@@ -6,3 +6,5 @@
 [node name="PlayerBase" type="Node"]
 script = ExtResource("1_6su4c")
 unit = ExtResource("2_bgtml")
+
+[node name="UnitsGroup" type="Node" parent="."]
