@@ -8,4 +8,23 @@ position = Vector2(524, 288)
 script = ExtResource("1_mmle3")
 
 [node name="BubbleSpawner" parent="." instance=ExtResource("2_n4osd")]
-position = Vector2(35, -4)
+position = Vector2(8, 48)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(54, 37)
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+position = Vector2(-538, -60)
+polygon = PackedVector2Array(28, -230, 174, -185, 89, -161, 14, -188)
+
+[node name="Polygon2D2" type="Polygon2D" parent="."]
+position = Vector2(417, -78)
+polygon = PackedVector2Array(28, -230, 174, -185, 89, -161, 14, -188)
+
+[node name="Polygon2D3" type="Polygon2D" parent="."]
+position = Vector2(414, 496)
+polygon = PackedVector2Array(28, -230, 174, -185, 89, -161, 14, -188)
+
+[node name="Polygon2D4" type="Polygon2D" parent="."]
+position = Vector2(-575, 500)
+polygon = PackedVector2Array(28, -230, 174, -185, 89, -161, 14, -188)

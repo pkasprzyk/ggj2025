@@ -12,18 +12,23 @@ extends Area2D
 
 var active: bool = true
 var bubbles: int = 0
-@onready var spawn_extents: Rect2 = spawn_area.shape.get_rect()
+var spawn_start: Vector2
+var spawn_end: Vector2
+
+func _ready() -> void:
+	spawn_start = spawn_area.shape.get_rect().position
+	spawn_end = spawn_area.shape.get_rect().end
 
 
 func _gen_random_pos():
-	var x = randf_range(spawn_extents.position.x, spawn_extents.end.x)
-	var y = randf_range(spawn_extents.position.y, spawn_extents.end.y)
+	var x = randf_range(spawn_start.x, spawn_end.x)
+	var y = randf_range(spawn_start.y, spawn_end.y)
 	return Vector2(x, y)
 
 
 func _spawn_bubble() -> void:
 	var bubble_instance = bubble.instantiate()
-	bubble_instance.position = _gen_random_pos()
+	bubble_instance.global_position = _gen_random_pos()
 	bubble_instance.set_target(target.global_position)
 	bubble_instance.connect("tree_exiting", _on_bubble_destroyed)
 	add_child(bubble_instance)

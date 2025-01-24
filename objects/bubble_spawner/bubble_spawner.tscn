@@ -7,16 +7,14 @@
 size = Vector2(830.75, 552.75)
 
 [node name="BubbleSpawner" type="Area2D"]
-position = Vector2(-1, -2)
 script = ExtResource("1_xqyw5")
 bubble = ExtResource("2_liosr")
 
 [node name="SpawnArea" type="CollisionShape2D" parent="."]
-position = Vector2(508.625, 134.625)
 shape = SubResource("RectangleShape2D_pi0ja")
 
 [node name="Target" type="Marker2D" parent="."]
-position = Vector2(182, 0)
+position = Vector2(626, 0)
 
 [node name="SpawnTimer" type="Timer" parent="."]
 wait_time = 0.2
