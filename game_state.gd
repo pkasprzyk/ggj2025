@@ -29,6 +29,8 @@ func init(
 	player_right_base = new_player_right_base
 	player_right_base.init(viewport_right, viewport_top, viewport_bottom, viewport_left)
 	right_spawn_timer = new_right_spawn_timer
+	player_left_base.set_other_base(player_right_base)
+	player_right_base.set_other_base(player_left_base)
 
 
 func _process(delta: float) -> void:
@@ -38,7 +40,7 @@ func _process(delta: float) -> void:
 	score_label.text = "Time %2d:%02d - Score: %s" % [int(timer) / 60, int(timer) % 60, score]
 	if right_spawn_timer.is_stopped():
 		right_spawn_timer.start()
-		player_right_base.spawn_unit()
+		player_right_base.spawn_unit(UnitShooter.PlayerSide.PLAYER_RIGHT)
 
 	if timer < 0.0:
 		get_tree().paused = true
@@ -47,7 +49,7 @@ func _process(delta: float) -> void:
 
 func bubble_popped() -> void:
 	increment_score(1)
-	player_left_base.spawn_unit()
+	player_left_base.spawn_unit(UnitShooter.PlayerSide.PLAYER_LEFT)
 
 
 func increment_score(value: int) -> void:
