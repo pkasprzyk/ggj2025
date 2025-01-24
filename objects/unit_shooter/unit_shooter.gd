@@ -86,5 +86,5 @@ func _physics_process(delta: float) -> void:
 	var allignment_vec: Vector2 = _allignment_rule(friendly_units)
 	new_velocity = new_velocity + cohesion_vec + allignment_vec + seperation_vec
 	velocity = new_velocity.normalized() * speed
-	look_at(velocity)
+	look_at(global_position + velocity)
 	global_position += velocity * delta

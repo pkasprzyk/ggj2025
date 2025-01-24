@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://pwm6l2tln5xx"]
+[gd_scene load_steps=4 format=3 uid="uid://pwm6l2tln5xx"]
 
 [ext_resource type="Script" path="res://objects/unit_shooter/unit_shooter.gd" id="1_twmya"]
+[ext_resource type="Texture2D" uid="uid://cg8e1nu62mf6n" path="res://objects/unit_shooter/manBlue_machine.png" id="2_c7sij"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_85p5x"]
 size = Vector2(32, 32)
@@ -15,6 +16,5 @@ position = Vector2(16, 16)
 position = Vector2(-16, -16)
 shape = SubResource("RectangleShape2D_85p5x")
 
-[node name="Polygon2D" type="Polygon2D" parent="."]
-position = Vector2(32, 40)
-polygon = PackedVector2Array(-48, -56, -48, -24, -16, -24, -16, -56)
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_c7sij")
