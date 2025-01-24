@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://cp0cv4sifmh4e"]
+
+[node name="Bubble" type="Node2D"]
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+color = Color(0.173282, 0.605552, 0.547183, 1)
+polygon = PackedVector2Array(30, 17, 80, -33, 4, -68, -54, -56, -84, 46, 32, 94)
