@@ -1,4 +1,4 @@
-@icon("res://objects/bubble/bubbles.svg")
+@icon("res://icons/bubble.svg")
 extends Node2D
 
 

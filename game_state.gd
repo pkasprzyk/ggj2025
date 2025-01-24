@@ -32,6 +32,8 @@ func init(
 
 
 func _process(delta: float) -> void:
+	if not score_label:
+		return
 	timer -= delta
 	score_label.text = "Time %2d:%02d - Score: %s" % [int(timer) / 60, int(timer) % 60, score]
 	if right_spawn_timer.is_stopped():
