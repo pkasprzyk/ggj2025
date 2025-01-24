@@ -3,8 +3,9 @@ extends Node
 
 class_name PlayerBase
 
-
 @export var unit: PackedScene
+
+@onready var units_group: Node = $UnitsGroup
 
 var spawn_x: float
 var spawn_y_start: float
@@ -25,7 +26,11 @@ func init(new_spawn_x: float, new_spawn_y_start: float, new_spawn_y_end: float, 
 
 func spawn_unit() -> void:
 	var unit_instance = unit.instantiate()
-	add_child(unit_instance)
+	units_group.add_child(unit_instance)
 	var spawn_point = Vector2(spawn_x, randf_range(spawn_y_start, spawn_y_end))
 	unit_instance.global_position = spawn_point
-	unit_instance.set_target(Vector2(target_x, spawn_point.y))
+	unit_instance.init(self, Vector2(target_x, spawn_point.y))
+
+
+func get_units() -> Array:
+	return units_group.get_children()
