@@ -11,11 +11,4 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
-	
-func _input(event):
-	var touch = event as InputEventScreenTouch
-	if touch:
-		var b = bubble_scene.instantiate()
-		b.position = touch.position
-		add_child(b)
-		 
+

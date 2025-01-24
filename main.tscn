@@ -1,6 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://dgdqtydil5rj8"]
+[gd_scene load_steps=3 format=3 uid="uid://dgdqtydil5rj8"]
 
-[ext_resource type="Script" path="res://mian.gd" id="1_mmle3"]
+[ext_resource type="Script" path="res://main.gd" id="1_mmle3"]
+[ext_resource type="PackedScene" uid="uid://7m54yhh1iwlb" path="res://objects/bubble_spawner/bubble_spawner.tscn" id="2_n4osd"]
 
 [node name="Node2D" type="Node2D"]
+position = Vector2(524, 288)
 script = ExtResource("1_mmle3")
+
+[node name="BubbleSpawner" parent="." instance=ExtResource("2_n4osd")]
+position = Vector2(35, -4)
