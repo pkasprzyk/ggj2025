@@ -1,21 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://7m54yhh1iwlb"]
+[gd_scene load_steps=3 format=3 uid="uid://7m54yhh1iwlb"]
 
 [ext_resource type="Script" path="res://objects/bubble_spawner/bubble_spawner.gd" id="1_xqyw5"]
 [ext_resource type="PackedScene" uid="uid://cp0cv4sifmh4e" path="res://objects/bubble/bubble.tscn" id="2_liosr"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_pi0ja"]
-size = Vector2(1799, 912)
-
-[node name="BubbleSpawner" type="Area2D"]
+[node name="BubbleSpawner" type="Node2D"]
 script = ExtResource("1_xqyw5")
 bubble = ExtResource("2_liosr")
-
-[node name="SpawnArea" type="CollisionShape2D" parent="."]
-position = Vector2(25.5, 13)
-shape = SubResource("RectangleShape2D_pi0ja")
-
-[node name="Target" type="Marker2D" parent="."]
-position = Vector2(915, 456)
 
 [node name="SpawnTimer" type="Timer" parent="."]
 wait_time = 0.2
