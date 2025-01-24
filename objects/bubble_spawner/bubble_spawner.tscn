@@ -14,7 +14,7 @@ bubble = ExtResource("2_liosr")
 shape = SubResource("RectangleShape2D_pi0ja")
 
 [node name="Target" type="Marker2D" parent="."]
-position = Vector2(626, 0)
+position = Vector2(377, 244)
 
 [node name="SpawnTimer" type="Timer" parent="."]
 wait_time = 0.2
