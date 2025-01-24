@@ -1,10 +1,25 @@
 [gd_scene load_steps=7 format=3 uid="uid://cp0cv4sifmh4e"]
 
 [ext_resource type="Script" path="res://objects/bubble/bubble.gd" id="1_n48a3"]
-[ext_resource type="Texture2D" uid="uid://2ore4abcxhm7" path="res://objects/bubble/bubbles.svg" id="1_pcjib"]
+[ext_resource type="Texture2D" uid="uid://hbg8kb3uh7qn" path="res://objects/bubble/bubble.svg" id="2_krr3h"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5eic6"]
 radius = 60.959
+
+[sub_resource type="Animation" id="Animation_6ledq"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Bubbles:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_hfkus"]
 resource_name = "spawn"
@@ -23,21 +38,6 @@ tracks/0/keys = {
 "values": [Vector2(0.1, 0.1), Vector2(1, 1)]
 }
 
-[sub_resource type="Animation" id="Animation_6ledq"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Bubbles:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(1, 1)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_i2q3k"]
 _data = {
 "RESET": SubResource("Animation_6ledq"),
@@ -48,8 +48,7 @@ _data = {
 script = ExtResource("1_n48a3")
 
 [node name="Bubbles" type="Sprite2D" parent="."]
-texture = ExtResource("1_pcjib")
-region_enabled = true
+texture = ExtResource("2_krr3h")
 region_rect = Rect2(188, 16, 127.182, 128)
 
 [node name="Collider" type="CollisionShape2D" parent="."]
