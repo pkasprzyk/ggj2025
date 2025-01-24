@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://ctjnx6oo5ch47"]
+
+[ext_resource type="Script" path="res://objects/unit_base/unit_base.gd" id="1_6su4c"]
+
+[node name="PlayerBase" type="Node"]
+script = ExtResource("1_6su4c")
+
+[node name="UnitsGroup" type="Node" parent="."]
