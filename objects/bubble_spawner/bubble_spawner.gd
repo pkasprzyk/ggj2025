@@ -39,7 +39,7 @@ func _spawn_bubble() -> void:
 
 func _on_bubble_destroyed() -> void:
 	bubbles -= 1
-	GAME_STATE.increment_score(1)
+	GAME_STATE.bubble_popped()
 
 
 func _physics_process(delta: float) -> void:
