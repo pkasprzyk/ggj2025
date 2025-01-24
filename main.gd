@@ -1,12 +1,15 @@
 extends Node
 
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	Input.emulate_touch_from_mouse = true
-	GAME_STATE.init($HUD/ScoreLabel)
+	var camera: Camera2D = $Camera2D
+	GAME_STATE.init(
+		$HUD/ScoreLabel,
+		$PlayerBase,
+		0, 1920, 1080, 0,
+	)
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
