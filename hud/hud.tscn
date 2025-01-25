@@ -1,6 +1,15 @@
-[gd_scene load_steps=2 format=3 uid="uid://ukm7x4tnv1xr"]
+[gd_scene load_steps=5 format=3 uid="uid://ukm7x4tnv1xr"]
 
 [ext_resource type="Script" path="res://hud/hud.gd" id="1_n3j1n"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0qmfv"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7mmyk"]
+bg_color = Color(0.585399, 0.124415, 0.0170263, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mypli"]
+bg_color = Color(0.499222, 0.548768, 1, 1)
 
 [node name="HUD" type="Control"]
 process_mode = 3
@@ -166,6 +175,31 @@ grow_horizontal = 2
 grow_vertical = 0
 theme_override_font_sizes/font_size = 50
 text = "Close"
+
+[node name="ProgressBarL" type="ProgressBar" parent="."]
+modulate = Color(1, 1, 1, 0.509804)
+layout_mode = 0
+offset_top = 126.0
+offset_right = 67.0
+offset_bottom = 1076.0
+theme_override_styles/background = SubResource("StyleBoxFlat_0qmfv")
+theme_override_styles/fill = SubResource("StyleBoxFlat_7mmyk")
+value = 50.0
+fill_mode = 3
+show_percentage = false
+
+[node name="ProgressBarR" type="ProgressBar" parent="."]
+modulate = Color(1, 1, 1, 0.509804)
+layout_mode = 0
+offset_left = 1847.0
+offset_top = 126.0
+offset_right = 1914.0
+offset_bottom = 1076.0
+theme_override_styles/background = SubResource("StyleBoxFlat_0qmfv")
+theme_override_styles/fill = SubResource("StyleBoxFlat_mypli")
+value = 50.0
+fill_mode = 3
+show_percentage = false
 
 [connection signal="pressed" from="TopBarBG/TopBar/CreditsButton" to="." method="_on_credits_button_pressed"]
 [connection signal="pressed" from="TopBarBG/TopBar/ResetButton" to="." method="_on_reset_button_pressed"]

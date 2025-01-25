@@ -6,6 +6,9 @@ extends Control
 @onready var credits_rich_text = $Credits/CreditsText
 @onready var debug_menu = $DebugMenu
 @onready var game_end = $GameEnd
+@onready var progress_bar_l := ($ProgressBarL as ProgressBar)
+@onready var progress_bar_r := ($ProgressBarR as ProgressBar)
+
 static var credits_config : CreditsConfig = load("res://config/credits.tres")
 
 
@@ -35,6 +38,10 @@ func _on_credits_text_meta_clicked(meta: Variant) -> void:
 func update_values(timer : float, score: Array[int]) -> void:
 	score_label.text = "[center]Time %2d:%02d\nScore: [color=red]%s[/color] - [color=blue]%s[/color][/center]" % \
 			[int(timer) / 60, int(timer) % 60, score[0], score[1]]
+	var r = 1 - (score[0] / float(GAME_STATE.GAME_END_SCORE))
+	var l = 1 - (score[1] / float(GAME_STATE.GAME_END_SCORE))
+	progress_bar_l.value = l * 100
+	progress_bar_r.value = r * 100
 
 
 
