@@ -30,6 +30,7 @@ var player_left_base: UnitBase
 var player_right_base: UnitBase
 var bullet_manager: Node
 
+var autospawn_right_player: bool = true
 var right_spawn_timer: Timer
 
 var bgm_player : AudioStreamPlayer
@@ -58,13 +59,13 @@ func init(
 	player_left_base.set_other_base(player_right_base)
 	player_right_base.set_other_base(player_left_base)
 	bullet_manager = new_bullet_manager
-	
+
 	right_spawn_timer = Timer.new()
 	right_spawn_timer.wait_time = 1.0
 	right_spawn_timer.one_shot = true
 	right_spawn_timer.name = "right_spawn_timer"
 	get_tree().current_scene.add_child(right_spawn_timer)
-	
+
 	reset_values()
 
 
@@ -73,7 +74,7 @@ func _process(delta: float) -> void:
 		return
 
 	timer += delta
-	if right_spawn_timer.is_stopped():
+	if right_spawn_timer.is_stopped() and autospawn_right_player:
 		right_spawn_timer.start()
 		player_right_base.spawn_unit(UnitType.SHOOTER)
 
@@ -139,6 +140,9 @@ func increment_score(side: PlayerSide, value: int) -> void:
 		hud.game_ended()
 		get_tree().paused = true
 
+
+func toggle_autospawn() -> void:
+	autospawn_right_player = not autospawn_right_player
 
 
 func get_player_color(side: PlayerSide) -> Color:

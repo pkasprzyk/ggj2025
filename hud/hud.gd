@@ -4,6 +4,7 @@ extends Control
 @onready var score_label = $TopBarBG/ScoreLabel
 @onready var credits = $Credits
 @onready var credits_rich_text = $Credits/CreditsText
+@onready var debug_menu = $DebugMenu
 @onready var game_end = $GameEnd
 static var credits_config : CreditsConfig = load("res://config/credits.tres")
 
@@ -23,6 +24,8 @@ func _ready() -> void:
 	for url in credits_config.sfx:
 		credits_rich_text.text += "\n - [url=%s] %s [/url]" % [url, url]
 
+	update_autospawn_button()
+
 
 func _on_credits_text_meta_clicked(meta: Variant) -> void:
 	OS.shell_open(meta)
@@ -34,17 +37,39 @@ func update_values(timer : float, score: Array[int]) -> void:
 			[int(timer) / 60, int(timer) % 60, score[0], score[1]]
 
 
+
+func update_autospawn_button() -> void:
+	$DebugMenu/AutoSpawnToggle.text = "Autospawn right player: %s" % GAME_STATE.autospawn_right_player
+
+
 func game_ended() -> void:
 	game_end.show()
 
 
-func _on_button_pressed() -> void:
+func _on_reset_button_pressed() -> void:
 	GAME_STATE.reset()
 
 
 func _on_credits_button_pressed() -> void:
+	if (debug_menu.visible):
+		debug_menu.hide()
 	credits.show()
 
 
 func _on_close_credits_pressed() -> void:
 	credits.hide()
+
+
+func _on_debug_menu_button_pressed() -> void:
+	if (credits.visible):
+		credits.hide()
+	debug_menu.show()
+
+
+func _on_close_debug_menu_pressed() -> void:
+	debug_menu.hide()
+
+
+func _on_toggle_autospawn_button_pressed() -> void:
+	GAME_STATE.toggle_autospawn()
+	update_autospawn_button()
