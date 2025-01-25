@@ -29,7 +29,7 @@ func set_other_base(new_other_base: UnitBase) -> void:
 	other_base = new_other_base
 
 
-func spawn_unit(player_side: UnitShooter.PlayerSide) -> void:
+func spawn_unit(player_side: GAME_STATE.PlayerSide) -> void:
 	var spawn_point = Vector2(spawn_x, randf_range(spawn_y_start, spawn_y_end))
 	UnitShooter.spawn(units_group, spawn_point, player_side, self, Vector2(target_x, spawn_point.y), other_base)
 

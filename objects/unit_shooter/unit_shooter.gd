@@ -12,12 +12,6 @@ var other_base: UnitBase
 var velocity: Vector2 = Vector2.ZERO
 
 
-enum PlayerSide {
-	PLAYER_LEFT,
-	PLAYER_RIGHT
-}
-
-
 static var unit_scene: PackedScene = load("res://objects/unit_shooter/unit_shooter.tscn")
 
 @onready var shooting_timer: Timer = $ShootingTimer
@@ -26,7 +20,7 @@ static var unit_scene: PackedScene = load("res://objects/unit_shooter/unit_shoot
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 
-static func spawn(parent: Node, spawn_point: Vector2, player: PlayerSide, new_base: UnitBase, new_target: Vector2, new_other_base: UnitBase) -> UnitShooter:
+static func spawn(parent: Node, spawn_point: Vector2, player: GAME_STATE.PlayerSide, new_base: UnitBase, new_target: Vector2, new_other_base: UnitBase) -> UnitShooter:
 	var unit = unit_scene.instantiate()
 	unit.name = "Shooter"+str(randi_range(0,9999999))
 	parent.add_child(unit)
@@ -35,7 +29,7 @@ static func spawn(parent: Node, spawn_point: Vector2, player: PlayerSide, new_ba
 	unit.base = new_base
 	unit.other_base = new_other_base
 	unit.target = new_target
-	unit.sprite.modulate = Color(1, 0, 0, 1) if player == PlayerSide.PLAYER_LEFT else Color(0, 0, 1, 1)
+	unit.sprite.modulate = GAME_STATE.get_player_color(player)
 	return unit
 
 

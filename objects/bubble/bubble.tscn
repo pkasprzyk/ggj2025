@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://cp0cv4sifmh4e"]
+[gd_scene load_steps=8 format=3 uid="uid://cp0cv4sifmh4e"]
 
 [ext_resource type="Script" path="res://objects/bubble/bubble.gd" id="1_n48a3"]
 [ext_resource type="Texture2D" uid="uid://hbg8kb3uh7qn" path="res://objects/bubble/bubble.svg" id="2_krr3h"]
+[ext_resource type="Texture2D" uid="uid://dct624iyu1ob6" path="res://icons/IconGodotNode/node/canon.png" id="3_26ios"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5eic6"]
 radius = 60.959
@@ -50,6 +51,19 @@ script = ExtResource("1_n48a3")
 [node name="Bubbles" type="Sprite2D" parent="."]
 texture = ExtResource("2_krr3h")
 region_rect = Rect2(188, 16, 127.182, 128)
+
+[node name="IconBG" type="Sprite2D" parent="Bubbles"]
+z_index = 1
+texture_filter = 1
+position = Vector2(1, 0)
+scale = Vector2(6, 6)
+texture = ExtResource("3_26ios")
+
+[node name="Icon" type="Sprite2D" parent="Bubbles/IconBG"]
+modulate = Color(0.71, 0, 0, 1)
+z_index = 1
+texture_filter = 2
+texture = ExtResource("3_26ios")
 
 [node name="Collider" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_5eic6")

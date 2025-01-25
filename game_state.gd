@@ -3,6 +3,17 @@ extends Node
 
 # global singleton GAME_STATE
 
+enum PlayerSide {
+	PLAYER_LEFT,
+	PLAYER_RIGHT,
+}
+
+enum BubbleType {
+	SWORD,
+	SHIELD,
+	CANNON,
+}
+
 const MATCH_TIME = 0.5 * 60.0
 
 @onready var score: int = 0
@@ -45,7 +56,7 @@ func _process(delta: float) -> void:
 	timer -= delta
 	if right_spawn_timer.is_stopped():
 		right_spawn_timer.start()
-		player_right_base.spawn_unit(UnitShooter.PlayerSide.PLAYER_RIGHT)
+		player_right_base.spawn_unit(PlayerSide.PLAYER_RIGHT)
 
 	if hud:
 		hud.update_values(timer, score)
@@ -60,10 +71,16 @@ func reset():
 	get_tree().change_scene_to_file("res://main.tscn")
 	timer = MATCH_TIME
 
+
 func bubble_popped() -> void:
 	increment_score(1)
-	player_left_base.spawn_unit(UnitShooter.PlayerSide.PLAYER_LEFT)
+	player_left_base.spawn_unit(PlayerSide.PLAYER_LEFT)
 
 
 func increment_score(value: int) -> void:
 	score += value
+
+
+func get_player_color(side: PlayerSide) -> Color:
+	return Color(1, 0, 0, 1) if side == PlayerSide.PLAYER_LEFT\
+	  else Color(0, 0, 1, 1)

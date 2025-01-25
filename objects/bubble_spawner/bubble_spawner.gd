@@ -30,10 +30,18 @@ func _gen_random_pos():
 
 func _spawn_bubble() -> void:
 	var bubble_instance = bubble.instantiate()
-	bubble_instance.set_target(target.global_position)
+	var side = [
+		GAME_STATE.PlayerSide.PLAYER_LEFT,
+		GAME_STATE.PlayerSide.PLAYER_RIGHT,
+	].pick_random()
+	var bubble_type = [
+		GAME_STATE.BubbleType.SWORD,
+		GAME_STATE.BubbleType.SHIELD,
+		GAME_STATE.BubbleType.CANNON,
+	].pick_random()
 	bubble_instance.connect("tree_exiting", _on_bubble_destroyed)
 	add_child(bubble_instance)
-	bubble_instance.global_position = _gen_random_pos()
+	bubble_instance.initialize(_gen_random_pos(), target.global_position, side, bubble_type)
 	bubbles += 1
 
 
