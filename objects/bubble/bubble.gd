@@ -71,7 +71,7 @@ func _on_input_event(_viewport:Node, event:InputEvent, _shape_idx:int) -> void:
 
 
 func play_pop_cue():
-	var player = AudioStreamPlayer2D.new()
+	var audio_player = AudioStreamPlayer2D.new()
 	var sfx_res = [
 		"res://objects/bubble/bubble_pop/bubble-pop-1.mp3",
 		"res://objects/bubble/bubble_pop/bubble-pop-2.mp3",
@@ -80,11 +80,12 @@ func play_pop_cue():
 		"res://objects/bubble/bubble_pop/bubble-pop-5.mp3",
 		"res://objects/bubble/bubble_pop/bubble-pop-6.mp3"
 	].pick_random()
-	player.stream = load(sfx_res)
-	player.connect("finished", player.queue_free)
-	get_tree().current_scene.add_child(player)
-	player.global_position = global_position
-	player.play()
+	audio_player.stream = load(sfx_res)
+	audio_player.volume_db = 30
+	audio_player.connect("finished", audio_player.queue_free)
+	get_tree().current_scene.add_child(audio_player)
+	audio_player.global_position = global_position
+	audio_player.play()
 
 
 func spawn_pop():
