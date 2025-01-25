@@ -80,6 +80,7 @@ func play_pop_cue():
 		"res://objects/bubble/bubble_pop/bubble-pop-6.mp3"
 	].pick_random()
 	player.stream = load(sfx_res)
+	player.connect("finished", player.queue_free)
 	get_tree().current_scene.add_child(player)
 	player.global_position = global_position
 	player.play()
