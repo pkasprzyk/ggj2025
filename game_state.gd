@@ -72,9 +72,12 @@ func reset():
 	timer = MATCH_TIME
 
 
-func bubble_popped() -> void:
+func bubble_popped( bubble: Bubble) -> void:
 	increment_score(1)
-	player_left_base.spawn_unit(PlayerSide.PLAYER_LEFT)
+	if bubble.side == SIDE_LEFT:
+		player_left_base.spawn_unit(bubble.side)
+	else :
+		player_right_base.spawn_unit(bubble.side)
 
 
 func increment_score(value: int) -> void:

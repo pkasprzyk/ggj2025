@@ -1,7 +1,12 @@
+class_name Bubble
 extends Node2D
 
 
 var target: Vector2 = Vector2.ZERO
+
+@export var  side: GAME_STATE.PlayerSide
+@export var  type: GAME_STATE.BubbleType
+
 
 @export var  phase = 0
 @export var  speed = 100
@@ -12,6 +17,8 @@ var scale_oscilation = 0.5 # influences oscillating
 @onready var animated_sprite: AnimationPlayer = $AnimationPlayer
 @onready var icon_BG : Sprite2D = $Bubbles/IconBG
 @onready var icon : Sprite2D = $Bubbles/IconBG/Icon
+
+
 
 static var icon_shield = load("res://icons/IconGodotNode/node/icon_shield.png")
 static var icon_sword = load("res://icons/IconGodotNode/node/icon_sword.png")
@@ -30,7 +37,9 @@ func _ready() -> void:
 	phase = randf_range(0, 2 * PI)
 
 
-func initialize(start_pos: Vector2, new_target: Vector2, side : GAME_STATE.PlayerSide, type : GAME_STATE.BubbleType) -> void:
+func initialize(start_pos: Vector2, new_target: Vector2, new_side : GAME_STATE.PlayerSide, new_type : GAME_STATE.BubbleType) -> void:
+	side = new_side
+	type = new_type
 	global_position = start_pos
 	target = new_target
 	icon.texture = icons[type]
@@ -57,7 +66,7 @@ func _on_input_event(viewport:Node, event:InputEvent, shape_idx:int) -> void:
 	var touch = event as InputEventScreenTouch
 	if touch:
 		spawn_pop()
-		GAME_STATE.bubble_popped()
+		GAME_STATE.bubble_popped(self)
 		queue_free()
 
 
