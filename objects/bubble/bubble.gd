@@ -15,7 +15,7 @@ var scale_oscilation = 0.5 # influences oscillating
 
 @onready var collider: CollisionShape2D = $Collider
 @onready var animated_sprite: AnimationPlayer = $AnimationPlayer
-@onready var icon_BG : Sprite2D = $IconBG
+@onready var icon_bg : Sprite2D = $IconBG
 @onready var icon : Sprite2D = $IconBG/Icon
 
 
@@ -42,7 +42,7 @@ func initialize(start_pos: Vector2, new_target: Vector2, new_side : GAME_STATE.P
 	global_position = start_pos
 	target = new_target
 	icon.texture = icons[type]
-	icon_BG.texture = icons[type]
+	icon_bg.texture = icons[type]
 	var color = GAME_STATE.get_player_color(side)
 	icon.modulate = color
 

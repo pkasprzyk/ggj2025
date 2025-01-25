@@ -1,0 +1,40 @@
+[gd_scene load_steps=7 format=3 uid="uid://c3b7fehkdfjwg"]
+
+[ext_resource type="Script" path="res://objects/bubble/bubble_bonus_marker/bubble_bonus.gd" id="1_66r55"]
+[ext_resource type="Texture2D" uid="uid://6347gkdm4e4l" path="res://icons/IconGodotNode/node/icon_shield.png" id="2_xemk5"]
+[ext_resource type="Texture2D" uid="uid://bofmoniawd8u0" path="res://objects/bubble/bubble_pop/pop_pfx.svg" id="3_b8gf1"]
+
+[sub_resource type="Curve" id="Curve_4s6xp"]
+_data = [Vector2(0.0220386, 0), 0.0, 0.0, 0, 0, Vector2(0.380165, 1), 0.0, 0.0, 0, 0, Vector2(0.713499, 0.659358), -1.17164, -1.17164, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_wglpd"]
+curve = SubResource("Curve_4s6xp")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_mkt8j"]
+particle_flag_disable_z = true
+gravity = Vector3(0, 980, 0)
+scale_min = 0.1
+scale_max = 0.1
+scale_curve = SubResource("CurveTexture_wglpd")
+color = Color(1, 1, 1, 0.619608)
+
+[node name="BubbleBonus" type="Node2D"]
+script = ExtResource("1_66r55")
+
+[node name="TrailPfx" type="GPUParticles2D" parent="."]
+amount = 24
+process_material = SubResource("ParticleProcessMaterial_mkt8j")
+texture = ExtResource("3_b8gf1")
+lifetime = 0.4
+
+[node name="IconBG" type="Sprite2D" parent="."]
+position = Vector2(1, 0)
+scale = Vector2(3.75, 3.75)
+texture = ExtResource("2_xemk5")
+
+[node name="Icon" type="Sprite2D" parent="IconBG"]
+modulate = Color(0.71, 0, 0, 1)
+z_index = 1
+position = Vector2(-0.820513, -0.820513)
+texture = ExtResource("2_xemk5")

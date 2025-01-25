@@ -105,8 +105,14 @@ func bubble_to_unit(bubble_type: BubbleType) -> UnitType:
 
 func bubble_popped(bubble: Bubble) -> void:
 	increment_score(bubble.side, 1)
+	var bonus = BubbleBonus.spawn(bullet_manager, bubble)
 	var unit_type = bubble_to_unit(bubble.type)
-	if bubble.side == SIDE_LEFT:
+	var side = bubble.side
+	bonus.on_bonus_granted.connect(func (): spawn_unit_for(side, unit_type))
+
+
+func spawn_unit_for(side:PlayerSide, unit_type:UnitType) -> void:
+	if side == SIDE_LEFT:
 		player_left_base.spawn_unit(unit_type)
 	else :
 		player_right_base.spawn_unit(unit_type)
