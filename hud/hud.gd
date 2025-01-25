@@ -1,9 +1,10 @@
 class_name Hud
 extends Control
 
-@onready var score_label = $TopBarBG/TopBar/ScoreLabel
+@onready var score_label = $TopBarBG/ScoreLabel
 @onready var credits = $Credits
 @onready var credits_rich_text = $Credits/CreditsText
+@onready var game_end = $GameEnd
 static var credits_config : CreditsConfig = load("res://config/credits.tres")
 
 
@@ -28,12 +29,12 @@ func _on_credits_text_meta_clicked(meta: Variant) -> void:
 
 
 func update_values(timer : float, score: Array[int]) -> void:
-	score_label.text = "Time %2d:%02d - Score: %s - %s" % \
+	score_label.text = "[center]Time %2d:%02d\nScore: [color=red]%s[/color] - [color=blue]%s[/color][/center]" % \
 			[int(timer) / 60, int(timer) % 60, score[0], score[1]]
 
 
 func game_ended() -> void:
-	score_label.text += "\n GAME OVER"
+	game_end.show()
 
 
 func _on_button_pressed() -> void:
