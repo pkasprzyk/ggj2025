@@ -12,6 +12,7 @@ class_name UnitShooter
 
 var type : GAME_STATE.UnitType
 
+var bonus_active:bool
 var target: Vector2 = Vector2.ZERO
 var base: UnitBase
 var other_base: UnitBase
@@ -28,6 +29,7 @@ static var unit_type_to_scene: Dictionary = {
 @onready var barrel_tip: Marker2D = $BarrelTip
 @onready var area: Area2D = $Area2D
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var power_up_pfx: = $PowerUpPfx
 
 
 static func spawn(
@@ -61,6 +63,9 @@ static func spawn(
 func get_velocity() -> Vector2:
 	return velocity
 
+func set_bonus_active(active:bool) -> void:
+	power_up_pfx.emitting = active
+	bonus_active = active
 
 func _cohesion_rule(all_units) -> Vector2:
 	var perceived_centre: Vector2
@@ -130,15 +135,18 @@ func _rotate_clamped(new_velocity: Vector2) -> Vector2:
 
 
 func _come_closer(delta: float) -> void:
+	var effective_speed = speed
+	if bonus_active:
+		effective_speed *= 5
 	var friendly_units = base.get_units()
 	var enemy_units = other_base.get_units()
-	var new_velocity = (target - global_position).normalized() * speed / 2
+	var new_velocity = (target - global_position).normalized() * effective_speed / 2
 	var cohesion_vec: Vector2 = _cohesion_rule(friendly_units)
 	var seperation_vec: Vector2 = _separation_rule(friendly_units + enemy_units)
 	var allignment_vec: Vector2 = _allignment_rule(friendly_units)
 	new_velocity = new_velocity + cohesion_vec + allignment_vec + seperation_vec
 	new_velocity = _rotate_clamped(new_velocity)
-	velocity = new_velocity.normalized() * speed
+	velocity = new_velocity.normalized() * effective_speed
 	global_position += velocity * delta
 
 

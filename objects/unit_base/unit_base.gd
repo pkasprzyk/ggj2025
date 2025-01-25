@@ -21,6 +21,8 @@ var rush_time = 1.0
 func _ready() -> void:
 	GAME_STATE.connect("bonus_activated", activate_bonus)
 	rush_expiry_timer = Timer.new()
+	rush_expiry_timer.name = "rush_expiry_timer"
+	add_child(rush_expiry_timer, false, InternalMode.INTERNAL_MODE_BACK)
 
 
 func init(
@@ -66,8 +68,8 @@ func get_units() -> Array:
 
 func expire_bonus(type: GAME_STATE.BubbleType, unit_type: GAME_STATE.UnitType) -> void:
 	for unit in get_units():
-			if unit.type == unit_type:
-				unit.speed /= 5
+			if unit as UnitShooter and unit.type == unit_type:
+				unit.set_bonus_active(false)
 
 
 func activate_bonus(type: GAME_STATE.BubbleType, unit_type: GAME_STATE.UnitType) -> void:
@@ -81,4 +83,4 @@ func activate_bonus(type: GAME_STATE.BubbleType, unit_type: GAME_STATE.UnitType)
 
 		for unit in get_units():
 			if unit as UnitShooter and unit.type == unit_type:
-				unit.speed *= 5
+				unit.set_bonus_active(true)

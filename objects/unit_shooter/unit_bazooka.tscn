@@ -1,11 +1,39 @@
-[gd_scene load_steps=8 format=3 uid="uid://lcjyxnbr11ku"]
+[gd_scene load_steps=14 format=3 uid="uid://lcjyxnbr11ku"]
 
 [ext_resource type="Script" path="res://objects/unit_shooter/unit_shooter.gd" id="1_dhmrr"]
 [ext_resource type="Texture2D" uid="uid://cg8e1nu62mf6n" path="res://objects/unit_shooter/manBlue_machine.png" id="2_opi23"]
 [ext_resource type="Texture2D" uid="uid://bsmdoobq1iafs" path="res://objects/unit_shooter/shotLarge.png" id="3_yu5eu"]
+[ext_resource type="Texture2D" uid="uid://bofmoniawd8u0" path="res://objects/bubble/bubble_pop/pop_pfx.svg" id="4_mwh2y"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_85p5x"]
 size = Vector2(32, 48)
+
+[sub_resource type="Gradient" id="Gradient_kvlp2"]
+offsets = PackedFloat32Array(0, 0.129105, 0.899207, 1)
+colors = PackedColorArray(0, 0, 0, 0, 0.64785, 0.561428, 0.219004, 0.129105, 0.96, 0.78144, 0.0672, 0.576471, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_vf87q"]
+gradient = SubResource("Gradient_kvlp2")
+
+[sub_resource type="Curve" id="Curve_xnb8j"]
+_data = [Vector2(0.00109769, 0.440481), 0.0, 0.0, 0, 0, Vector2(0.414929, 0.689996), 0.0, 0.0, 0, 0, Vector2(0.975851, 0.115355), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_6qi6w"]
+curve = SubResource("Curve_xnb8j")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_jqk4f"]
+particle_flag_disable_z = true
+angle_min = 1.07288e-05
+angle_max = 1.07288e-05
+spread = 180.0
+initial_velocity_min = 100.0
+initial_velocity_max = 120.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.1
+scale_max = 0.1
+scale_curve = SubResource("CurveTexture_6qi6w")
+color_ramp = SubResource("GradientTexture1D_vf87q")
 
 [sub_resource type="Animation" id="Animation_5081w"]
 length = 0.001
@@ -53,6 +81,11 @@ position = Vector2(16, 16)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(-24, -16)
 shape = SubResource("RectangleShape2D_85p5x")
+
+[node name="PowerUpPfx" type="GPUParticles2D" parent="."]
+emitting = false
+process_material = SubResource("ParticleProcessMaterial_jqk4f")
+texture = ExtResource("4_mwh2y")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_opi23")
