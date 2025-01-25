@@ -5,6 +5,7 @@ class_name UnitBase
 
 @onready var units_group: Node = $UnitsGroup
 @onready var sprite: Sprite2D = $Sprite2D
+@onready var area: Area2D = $Area2D
 
 var spawn_x: float
 var spawn_y_start: float
@@ -26,6 +27,7 @@ func init(
 	spawn_y_start = play_area.position.y
 	spawn_y_end = play_area.end.y
 	sprite.modulate = GAME_STATE.get_player_color(player)
+	area.collision_layer = GAME_STATE.get_player_layer(player)
 	
 	if new_player == GAME_STATE.PlayerSide.PLAYER_LEFT:
 		spawn_x = play_area.position.x

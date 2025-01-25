@@ -146,6 +146,14 @@ func bubble_to_unit(bubble_type: BubbleType) -> UnitType:
 	return UnitType.SHOOTER
 
 
+func get_player_layer(player: PlayerSide) -> int:
+	return 2 if player == PlayerSide.PLAYER_LEFT else 3
+
+
+func get_other_player(player: PlayerSide) -> PlayerSide:
+	return PlayerSide.PLAYER_RIGHT if player == PlayerSide.PLAYER_LEFT else PlayerSide.PLAYER_LEFT
+
+
 func bubble_popped(bubble: Bubble) -> void:
 	increment_score(bubble.side, 1)
 	replay_config.click_history.append([timer, bubble.side, bubble.type, bubble.global_position])
@@ -182,7 +190,7 @@ func base_hit(base:UnitBase) -> void:
 
 
 func spawn_bullet(shooter:UnitShooter, position:Vector2, velocity:Vector2):
-	Bullet.spawn( shooter.type, bullet_manager, position, velocity)
+	Bullet.spawn(shooter.type, bullet_manager, position, velocity, get_other_player(shooter.player))
 
 
 func increment_score(side: PlayerSide, value: int) -> void:

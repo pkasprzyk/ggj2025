@@ -26,6 +26,7 @@ static var unit_type_to_scene: Dictionary = {
 @onready var shooting_timer: Timer = $ShootingTimer
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var barrel_tip: Marker2D = $BarrelTip
+@onready var area: Area2D = $Area2D
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 
@@ -52,6 +53,7 @@ static func spawn(
 	unit.other_base = new_other_base
 	unit.target = new_target
 	unit.sprite.modulate = GAME_STATE.get_player_color(new_player)
+	unit.area.collision_layer = GAME_STATE.get_player_layer(new_player)
 	unit.look_at(unit.target)
 	return unit
 
