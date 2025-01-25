@@ -9,6 +9,7 @@ static var bonus_scene = load("res://objects/bubble/bubble_bonus_marker/bubble_b
 @onready var trail_pfx : GPUParticles2D = $TrailPfx
 
 @export var speed: float = 900
+@export var minimal_distance_to_target: float = 10.0
 
 var fired := false
 var target: Vector2
@@ -23,7 +24,7 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	if not fired and global_position.distance_to(target) < 10:
+	if not fired and global_position.distance_to(target) < minimal_distance_to_target:
 		on_bonus_granted.emit()
 		fired = true
 		trail_pfx.emitting = false
