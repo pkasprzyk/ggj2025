@@ -6,7 +6,7 @@ class_name UnitShooter
 @export var player: GAME_STATE.PlayerSide
 @export var hp: float = 100.0
 @export var speed: float = 100.0
-@export var separation_distance: float = 50.0
+@export var separation_distance_squared: float = 50.0 ** 2
 @export var shooting_distance: float = 500.0
 @export var rotation_speed: float = 0.05  # radians per tick
 
@@ -82,7 +82,7 @@ func _separation_rule(all_units) -> Vector2:
 	
 	for other_unit in all_units:
 		if self != other_unit:
-			if (other_unit.position - position).length() < separation_distance:
+			if (other_unit.position - position).length_squared() < separation_distance_squared:
 				separation_vec = separation_vec - (other_unit.position - position)
 	
 	return separation_vec

@@ -32,8 +32,10 @@ var bullet_manager: Node
 
 var autospawn_right_player: bool = true
 var deterministic_unit_spawn: bool = false
+var epic_mode: bool = false
 var spawn_bubbles: bool
 var right_spawn_timer: Timer
+var epic_multiplier: int = 5
 
 var bgm_player : AudioStreamPlayer
 
@@ -158,10 +160,17 @@ func bubble_popped(bubble: Bubble) -> void:
 
 func spawn_unit_for(side:PlayerSide, unit_type:UnitType, spawn_target: Vector2) -> void:
 	replay_config.spawn_history.append([timer, side, unit_type, spawn_target])
+	var spawner: UnitBase
 	if side == PlayerSide.PLAYER_LEFT:
-		player_left_base.spawn_unit(unit_type, spawn_target)
+		spawner = player_left_base
 	else :
-		player_right_base.spawn_unit(unit_type, spawn_target)
+		spawner = player_right_base
+
+	if epic_mode:
+		for i in range(epic_multiplier):
+			spawner.spawn_unit(unit_type, spawn_target)
+	else:
+		spawner.spawn_unit(unit_type, spawn_target)
 
 
 func unit_died(unit:UnitShooter) -> void:
@@ -192,6 +201,10 @@ func toggle_autospawn() -> void:
 
 func toggle_deterministic_unit_spawn() -> void:
 	deterministic_unit_spawn = not deterministic_unit_spawn
+
+
+func toggle_epic_mode() -> void:
+	epic_mode = not epic_mode
 
 
 func get_player_color(side: PlayerSide) -> Color:
