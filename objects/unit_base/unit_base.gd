@@ -31,9 +31,7 @@ func set_other_base(new_other_base: UnitBase) -> void:
 
 func spawn_unit(player_side: UnitShooter.PlayerSide) -> void:
 	var spawn_point = Vector2(spawn_x, randf_range(spawn_y_start, spawn_y_end))
-	var unit_instance = UnitShooter.spawn(player_side, self, Vector2(target_x, spawn_point.y), other_base)
-	units_group.add_child(unit_instance)
-	unit_instance.global_position = spawn_point
+	UnitShooter.spawn(units_group, spawn_point, player_side, self, Vector2(target_x, spawn_point.y), other_base)
 
 
 func get_units() -> Array:

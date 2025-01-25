@@ -7,5 +7,6 @@ func _ready() -> void:
 		$HUD,
 		$PlayerBases/PlayerLeftBase,
 		$PlayerBases/PlayerRightBase,
+		$BulletManager,
 		0, 1920, 1080, 0,
 	)

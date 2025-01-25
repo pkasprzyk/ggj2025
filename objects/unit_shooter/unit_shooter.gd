@@ -19,20 +19,28 @@ enum PlayerSide {
 
 static var unit_scene: PackedScene = load("res://objects/unit_shooter/unit_shooter.tscn")
 
+@onready var shooting_timer: Timer = $ShootingTimer
+@onready var sprite: Sprite2D = $Sprite2D
+@onready var barrel_tip: Marker2D = $BarrelTip
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
+	shooting_timer.connect("timeout", shoot)
+	shooting_timer.start()
 
 
-static func spawn(player: PlayerSide, new_base: UnitBase, new_target: Vector2, new_other_base: UnitBase) -> UnitShooter:
+static func spawn(parent: Node, spawn_point: Vector2, player: PlayerSide, new_base: UnitBase, new_target: Vector2, new_other_base: UnitBase) -> UnitShooter:
 	var unit = unit_scene.instantiate()
 	unit.name = "Shooter"+str(randi_range(0,9999999))
+	parent.add_child(unit)
 
+	unit.global_position = spawn_point
 	unit.base = new_base
 	unit.other_base = new_other_base
 	unit.target = new_target
-	unit.modulate = Color(1, 0, 0, 1) if player == PlayerSide.PLAYER_LEFT else Color(0, 0, 1, 1)
+	unit.sprite.modulate = Color(1, 0, 0, 1) if player == PlayerSide.PLAYER_LEFT else Color(0, 0, 1, 1)
 	return unit
 
 
@@ -90,3 +98,12 @@ func _physics_process(delta: float) -> void:
 	velocity = new_velocity.normalized() * speed
 	look_at(global_position + velocity)
 	global_position += velocity * delta
+
+
+func handle_hit() -> void:
+	queue_free()
+
+
+func shoot() -> void:
+	animation_player.play("shoot")
+	Bullet.spawn(barrel_tip.global_position, velocity)

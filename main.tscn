@@ -134,3 +134,5 @@ shape = SubResource("RectangleShape2D_5c7yc")
 position = Vector2(-2107, -1210)
 
 [node name="HUD" parent="." instance=ExtResource("4_vi50i")]
+
+[node name="BulletManager" type="Node2D" parent="."]

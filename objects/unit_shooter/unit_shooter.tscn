@@ -1,10 +1,48 @@
-[gd_scene load_steps=4 format=3 uid="uid://pwm6l2tln5xx"]
+[gd_scene load_steps=8 format=3 uid="uid://pwm6l2tln5xx"]
 
 [ext_resource type="Script" path="res://objects/unit_shooter/unit_shooter.gd" id="1_twmya"]
 [ext_resource type="Texture2D" uid="uid://cg8e1nu62mf6n" path="res://objects/unit_shooter/manBlue_machine.png" id="2_c7sij"]
+[ext_resource type="Texture2D" uid="uid://bsmdoobq1iafs" path="res://objects/unit_shooter/shotLarge.png" id="3_jxddn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_85p5x"]
-size = Vector2(32, 32)
+size = Vector2(32, 48)
+
+[sub_resource type="Animation" id="Animation_pgecu"]
+resource_name = "shoot"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ShotLarge:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.188596),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="Animation" id="Animation_5081w"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ShotLarge:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5mray"]
+_data = {
+"RESET": SubResource("Animation_5081w"),
+"shoot": SubResource("Animation_pgecu")
+}
 
 [node name="UnitShooter" type="Node2D"]
 script = ExtResource("1_twmya")
@@ -13,8 +51,25 @@ script = ExtResource("1_twmya")
 position = Vector2(16, 16)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(-16, -16)
+position = Vector2(-24, -16)
 shape = SubResource("RectangleShape2D_85p5x")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_c7sij")
+
+[node name="ShootingTimer" type="Timer" parent="."]
+wait_time = 3.0
+
+[node name="BarrelTip" type="Marker2D" parent="."]
+position = Vector2(24, 8)
+
+[node name="ShotLarge" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(38, 10)
+rotation = 1.5708
+texture = ExtResource("3_jxddn")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_5mray")
+}

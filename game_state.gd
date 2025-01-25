@@ -11,6 +11,7 @@ var timer := MATCH_TIME
 var hud: Hud
 var player_left_base: UnitBase
 var player_right_base: UnitBase
+var bullet_manager: Node
 
 var right_spawn_timer: Timer
 
@@ -19,6 +20,7 @@ func init(
 	i_hud : Hud,
 	new_player_left_base: UnitBase,
 	new_player_right_base: UnitBase,
+	new_bullet_manager: Node,
 	viewport_top: float, viewport_right: float,
 	viewport_bottom: float,
 	viewport_left: float
@@ -30,6 +32,7 @@ func init(
 	player_right_base.init(viewport_right, viewport_top, viewport_bottom, viewport_left)
 	player_left_base.set_other_base(player_right_base)
 	player_right_base.set_other_base(player_left_base)
+	bullet_manager = new_bullet_manager
 	
 	right_spawn_timer = Timer.new()
 	right_spawn_timer.wait_time = 1.0
