@@ -116,6 +116,10 @@ func unit_died(unit:UnitShooter) -> void:
 	increment_score(1 - unit.player, 50)
 
 
+func base_hit(base:UnitBase) -> void:
+	increment_score(1 - base.player, 100)
+
+
 func spawn_bullet(shooter:UnitShooter, position:Vector2, velocity:Vector2):
 	Bullet.spawn( shooter.type, bullet_manager, position, velocity)
 

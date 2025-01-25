@@ -1,8 +1,23 @@
-[gd_scene load_steps=2 format=3 uid="uid://ctjnx6oo5ch47"]
+[gd_scene load_steps=4 format=3 uid="uid://ctjnx6oo5ch47"]
 
 [ext_resource type="Script" path="res://objects/unit_base/unit_base.gd" id="1_6su4c"]
+[ext_resource type="Texture2D" uid="uid://ca6rhf8ene4vy" path="res://objects/unit_base/tankBody_huge.png" id="2_hh8h0"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l2u87"]
+size = Vector2(61, 98)
 
 [node name="PlayerBase" type="Node2D"]
 script = ExtResource("1_6su4c")
 
 [node name="UnitsGroup" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, 9.53674e-07)
+scale = Vector2(1, 1.44118)
+texture = ExtResource("2_hh8h0")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(1.5, -1)
+shape = SubResource("RectangleShape2D_l2u87")

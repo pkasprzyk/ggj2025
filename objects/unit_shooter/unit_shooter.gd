@@ -53,6 +53,9 @@ static func spawn(
 	unit.sprite.modulate = GAME_STATE.get_player_color(new_player)
 	return unit
 
+func get_velocity() -> Vector2:
+	return velocity
+
 
 func _cohesion_rule(all_units) -> Vector2:
 	var perceived_centre: Vector2
@@ -91,7 +94,7 @@ func _allignment_rule(all_units) -> Vector2:
 	
 	for other_unit in all_units:
 		if self != other_unit:
-			perceived_velocity = perceived_velocity + other_unit.velocity
+			perceived_velocity = perceived_velocity + other_unit.get_velocity()
 	
 	perceived_velocity = perceived_velocity / (all_units.size() - 1)
 	
@@ -99,7 +102,7 @@ func _allignment_rule(all_units) -> Vector2:
 
 
 func find_closest_enemy(all_units):
-	var closest_enemy: UnitShooter = null
+	var closest_enemy: Node2D = null
 	var closest_distance: float = 9999999
 
 	for other_unit in all_units:

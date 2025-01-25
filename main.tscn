@@ -72,8 +72,10 @@ tile_set = SubResource("TileSet_m3rmy")
 [node name="PlayerBases" type="Node2D" parent="."]
 
 [node name="PlayerLeftBase" parent="PlayerBases" instance=ExtResource("4_78562")]
+position = Vector2(16, 608)
 
 [node name="PlayerRightBase" parent="PlayerBases" instance=ExtResource("4_78562")]
+position = Vector2(1904, 608)
 
 [node name="BubbleSpawners" type="Node2D" parent="."]
 
