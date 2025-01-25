@@ -26,7 +26,16 @@ var bullet_manager: Node
 
 var right_spawn_timer: Timer
 
+var bgm_player : AudioStreamPlayer
 
+func _ready() -> void:
+	bgm_player = AudioStreamPlayer.new()
+	bgm_player.name = "bgm_player"
+	add_child(bgm_player)
+	bgm_player.stream = load("res://bgm/reborn-battle-hybrid-cinematic-action-274988.mp3")
+	bgm_player.play()
+	
+	
 func init(
 	i_hud : Hud,
 	new_player_left_base: UnitBase,
