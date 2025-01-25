@@ -76,7 +76,7 @@ func _process(delta: float) -> void:
 	timer += delta
 	if right_spawn_timer.is_stopped() and autospawn_right_player:
 		right_spawn_timer.start()
-		player_right_base.spawn_unit(UnitType.SHOOTER)
+		player_right_base.spawn_unit(UnitType.SHOOTER, player_right_base.generate_spawn_target())
 
 	if hud:
 		hud.update_values(timer, score)
@@ -106,17 +106,18 @@ func bubble_to_unit(bubble_type: BubbleType) -> UnitType:
 
 func bubble_popped(bubble: Bubble) -> void:
 	increment_score(bubble.side, 1)
-	var bonus = BubbleBonus.spawn(bullet_manager, bubble)
+	var spawn_target = player_left_base.generate_spawn_target() if bubble.side == PlayerSide.PLAYER_LEFT else player_right_base.generate_spawn_target()
+	var bonus = BubbleBonus.spawn(bullet_manager, bubble, spawn_target)
 	var unit_type = bubble_to_unit(bubble.type)
 	var side = bubble.side
-	bonus.on_bonus_granted.connect(func (): spawn_unit_for(side, unit_type))
+	bonus.on_bonus_granted.connect(func (): spawn_unit_for(side, unit_type, spawn_target))
 
 
-func spawn_unit_for(side:PlayerSide, unit_type:UnitType) -> void:
+func spawn_unit_for(side:PlayerSide, unit_type:UnitType, spawn_target: Vector2) -> void:
 	if side == SIDE_LEFT:
-		player_left_base.spawn_unit(unit_type)
+		player_left_base.spawn_unit(unit_type, spawn_target)
 	else :
-		player_right_base.spawn_unit(unit_type)
+		player_right_base.spawn_unit(unit_type, spawn_target)
 
 
 func unit_died(unit:UnitShooter) -> void:

@@ -8,7 +8,10 @@ static var bonus_scene = load("res://objects/bubble/bubble_bonus_marker/bubble_b
 @onready var icon_bg : Sprite2D = $IconBG
 @onready var trail_pfx : GPUParticles2D = $TrailPfx
 
+@export var speed: float = 900
+
 var fired := false
+var target: Vector2
 
 signal on_bonus_granted()
 var player : GAME_STATE.PlayerSide
@@ -20,16 +23,17 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	var dir := 1 if player == GAME_STATE.PlayerSide.PLAYER_LEFT else -1
-	position.x -= delta * 900.0 * dir
-	if not fired and (global_position.x < -100 or global_position.x > (1980+100)):
+	if not fired and global_position.distance_to(target) < 10:
 		on_bonus_granted.emit()
 		fired = true
 		trail_pfx.emitting = false
 		get_tree().create_timer(0.5).timeout.connect(func (): queue_free())
+		return
+	
+	global_position = global_position.move_toward(target, speed * delta)
 
 
-static func spawn(parent:Node2D, bubble: Bubble) -> BubbleBonus:
+static func spawn(parent:Node2D, bubble: Bubble, target: Vector2) -> BubbleBonus:
 	var b = bonus_scene.instantiate() as BubbleBonus
 	parent.add_child(b)
 	b.global_position = bubble.global_position
@@ -39,4 +43,5 @@ static func spawn(parent:Node2D, bubble: Bubble) -> BubbleBonus:
 	b.icon.modulate = c
 	b.icon.texture = Bubble.icons[bubble.type]
 	b.icon_bg.texture = Bubble.icons[bubble.type]
+	b.target = target
 	return b

@@ -46,10 +46,13 @@ func handle_hit(_bullet: Bullet) -> void:
 	GAME_STATE.base_hit(self)
 
 
-func spawn_unit(unit_type: GAME_STATE.UnitType) -> void:
-	var spawn_position = Vector2(spawn_x, randf_range(spawn_y_start, spawn_y_end))
-	var destination = Vector2(target_x, spawn_position.y)
-	UnitShooter.spawn(unit_type, units_group, spawn_position, player, self, destination, other_base)
+func generate_spawn_target() -> Vector2:
+	return Vector2(spawn_x, randf_range(spawn_y_start, spawn_y_end))
+
+
+func spawn_unit(unit_type: GAME_STATE.UnitType, spawn_target: Vector2) -> void:
+	var destination = Vector2(target_x, spawn_target.y)
+	UnitShooter.spawn(unit_type, units_group, spawn_target, player, self, destination, other_base)
 
 
 func get_units() -> Array:
