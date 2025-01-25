@@ -61,6 +61,7 @@ static var icons = [icon_sword, icon_shield, icon_cannon]
 
 signal bonus_activated(BubbleType, BubbleContent)
 
+var replay_timers : Array[Timer] = [] 
 
 func _ready() -> void:
 	bgm_player = AudioStreamPlayer.new()
@@ -123,33 +124,55 @@ func _reload_scene():
 
 func reset():
 	in_replay_mode = false
+	clear_timers()
 	_reload_scene()
 
 
 func view_replay():
 	in_replay_mode = true
+	clear_timers()
 	_reload_scene()
 
 
 func _run_replay():
 	autospawn_right_player = false
 	spawn_bubbles = false
+	
 	for entry in replay_config.spawn_history:
 		var time = entry[0]
 		var side = entry[1]
 		var unit_type = entry[2]
 		var spawn_target = entry[3]
-		get_tree().create_timer(time).connect("timeout", func (): spawn_unit_for(side, unit_type, spawn_target))
+		var t = Timer.new()
+		t.one_shot = true
+		add_child(t)
+		replay_timers.append(t)
+		t.timeout.connect(spawn_unit_for.bind(side, unit_type, spawn_target))
+		t.start(time)
 	for entry in replay_config.click_history:
 		var time = entry[0]
 		var type = entry[1]
 		var side = entry[2]
 		var contents = entry[3]
 		var _position = entry[4]
+		var t = Timer.new()
+		t.one_shot = true
+		add_child(t)
+		replay_timers.append(t)
 		if type == BubbleType.UNIT:
-			get_tree().create_timer(time).connect("timeout", func (): increment_score(side, CONFIG.points_per_spawn()))
+			t.timeout.connect(increment_score.bind(side, CONFIG.points_per_spawn()))
+			t.start(time)
 		else:
-			get_tree().create_timer(time).connect("timeout", func (): process_bonus(type, contents))
+			t.timeout.connect(process_bonus.bind(type, contents))
+			t.start(time)
+
+
+func clear_timers():
+	for t in replay_timers:
+		if t and not t.is_stopped:
+			t.stop()
+		t.queue_free()
+	replay_timers = []
 
 
 func _clear_replay():
