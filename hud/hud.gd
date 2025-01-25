@@ -27,7 +27,7 @@ func _ready() -> void:
 	for url in credits_config.sfx:
 		credits_rich_text.text += "\n - [url=%s] %s [/url]" % [url, url]
 
-	update_autospawn_button()
+	refresh_debug_toggles()
 
 
 func _on_credits_text_meta_clicked(meta: Variant) -> void:
@@ -45,8 +45,9 @@ func update_values(timer : float, score: Array[int]) -> void:
 
 
 
-func update_autospawn_button() -> void:
+func refresh_debug_toggles() -> void:
 	$DebugMenu/AutoSpawnToggle.text = "Autospawn right player: %s" % GAME_STATE.autospawn_right_player
+	$DebugMenu/DeterministictUnitSpawnToggle.text = "Deterministic unit spawn: %s" % GAME_STATE.deterministic_unit_spawn
 
 
 func game_ended() -> void:
@@ -79,8 +80,13 @@ func _on_close_debug_menu_pressed() -> void:
 
 func _on_toggle_autospawn_button_pressed() -> void:
 	GAME_STATE.toggle_autospawn()
-	update_autospawn_button()
+	refresh_debug_toggles()
 
 
 func _on_view_replay_button_pressed() -> void:
 	GAME_STATE.view_replay()
+
+
+func _on_toggle_deterministic_unit_spawn_button_pressed() -> void:
+	GAME_STATE.toggle_deterministic_unit_spawn()
+	refresh_debug_toggles()

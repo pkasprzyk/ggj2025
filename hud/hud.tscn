@@ -173,6 +173,19 @@ grow_horizontal = 2
 theme_override_font_sizes/font_size = 50
 text = "Autospawn right player: true"
 
+[node name="DeterministictUnitSpawnToggle" type="Button" parent="DebugMenu"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -345.5
+offset_top = 111.0
+offset_right = 355.5
+offset_bottom = 188.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 50
+text = "Deterministic unit spawn: false"
+
 [node name="CloseDebugMenu" type="Button" parent="DebugMenu"]
 layout_mode = 1
 anchors_preset = 7
@@ -221,4 +234,5 @@ show_percentage = false
 [connection signal="meta_clicked" from="Credits/CreditsText" to="." method="_on_credits_text_meta_clicked"]
 [connection signal="pressed" from="Credits/CloseCredits" to="." method="_on_close_credits_pressed"]
 [connection signal="pressed" from="DebugMenu/AutoSpawnToggle" to="." method="_on_toggle_autospawn_button_pressed"]
+[connection signal="pressed" from="DebugMenu/DeterministictUnitSpawnToggle" to="." method="_on_toggle_deterministic_unit_spawn_button_pressed"]
 [connection signal="pressed" from="DebugMenu/CloseDebugMenu" to="." method="_on_close_debug_menu_pressed"]

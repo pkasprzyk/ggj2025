@@ -31,6 +31,7 @@ var player_right_base: UnitBase
 var bullet_manager: Node
 
 var autospawn_right_player: bool = true
+var deterministic_unit_spawn: bool = false
 var spawn_bubbles: bool
 var right_spawn_timer: Timer
 
@@ -147,6 +148,8 @@ func bubble_popped(bubble: Bubble) -> void:
 	increment_score(bubble.side, 1)
 	replay_config.click_history.append([timer, bubble.side, bubble.type, bubble.global_position])
 	var spawn_target = player_left_base.generate_spawn_target() if bubble.side == PlayerSide.PLAYER_LEFT else player_right_base.generate_spawn_target()
+	if deterministic_unit_spawn:
+		spawn_target.y = bubble.global_position.y
 	var bonus = BubbleBonus.spawn(bullet_manager, bubble, spawn_target)
 	var unit_type = bubble_to_unit(bubble.type)
 	var side = bubble.side
@@ -185,6 +188,10 @@ func increment_score(side: PlayerSide, value: int) -> void:
 
 func toggle_autospawn() -> void:
 	autospawn_right_player = not autospawn_right_player
+
+
+func toggle_deterministic_unit_spawn() -> void:
+	deterministic_unit_spawn = not deterministic_unit_spawn
 
 
 func get_player_color(side: PlayerSide) -> Color:
