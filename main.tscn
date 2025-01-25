@@ -133,6 +133,8 @@ shape = SubResource("RectangleShape2D_5c7yc")
 [node name="Marker2D" type="Marker2D" parent="BubbleSpawners/BubbleSpawner4/Area2D"]
 position = Vector2(-2106, -1086)
 
-[node name="HUD" parent="." instance=ExtResource("4_vi50i")]
-
 [node name="BulletManager" type="Node2D" parent="."]
+
+[node name="HUDCanvasGroup" type="CanvasLayer" parent="."]
+
+[node name="HUD" parent="HUDCanvasGroup" instance=ExtResource("4_vi50i")]
