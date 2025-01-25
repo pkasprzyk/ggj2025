@@ -58,7 +58,7 @@ func init(
 		new_bullet_manager: Node
 		) -> void:
 	hud = i_hud
-	var play_area = Rect2i(0, int(hud.size.y), 1920, 1080)
+	var play_area = Rect2i(0, int(hud.size.y) + 10, 1920, 1070)
 	player_left_base = new_player_left_base
 	player_left_base.init(PlayerSide.PLAYER_LEFT, play_area)
 	player_right_base = new_player_right_base

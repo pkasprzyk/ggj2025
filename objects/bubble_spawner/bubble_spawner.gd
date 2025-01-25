@@ -7,9 +7,12 @@ extends Node2D
 @export var max_bubbles: int = 10
 
 
+@onready var spawn_area_shape: CollisionShape2D = $Area2D/CollisionShape2D
+@onready var target_1: Node2D = $Area2D/Target1
+@onready var target_2: Node2D = $Area2D/Target2
+@onready var target_3: Node2D = $Area2D/Target3
+
 @onready var spawn_timer: Timer = $SpawnTimer
-@export var spawn_area_shape: CollisionShape2D
-@export var target : Node2D
 
 @export var rect_test : Rect2
 
@@ -40,6 +43,11 @@ func _spawn_bubble() -> void:
 	].pick_random()
 	bubble_instance.connect("tree_exiting", _on_bubble_destroyed)
 	add_child(bubble_instance)
+	var target = [
+		target_1,
+		target_2,
+		target_3,
+	].pick_random()
 	bubble_instance.initialize(_gen_random_pos(), target.global_position, side, bubble_type)
 	bubbles += 1
 

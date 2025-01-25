@@ -11,7 +11,8 @@ var target: Vector2 = Vector2.ZERO
 @export var  phase = 0
 @export var  speed = 100
 var scale_towards = 0.5 # influences moving towards target
-var scale_oscilation = 0.5 # influences oscillating
+var scale_oscilation = 1 # influences oscillating
+var critical_target_distance: float = 20 # distance to target to destroy bubble
 
 @onready var collider: CollisionShape2D = $Collider
 @onready var animated_sprite: AnimationPlayer = $AnimationPlayer
@@ -56,7 +57,7 @@ func _physics_process(delta: float) -> void:
 	global_position += scale_towards * normal_t * speed * delta
 	# perpendicular
 	global_position += scale_oscilation * normal_p * sin(phase)
-	if target_distance.length_squared() < 20 * 20:
+	if target_distance.length_squared() < critical_target_distance * critical_target_distance:
 		queue_free()
 
 

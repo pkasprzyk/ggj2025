@@ -79,10 +79,8 @@ position = Vector2(1848, 608)
 
 [node name="BubbleSpawners" type="Node2D" parent="."]
 
-[node name="BubbleSpawner" parent="BubbleSpawners" node_paths=PackedStringArray("spawn_area_shape", "target") instance=ExtResource("2_n4osd")]
+[node name="BubbleSpawner" parent="BubbleSpawners" instance=ExtResource("2_n4osd")]
 position = Vector2(852, 540)
-spawn_area_shape = NodePath("Area2D/CollisionShape2D")
-target = NodePath("Area2D/Marker2D")
 
 [node name="Area2D" type="Area2D" parent="BubbleSpawners/BubbleSpawner"]
 
@@ -90,13 +88,17 @@ target = NodePath("Area2D/Marker2D")
 position = Vector2(-519, -211)
 shape = SubResource("RectangleShape2D_5c7yc")
 
-[node name="Marker2D" type="Marker2D" parent="BubbleSpawners/BubbleSpawner/Area2D"]
+[node name="Target1" type="Marker2D" parent="BubbleSpawners/BubbleSpawner/Area2D"]
 position = Vector2(1067, 540)
 
-[node name="BubbleSpawner2" parent="BubbleSpawners" node_paths=PackedStringArray("spawn_area_shape", "target") instance=ExtResource("2_n4osd")]
+[node name="Target2" type="Marker2D" parent="BubbleSpawners/BubbleSpawner/Area2D"]
+position = Vector2(1068, -212)
+
+[node name="Target3" type="Marker2D" parent="BubbleSpawners/BubbleSpawner/Area2D"]
+position = Vector2(-508, 548)
+
+[node name="BubbleSpawner2" parent="BubbleSpawners" instance=ExtResource("2_n4osd")]
 position = Vector2(2107, 540)
-spawn_area_shape = NodePath("Area2D/CollisionShape2D")
-target = NodePath("Area2D/Marker2D")
 
 [node name="Area2D" type="Area2D" parent="BubbleSpawners/BubbleSpawner2"]
 
@@ -104,13 +106,17 @@ target = NodePath("Area2D/Marker2D")
 position = Vector2(-519, -213)
 shape = SubResource("RectangleShape2D_5c7yc")
 
-[node name="Marker2D" type="Marker2D" parent="BubbleSpawners/BubbleSpawner2/Area2D"]
+[node name="Target1" type="Marker2D" parent="BubbleSpawners/BubbleSpawner2/Area2D"]
 position = Vector2(-2106, 540)
 
-[node name="BubbleSpawner3" parent="BubbleSpawners" node_paths=PackedStringArray("spawn_area_shape", "target") instance=ExtResource("2_n4osd")]
+[node name="Target2" type="Marker2D" parent="BubbleSpawners/BubbleSpawner2/Area2D"]
+position = Vector2(-2099, -212)
+
+[node name="Target3" type="Marker2D" parent="BubbleSpawners/BubbleSpawner2/Area2D"]
+position = Vector2(-539, 548)
+
+[node name="BubbleSpawner3" parent="BubbleSpawners" instance=ExtResource("2_n4osd")]
 position = Vector2(852, 1210)
-spawn_area_shape = NodePath("Area2D/CollisionShape2D")
-target = NodePath("Area2D/Marker2D")
 
 [node name="Area2D" type="Area2D" parent="BubbleSpawners/BubbleSpawner3"]
 
@@ -118,13 +124,17 @@ target = NodePath("Area2D/Marker2D")
 position = Vector2(-521.5, -334)
 shape = SubResource("RectangleShape2D_5c7yc")
 
-[node name="Marker2D" type="Marker2D" parent="BubbleSpawners/BubbleSpawner3/Area2D"]
+[node name="Target1" type="Marker2D" parent="BubbleSpawners/BubbleSpawner3/Area2D"]
 position = Vector2(1067, -1086)
 
-[node name="BubbleSpawner4" parent="BubbleSpawners" node_paths=PackedStringArray("spawn_area_shape", "target") instance=ExtResource("2_n4osd")]
+[node name="Target2" type="Marker2D" parent="BubbleSpawners/BubbleSpawner3/Area2D"]
+position = Vector2(-492, -1082)
+
+[node name="Target3" type="Marker2D" parent="BubbleSpawners/BubbleSpawner3/Area2D"]
+position = Vector2(1060, -346)
+
+[node name="BubbleSpawner4" parent="BubbleSpawners" instance=ExtResource("2_n4osd")]
 position = Vector2(2107, 1210)
-spawn_area_shape = NodePath("Area2D/CollisionShape2D")
-target = NodePath("Area2D/Marker2D")
 
 [node name="Area2D" type="Area2D" parent="BubbleSpawners/BubbleSpawner4"]
 
@@ -132,8 +142,14 @@ target = NodePath("Area2D/Marker2D")
 position = Vector2(-521.5, -334)
 shape = SubResource("RectangleShape2D_5c7yc")
 
-[node name="Marker2D" type="Marker2D" parent="BubbleSpawners/BubbleSpawner4/Area2D"]
+[node name="Target1" type="Marker2D" parent="BubbleSpawners/BubbleSpawner4/Area2D"]
 position = Vector2(-2106, -1086)
+
+[node name="Target2" type="Marker2D" parent="BubbleSpawners/BubbleSpawner4/Area2D"]
+position = Vector2(-2099, -322)
+
+[node name="Target3" type="Marker2D" parent="BubbleSpawners/BubbleSpawner4/Area2D"]
+position = Vector2(-523, -1074)
 
 [node name="BulletManager" type="Node2D" parent="."]
 
