@@ -5,8 +5,7 @@ func _ready() -> void:
 	Input.emulate_touch_from_mouse = true
 	GAME_STATE.init(
 		$HUD,
-		$PlayerLeftBase,
-		$PlayerRightBase,
-		$PlayerRightSpawnTimer,
+		$PlayerBases/PlayerLeftBase,
+		$PlayerBases/PlayerRightBase,
 		0, 1920, 1080, 0,
 	)

@@ -27,6 +27,8 @@ func _ready() -> void:
 
 static func spawn(player: PlayerSide, new_base: UnitBase, new_target: Vector2, new_other_base: UnitBase) -> UnitShooter:
 	var unit = unit_scene.instantiate()
+	unit.name = "Shooter"+str(randi_range(0,9999999))
+
 	unit.base = new_base
 	unit.other_base = new_other_base
 	unit.target = new_target

@@ -18,7 +18,6 @@ func init(
 	i_hud : Hud,
 	new_player_left_base: UnitBase,
 	new_player_right_base: UnitBase,
-	new_right_spawn_timer: Timer,
 	viewport_top: float, viewport_right: float,
 	viewport_bottom: float,
 	viewport_left: float
@@ -28,9 +27,14 @@ func init(
 	player_left_base.init(viewport_left, viewport_top, viewport_bottom, viewport_right)
 	player_right_base = new_player_right_base
 	player_right_base.init(viewport_right, viewport_top, viewport_bottom, viewport_left)
-	right_spawn_timer = new_right_spawn_timer
 	player_left_base.set_other_base(player_right_base)
 	player_right_base.set_other_base(player_left_base)
+	
+	right_spawn_timer = Timer.new()
+	right_spawn_timer.wait_time = 1.0
+	right_spawn_timer.one_shot = true
+	right_spawn_timer.name = "right_spawn_timer"
+	get_tree().current_scene.add_child(right_spawn_timer)
 
 
 func _process(delta: float) -> void:
@@ -44,8 +48,8 @@ func _process(delta: float) -> void:
 
 	if timer < 0.0:
 		get_tree().paused = true
-		if hud:
-			hud.game_ended()
+		
+		hud.game_ended()
 
 
 func bubble_popped() -> void:

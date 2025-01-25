@@ -57,99 +57,80 @@ sources/0 = SubResource("TileSetAtlasSource_rmyoh")
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5c7yc"]
 size = Vector2(661, 404)
 
-[node name="Node2D" type="Node2D"]
+[node name="MainScene" type="Node2D"]
 script = ExtResource("1_mmle3")
 
-[node name="TileMapLayer" type="TileMapLayer" parent="."]
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(960, 540)
+
+[node name="Background" type="TileMapLayer" parent="."]
 modulate = Color(0.497474, 0.497474, 0.497474, 1)
 position = Vector2(0, -24)
 tile_map_data = PackedByteArray("AAAFAAMAAAAAAAAAAAAGAAMAAAAAAAAAAAAHAAMAAAAHAAAAAAAHAAQAAAAHAAAAAAAIAAMAAAAAAAIAAAAIAAIAAAAAAAIAAAAGAAIAAAAAAAAAAAAHAAIAAAAHAAAAAAAJAAIAAAAAAAIAAAAGAAQAAAAAAAAAAAAIAAQAAAAAAAIAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAABAAEAAAAAAAAAAAACAAEAAAAAAAAAAAADAAEAAAAAAAAAAAAEAAEAAAAAAAAAAAAFAAEAAAAAAAAAAAAGAAEAAAAAAAAAAAADAAIAAAAAAAAAAAACAAIAAAAAAAAAAAABAAIAAAAAAAAAAAAFAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAADAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAIAAAAAAAAAAAAEAAIAAAAAAAAAAAACAAMAAAAAAAAAAAABAAMAAAAAAAAAAAADAAMAAAAAAAAAAAAFAAIAAAAAAAAAAAAHAAEAAAAHAAAAAAAIAAEAAAAAAAIAAAAIAAAAAAAAAAIAAAAHAAAAAAAHAAAAAAAEAAMAAAAAAAAAAAADAAQAAAAAAAAAAAAJAAEAAAAAAAIAAAAKAAEAAAAAAAIAAAAFAAQAAAAAAAAAAAAEAAQAAAAAAAAAAAADAAUAAAAAAAAAAAACAAUAAAAAAAAAAAAGAAAAAAAAAAAAAAAJAAAAAAAAAAIAAAAKAAAAAAAAAAIAAAALAAAAAAAAAAIAAAAMAAAAAAAAAAIAAAANAAAAAAAAAAIAAAAOAAAAAAAAAAIAAAAOAAEAAAAAAAIAAAANAAEAAAAAAAIAAAAMAAEAAAAAAAIAAAALAAEAAAAAAAIAAAAMAAIAAAAAAAIAAAALAAIAAAAAAAIAAAAKAAIAAAAAAAIAAAANAAIAAAAAAAIAAAAOAAIAAAAAAAIAAAALAAMAAAAAAAIAAAAKAAMAAAAAAAIAAAAJAAMAAAAAAAIAAAAAAAMAAAAAAAAAAAAAAAQAAAAAAAAAAAABAAQAAAAAAAAAAAACAAQAAAAAAAAAAAAJAAQAAAAAAAIAAAAKAAQAAAAAAAIAAAALAAQAAAAAAAIAAAAMAAQAAAAAAAIAAAAMAAMAAAAAAAIAAAANAAMAAAAAAAIAAAANAAQAAAAAAAIAAAAOAAQAAAAAAAIAAAAOAAMAAAAAAAIAAAAOAAUAAAAAAAIAAAANAAUAAAAAAAIAAAABAAUAAAAAAAAAAAAAAAUAAAAAAAAAAAAEAAUAAAAAAAAAAAAFAAUAAAAAAAAAAAAGAAUAAAAAAAAAAAAIAAUAAAAAAAIAAAAJAAUAAAAAAAIAAAAKAAUAAAAAAAIAAAALAAUAAAAAAAIAAAAMAAUAAAAAAAIAAAABAAYAAAAAAAAAAAAAAAYAAAAAAAAAAAACAAYAAAAAAAAAAAADAAYAAAAAAAAAAAAEAAYAAAAAAAAAAAAFAAYAAAAAAAAAAAAGAAYAAAAAAAAAAAAIAAYAAAAAAAIAAAAJAAYAAAAAAAIAAAAKAAYAAAAAAAIAAAALAAYAAAAAAAIAAAAMAAYAAAAAAAIAAAANAAYAAAAAAAIAAAAOAAYAAAAAAAIAAAAOAAcAAAAAAAIAAAAOAAgAAAAAAAIAAAANAAgAAAAAAAIAAAAMAAgAAAAAAAIAAAAMAAcAAAAAAAIAAAALAAgAAAAAAAIAAAAKAAgAAAAAAAIAAAAJAAgAAAAAAAIAAAAIAAgAAAAAAAIAAAAGAAgAAAAAAAAAAAAFAAgAAAAAAAAAAAAEAAgAAAAAAAAAAAADAAgAAAAAAAAAAAACAAgAAAAAAAAAAAABAAgAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAcAAAAAAAAAAAABAAcAAAAAAAAAAAACAAcAAAAAAAAAAAADAAcAAAAAAAAAAAAEAAcAAAAAAAAAAAAFAAcAAAAAAAAAAAAGAAcAAAAAAAAAAAAIAAcAAAAAAAIAAAAJAAcAAAAAAAIAAAAKAAcAAAAAAAIAAAALAAcAAAAAAAIAAAANAAcAAAAAAAIAAAAHAAUAAAAHAAAAAAAHAAYAAAAHAAAAAAAHAAcAAAAHAAAAAAAHAAgAAAAHAAAAAAA=")
 tile_set = SubResource("TileSet_m3rmy")
 
-[node name="BubbleSpawner" parent="." node_paths=PackedStringArray("spawn_area_shape", "target") instance=ExtResource("2_n4osd")]
+[node name="PlayerBases" type="Node2D" parent="."]
+
+[node name="PlayerLeftBase" parent="PlayerBases" instance=ExtResource("4_78562")]
+
+[node name="PlayerRightBase" parent="PlayerBases" instance=ExtResource("4_78562")]
+
+[node name="BubbleSpawners" type="Node2D" parent="."]
+
+[node name="BubbleSpawner" parent="BubbleSpawners" node_paths=PackedStringArray("spawn_area_shape", "target") instance=ExtResource("2_n4osd")]
 position = Vector2(852, 540)
 spawn_area_shape = NodePath("Area2D/CollisionShape2D")
 target = NodePath("Area2D/Marker2D")
 
-[node name="Area2D" type="Area2D" parent="BubbleSpawner"]
+[node name="Area2D" type="Area2D" parent="BubbleSpawners/BubbleSpawner"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BubbleSpawner/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BubbleSpawners/BubbleSpawner/Area2D"]
 position = Vector2(-521.5, -334)
 shape = SubResource("RectangleShape2D_5c7yc")
 
-[node name="Marker2D" type="Marker2D" parent="BubbleSpawner/Area2D"]
+[node name="Marker2D" type="Marker2D" parent="BubbleSpawners/BubbleSpawner/Area2D"]
 position = Vector2(1067, 540)
 
-[node name="BubbleSpawner2" parent="." node_paths=PackedStringArray("spawn_area_shape", "target") instance=ExtResource("2_n4osd")]
+[node name="BubbleSpawner2" parent="BubbleSpawners" node_paths=PackedStringArray("spawn_area_shape", "target") instance=ExtResource("2_n4osd")]
 position = Vector2(2107, 540)
 spawn_area_shape = NodePath("Area2D/CollisionShape2D")
 target = NodePath("Area2D/Marker2D")
 
-[node name="Area2D" type="Area2D" parent="BubbleSpawner2"]
+[node name="Area2D" type="Area2D" parent="BubbleSpawners/BubbleSpawner2"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BubbleSpawner2/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BubbleSpawners/BubbleSpawner2/Area2D"]
 position = Vector2(-521.5, -334)
 shape = SubResource("RectangleShape2D_5c7yc")
 
-[node name="Marker2D" type="Marker2D" parent="BubbleSpawner2/Area2D"]
+[node name="Marker2D" type="Marker2D" parent="BubbleSpawners/BubbleSpawner2/Area2D"]
 position = Vector2(-2078, 507)
 
-[node name="BubbleSpawner3" parent="." node_paths=PackedStringArray("spawn_area_shape", "target") instance=ExtResource("2_n4osd")]
+[node name="BubbleSpawner3" parent="BubbleSpawners" node_paths=PackedStringArray("spawn_area_shape", "target") instance=ExtResource("2_n4osd")]
 position = Vector2(852, 1210)
 spawn_area_shape = NodePath("Area2D/CollisionShape2D")
 target = NodePath("Area2D/Marker2D")
 
-[node name="Area2D" type="Area2D" parent="BubbleSpawner3"]
+[node name="Area2D" type="Area2D" parent="BubbleSpawners/BubbleSpawner3"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BubbleSpawner3/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BubbleSpawners/BubbleSpawner3/Area2D"]
 position = Vector2(-521.5, -334)
 shape = SubResource("RectangleShape2D_5c7yc")
 
-[node name="Marker2D" type="Marker2D" parent="BubbleSpawner3/Area2D"]
+[node name="Marker2D" type="Marker2D" parent="BubbleSpawners/BubbleSpawner3/Area2D"]
 position = Vector2(1067, -1209)
 
-[node name="BubbleSpawner4" parent="." node_paths=PackedStringArray("spawn_area_shape", "target") instance=ExtResource("2_n4osd")]
+[node name="BubbleSpawner4" parent="BubbleSpawners" node_paths=PackedStringArray("spawn_area_shape", "target") instance=ExtResource("2_n4osd")]
 position = Vector2(2107, 1210)
 spawn_area_shape = NodePath("Area2D/CollisionShape2D")
 target = NodePath("Area2D/Marker2D")
 
-[node name="Area2D" type="Area2D" parent="BubbleSpawner4"]
+[node name="Area2D" type="Area2D" parent="BubbleSpawners/BubbleSpawner4"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BubbleSpawner4/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BubbleSpawners/BubbleSpawner4/Area2D"]
 position = Vector2(-521.5, -334)
 shape = SubResource("RectangleShape2D_5c7yc")
 
-[node name="Marker2D" type="Marker2D" parent="BubbleSpawner4/Area2D"]
+[node name="Marker2D" type="Marker2D" parent="BubbleSpawners/BubbleSpawner4/Area2D"]
 position = Vector2(-2107, -1210)
 
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(960, 540)
-
-[node name="Polygon2D" type="Polygon2D" parent="."]
-position = Vector2(0, 251)
-color = Color(0, 0, 0, 1)
-polygon = PackedVector2Array(0, -251, 185, -251, 24, -223, 0, -161)
-
-[node name="Polygon2D2" type="Polygon2D" parent="."]
-position = Vector2(1379, 464)
-color = Color(0, 0, 0, 1)
-polygon = PackedVector2Array(80, -464, 541, -464, 541, -286, 472, -402)
-
-[node name="Polygon2D3" type="Polygon2D" parent="."]
-position = Vector2(1376, 1038)
-color = Color(0, 0, 0, 1)
-polygon = PackedVector2Array(544, -183, 544, 42, 75, 41, 493, -5)
-
-[node name="Polygon2D4" type="Polygon2D" parent="."]
-position = Vector2(387, 1042)
-color = Color(0, 0, 0, 1)
-polygon = PackedVector2Array(-387, -226, -266, -59, 185, 38, -387, 38)
-
 [node name="HUD" parent="." instance=ExtResource("4_vi50i")]
-
-[node name="PlayerLeftBase" parent="." instance=ExtResource("4_78562")]
-
-[node name="PlayerRightBase" parent="." instance=ExtResource("4_78562")]
-
-[node name="PlayerRightSpawnTimer" type="Timer" parent="."]
-one_shot = true
