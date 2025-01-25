@@ -59,8 +59,8 @@ func _cohesion_rule(all_units) -> Vector2:
 	return (perceived_centre - position) / 10
 	
 
-func _seperation_rule(all_units) -> Vector2:
-	var seperation_vec: Vector2
+func _separation_rule(all_units) -> Vector2:
+	var separation_vec: Vector2
 
 	if all_units.size() == 1:
 		return Vector2.ZERO
@@ -68,9 +68,9 @@ func _seperation_rule(all_units) -> Vector2:
 	for other_unit in all_units:
 		if self != other_unit:
 			if (other_unit.position - position).length() < separation_distance:
-				seperation_vec = seperation_vec - (other_unit.position - position)
+				separation_vec = separation_vec - (other_unit.position - position)
 	
-	return seperation_vec
+	return separation_vec
 	
 func _allignment_rule(all_units) -> Vector2:
 	var perceived_velocity: Vector2
@@ -92,7 +92,7 @@ func _physics_process(delta: float) -> void:
 	var enemy_units = other_base.get_units()
 	var new_velocity = (target - global_position).normalized() * speed / 2
 	var cohesion_vec: Vector2 = _cohesion_rule(friendly_units)
-	var seperation_vec: Vector2 = _seperation_rule(friendly_units + enemy_units)
+	var seperation_vec: Vector2 = _separation_rule(friendly_units + enemy_units)
 	var allignment_vec: Vector2 = _allignment_rule(friendly_units)
 	new_velocity = new_velocity + cohesion_vec + allignment_vec + seperation_vec
 	velocity = new_velocity.normalized() * speed
