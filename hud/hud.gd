@@ -9,3 +9,7 @@ func update_values(timer : float, score: int) -> void:
 
 func game_ended() -> void:
 	score_label.text += "\n GAME OVER"
+
+
+func _on_button_pressed() -> void:
+	GAME_STATE.reset()

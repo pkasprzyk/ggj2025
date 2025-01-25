@@ -3,9 +3,10 @@ extends Node
 
 # global singleton GAME_STATE
 
+const MATCH_TIME = 0.5 * 60.0
 
 @onready var score: int = 0
-var timer := 1.5 * 60.0
+var timer := MATCH_TIME
 
 var hud: Hud
 var player_left_base: UnitBase
@@ -51,6 +52,10 @@ func _process(delta: float) -> void:
 		
 		hud.game_ended()
 
+func reset():
+	get_tree().paused = false
+	get_tree().change_scene_to_file("res://main.tscn")
+	timer = MATCH_TIME
 
 func bubble_popped() -> void:
 	increment_score(1)
