@@ -22,13 +22,6 @@ var critical_target_distance: float = 20 # distance to target to destroy bubble
 @onready var icon : Sprite2D = $IconBG/Icon
 
 
-static var icon_shield = load("res://icons/IconGodotNode/node/icon_shield.png")
-static var icon_sword = load("res://icons/IconGodotNode/node/icon_sword.png")
-static var icon_cannon = load("res://icons/IconGodotNode/node/canon_2.png")
-
-static var icons = [icon_sword, icon_shield, icon_cannon]
-
-
 static var pop_scene = load("res://objects/bubble/bubble_pop/bubble_pop.tscn")
 
 
@@ -45,8 +38,8 @@ func _initialize_common(start_pos: Vector2, new_target: Vector2, new_type: GAME_
 	contents = new_contents
 	global_position = start_pos
 	target = new_target
-	icon.texture = icons[contents]
-	icon_bg.texture = icons[contents]
+	icon.texture = GAME_STATE.get_icon_for(contents)
+	icon_bg.texture = GAME_STATE.get_icon_for(contents)
 
 
 func initialize_unit(start_pos: Vector2, new_target: Vector2, new_side: GAME_STATE.PlayerSide, new_contents: GAME_STATE.BubbleContent) -> void:
@@ -79,8 +72,8 @@ func _physics_process(delta: float) -> void:
 			type == GAME_STATE.BubbleType.UNIT and change_time <= 0:
 		change_time += CONFIG.change_bubble_types_period()
 		contents = GAME_STATE.next_content(contents)
-		icon.texture = icons[contents]
-		icon_bg.texture = icons[contents]
+		icon.texture = GAME_STATE.get_icon_for(contents)
+		icon_bg.texture = GAME_STATE.get_icon_for(contents)
 
 
 func _on_input_event(_viewport:Node, event:InputEvent, _shape_idx:int) -> void:

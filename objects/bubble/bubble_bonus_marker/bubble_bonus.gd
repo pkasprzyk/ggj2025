@@ -42,7 +42,7 @@ static func spawn(parent:Node2D, bubble: Bubble, new_target: Vector2) -> BubbleB
 	var c = GAME_STATE.get_player_color(b.player)
 	b.trail_pfx.modulate = c
 	b.icon.modulate = c
-	b.icon.texture = Bubble.icons[bubble.contents]
-	b.icon_bg.texture = Bubble.icons[bubble.contents]
+	b.icon.texture = GAME_STATE.get_icon_for(bubble.contents)
+	b.icon_bg.texture = GAME_STATE.get_icon_for(bubble.contents)
 	b.target = new_target
 	return b
