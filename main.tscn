@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=4 uid="uid://dgdqtydil5rj8"]
+[gd_scene load_steps=9 format=4 uid="uid://dgdqtydil5rj8"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_mmle3"]
 [ext_resource type="PackedScene" uid="uid://7m54yhh1iwlb" path="res://objects/bubble_spawner/bubble_spawner.tscn" id="2_n4osd"]
 [ext_resource type="Texture2D" uid="uid://d4hnr3kdyyf5g" path="res://background/terrainTiles_retina.png" id="2_pedbq"]
 [ext_resource type="PackedScene" uid="uid://ctjnx6oo5ch47" path="res://objects/unit_base/unit_base.tscn" id="4_78562"]
+[ext_resource type="PackedScene" uid="uid://ukm7x4tnv1xr" path="res://hud/hud.tscn" id="4_vi50i"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rmyoh"]
 texture = ExtResource("2_pedbq")
@@ -144,25 +145,7 @@ position = Vector2(387, 1042)
 color = Color(0, 0, 0, 1)
 polygon = PackedVector2Array(-387, -226, -266, -59, 185, 38, -387, 38)
 
-[node name="HUD" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_left = 1.0
-offset_top = 1.0
-offset_right = 1919.0
-offset_bottom = 90.0
-
-[node name="ScoreLabel" type="Label" parent="HUD"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -959.0
-offset_top = -1.0
-offset_right = 959.0
-offset_bottom = 88.0
-grow_horizontal = 2
-theme_override_font_sizes/font_size = 40
+[node name="HUD" parent="." instance=ExtResource("4_vi50i")]
 
 [node name="PlayerLeftBase" parent="." instance=ExtResource("4_78562")]
 

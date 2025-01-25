@@ -7,7 +7,7 @@ extends Node
 @onready var score: int = 0
 var timer := 1.5 * 60.0
 
-var score_label: Label
+var hud: Hud
 var player_left_base: UnitBase
 var player_right_base: UnitBase
 
@@ -15,7 +15,7 @@ var right_spawn_timer: Timer
 
 
 func init(
-	new_score_label: Label,
+	i_hud : Hud,
 	new_player_left_base: UnitBase,
 	new_player_right_base: UnitBase,
 	new_right_spawn_timer: Timer,
@@ -23,7 +23,7 @@ func init(
 	viewport_bottom: float,
 	viewport_left: float
 ) -> void:
-	score_label = new_score_label
+	hud = i_hud
 	player_left_base = new_player_left_base
 	player_left_base.init(viewport_left, viewport_top, viewport_bottom, viewport_right)
 	player_right_base = new_player_right_base
@@ -34,17 +34,18 @@ func init(
 
 
 func _process(delta: float) -> void:
-	if not score_label:
-		return
 	timer -= delta
-	score_label.text = "Time %2d:%02d - Score: %s" % [int(timer) / 60, int(timer) % 60, score]
 	if right_spawn_timer.is_stopped():
 		right_spawn_timer.start()
 		player_right_base.spawn_unit(UnitShooter.PlayerSide.PLAYER_RIGHT)
 
+	if hud:
+		hud.update_values(timer, score)
+
 	if timer < 0.0:
 		get_tree().paused = true
-		score_label.text += "\n GAME OVER"
+		if hud:
+			hud.game_ended()
 
 
 func bubble_popped() -> void:
