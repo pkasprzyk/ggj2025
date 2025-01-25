@@ -19,12 +19,11 @@ var scale_oscilation = 0.5 # influences oscillating
 @onready var icon : Sprite2D = $Bubbles/IconBG/Icon
 
 
-
 static var icon_shield = load("res://icons/IconGodotNode/node/icon_shield.png")
 static var icon_sword = load("res://icons/IconGodotNode/node/icon_sword.png")
 static var icon_cannon = load("res://icons/IconGodotNode/node/canon_2.png")
 
-static var icons = [icon_shield, icon_sword, icon_cannon]
+static var icons = [icon_sword, icon_shield, icon_cannon]
 
 
 static var pop_scene = load("res://objects/bubble/bubble_pop/bubble_pop.tscn")

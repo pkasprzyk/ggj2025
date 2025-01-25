@@ -1,11 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://pwm6l2tln5xx"]
+[gd_scene load_steps=8 format=3 uid="uid://pw7trqcfvf5d"]
 
-[ext_resource type="Script" path="res://objects/unit_shooter/unit_shooter.gd" id="1_twmya"]
-[ext_resource type="Texture2D" uid="uid://cg8e1nu62mf6n" path="res://objects/unit_shooter/manBlue_machine.png" id="2_c7sij"]
-[ext_resource type="Texture2D" uid="uid://bsmdoobq1iafs" path="res://objects/unit_shooter/shotLarge.png" id="3_jxddn"]
+[ext_resource type="Script" path="res://objects/unit_shooter/unit_shooter.gd" id="1_8ax5n"]
+[ext_resource type="Texture2D" uid="uid://biaqpt8uo05ap" path="res://objects/unit_shooter/tank_dark.png" id="2_0ufwv"]
+[ext_resource type="Texture2D" uid="uid://bsmdoobq1iafs" path="res://objects/unit_shooter/shotLarge.png" id="3_1heab"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_85p5x"]
-size = Vector2(32, 48)
+size = Vector2(54, 60)
 
 [sub_resource type="Animation" id="Animation_5081w"]
 length = 0.001
@@ -45,30 +45,34 @@ _data = {
 }
 
 [node name="UnitShooter" type="Node2D"]
-script = ExtResource("1_twmya")
+script = ExtResource("1_8ax5n")
 
 [node name="Area2D" type="Area2D" parent="."]
 position = Vector2(16, 16)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(-24, -16)
+position = Vector2(-20, -16)
 shape = SubResource("RectangleShape2D_85p5x")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_c7sij")
+position = Vector2(-5.96046e-08, -1.42109e-14)
+rotation = -1.5708
+scale = Vector2(1.4036, 1.4036)
+texture = ExtResource("2_0ufwv")
 
 [node name="ShootingTimer" type="Timer" parent="."]
 wait_time = 3.0
 one_shot = true
 
 [node name="BarrelTip" type="Marker2D" parent="."]
-position = Vector2(24, 8)
+position = Vector2(37, -1)
 
 [node name="ShotLarge" type="Sprite2D" parent="."]
 visible = false
-position = Vector2(38, 10)
+position = Vector2(54, -1)
 rotation = 1.5708
-texture = ExtResource("3_jxddn")
+scale = Vector2(1.47676, 1.47676)
+texture = ExtResource("3_1heab")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

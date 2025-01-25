@@ -1,8 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://pwm6l2tln5xx"]
+[gd_scene load_steps=8 format=3 uid="uid://lcjyxnbr11ku"]
 
-[ext_resource type="Script" path="res://objects/unit_shooter/unit_shooter.gd" id="1_twmya"]
-[ext_resource type="Texture2D" uid="uid://cg8e1nu62mf6n" path="res://objects/unit_shooter/manBlue_machine.png" id="2_c7sij"]
-[ext_resource type="Texture2D" uid="uid://bsmdoobq1iafs" path="res://objects/unit_shooter/shotLarge.png" id="3_jxddn"]
+[ext_resource type="Script" path="res://objects/unit_shooter/unit_shooter.gd" id="1_dhmrr"]
+[ext_resource type="Texture2D" uid="uid://cg8e1nu62mf6n" path="res://objects/unit_shooter/manBlue_machine.png" id="2_opi23"]
+[ext_resource type="Texture2D" uid="uid://bsmdoobq1iafs" path="res://objects/unit_shooter/shotLarge.png" id="3_yu5eu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_85p5x"]
 size = Vector2(32, 48)
@@ -45,7 +45,7 @@ _data = {
 }
 
 [node name="UnitShooter" type="Node2D"]
-script = ExtResource("1_twmya")
+script = ExtResource("1_dhmrr")
 
 [node name="Area2D" type="Area2D" parent="."]
 position = Vector2(16, 16)
@@ -55,7 +55,7 @@ position = Vector2(-24, -16)
 shape = SubResource("RectangleShape2D_85p5x")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_c7sij")
+texture = ExtResource("2_opi23")
 
 [node name="ShootingTimer" type="Timer" parent="."]
 wait_time = 3.0
@@ -68,9 +68,13 @@ position = Vector2(24, 8)
 visible = false
 position = Vector2(38, 10)
 rotation = 1.5708
-texture = ExtResource("3_jxddn")
+texture = ExtResource("3_yu5eu")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_5mray")
 }
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-40, 13, 22.6368, 14.7161, 33, 17, 33, 1, 22, 4, -40, 4)

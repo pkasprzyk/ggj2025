@@ -11,8 +11,11 @@ var base: UnitBase
 var other_base: UnitBase
 var velocity: Vector2 = Vector2.ZERO
 
-
-static var unit_scene: PackedScene = load("res://objects/unit_shooter/unit_shooter.tscn")
+static var unit_type_to_scene: Dictionary = {
+	GAME_STATE.UnitType.SHOOTER: load("res://objects/unit_shooter/unit_shooter.tscn"),
+	GAME_STATE.UnitType.TANK: load("res://objects/unit_shooter/unit_tank.tscn"),
+	GAME_STATE.UnitType.BAZOOKA: load("res://objects/unit_shooter/unit_bazooka.tscn"),
+}
 
 @onready var shooting_timer: Timer = $ShootingTimer
 @onready var sprite: Sprite2D = $Sprite2D
@@ -20,12 +23,24 @@ static var unit_scene: PackedScene = load("res://objects/unit_shooter/unit_shoot
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 
-static func spawn(parent: Node, spawn_point: Vector2, player: GAME_STATE.PlayerSide, new_base: UnitBase, new_target: Vector2, new_other_base: UnitBase) -> UnitShooter:
+static func spawn(
+		unit_type: GAME_STATE.UnitType,
+		parent: Node,
+		spawn_position: Vector2,
+		player: GAME_STATE.PlayerSide,
+		new_base: UnitBase,
+		new_target: Vector2,
+		new_other_base: UnitBase) -> UnitShooter:
+
+	var unit_scene = unit_type_to_scene[unit_type] as PackedScene
+	print_debug("SPAWN %s %s %s"%[player, unit_type, unit_scene.resource_path])
+	var spawned_unit = unit_scene.instantiate() as UnitShooter
+
 	var unit = unit_scene.instantiate()
 	unit.name = "Shooter"+str(randi_range(0,9999999))
 	parent.add_child(unit)
 
-	unit.global_position = spawn_point
+	unit.global_position = spawn_position
 	unit.base = new_base
 	unit.other_base = new_other_base
 	unit.target = new_target
@@ -115,7 +130,7 @@ func _physics_process(delta: float) -> void:
 		_come_closer(delta)
 
 
-func handle_hit() -> void:
+func handle_hit(bullet: Bullet) -> void:
 	queue_free()
 
 
