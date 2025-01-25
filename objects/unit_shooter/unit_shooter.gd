@@ -8,6 +8,7 @@ class_name UnitShooter
 @export var speed: float = 100.0
 @export var separation_distance: float = 50.0
 @export var shooting_distance: float = 500.0
+@export var rotation_speed: float = 0.05  # radians per tick
 
 var type : GAME_STATE.UnitType
 
@@ -51,6 +52,7 @@ static func spawn(
 	unit.other_base = new_other_base
 	unit.target = new_target
 	unit.sprite.modulate = GAME_STATE.get_player_color(new_player)
+	unit.look_at(unit.target)
 	return unit
 
 func get_velocity() -> Vector2:
@@ -68,9 +70,9 @@ func _cohesion_rule(all_units) -> Vector2:
 			perceived_centre = perceived_centre + position
 	
 	perceived_centre = perceived_centre / (all_units.size() - 1)
-	
+
 	return (perceived_centre - position) / 10
-	
+
 
 func _separation_rule(all_units) -> Vector2:
 	var separation_vec: Vector2
@@ -115,6 +117,15 @@ func find_closest_enemy(all_units):
 	return [closest_enemy, closest_distance]
 
 
+func _rotate_clamped(new_velocity: Vector2) -> Vector2:
+	var angle = new_velocity.angle_to(velocity)
+	if abs(angle) > rotation_speed:
+		angle = angle - rotation_speed if angle > 0 else angle + rotation_speed
+		new_velocity = new_velocity.rotated(angle)
+	look_at(global_position + new_velocity)
+	return new_velocity
+
+
 func _come_closer(delta: float) -> void:
 	var friendly_units = base.get_units()
 	var enemy_units = other_base.get_units()
@@ -123,8 +134,8 @@ func _come_closer(delta: float) -> void:
 	var seperation_vec: Vector2 = _separation_rule(friendly_units + enemy_units)
 	var allignment_vec: Vector2 = _allignment_rule(friendly_units)
 	new_velocity = new_velocity + cohesion_vec + allignment_vec + seperation_vec
+	new_velocity = _rotate_clamped(new_velocity)
 	velocity = new_velocity.normalized() * speed
-	look_at(global_position + velocity)
 	global_position += velocity * delta
 
 
@@ -134,7 +145,7 @@ func _physics_process(delta: float) -> void:
 	var distance = closest[1]
 	if distance < shooting_distance:
 		velocity = (closest_enemy.global_position - global_position).normalized() * speed
-		look_at(closest_enemy.global_position)
+		velocity = _rotate_clamped(velocity)
 		try_shoot()
 	else:
 		_come_closer(delta)
