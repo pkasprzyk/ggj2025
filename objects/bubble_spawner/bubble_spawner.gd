@@ -14,7 +14,6 @@ extends Node2D
 @export var rect_test : Rect2
 
 
-var active: bool = true
 var bubbles: int = 0
 
 
@@ -49,6 +48,6 @@ func _on_bubble_destroyed() -> void:
 	bubbles -= 1
 
 func _physics_process(_delta: float) -> void:
-	if spawn_timer.is_stopped() and active and bubbles < max_bubbles:
+	if GAME_STATE.spawn_bubbles and spawn_timer.is_stopped() and bubbles < max_bubbles:
 		_spawn_bubble()
 		spawn_timer.start()

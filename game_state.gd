@@ -31,9 +31,15 @@ var player_right_base: UnitBase
 var bullet_manager: Node
 
 var autospawn_right_player: bool = true
+var spawn_bubbles: bool
 var right_spawn_timer: Timer
 
 var bgm_player : AudioStreamPlayer
+
+var in_replay_mode = false
+
+
+static var replay_config : ReplayConfig = ReplayConfig.new()
 
 
 func _ready() -> void:
@@ -67,6 +73,10 @@ func init(
 	get_tree().current_scene.add_child(right_spawn_timer)
 
 	reset_values()
+	if in_replay_mode:
+		_run_replay()
+	else:
+		_clear_replay()
 
 
 func _process(delta: float) -> void:
@@ -76,21 +86,50 @@ func _process(delta: float) -> void:
 	timer += delta
 	if right_spawn_timer.is_stopped() and autospawn_right_player:
 		right_spawn_timer.start()
-		player_right_base.spawn_unit(UnitType.SHOOTER, player_right_base.generate_spawn_target())
+		spawn_unit_for(PlayerSide.PLAYER_RIGHT, UnitType.SHOOTER, player_right_base.generate_spawn_target())
 
 	if hud:
 		hud.update_values(timer, score)
 
-func reset():
+
+func _reload_scene():
 	get_tree().paused = false
-	get_tree().change_scene_to_file("res://main.tscn")
-	reset_values()
+	get_tree().reload_current_scene()
+
+
+func reset():
+	in_replay_mode = false
+	_reload_scene()
+
+
+func view_replay():
+	in_replay_mode = true
+	_reload_scene()
+
+
+func _run_replay():
+	autospawn_right_player = false
+	spawn_bubbles = false
+	for entry in replay_config.spawn_history:
+		var time = entry[0]
+		var side = entry[1]
+		var unit_type = entry[2]
+		var spawn_target = entry[3]
+		get_tree().create_timer(time).connect("timeout", func (): spawn_unit_for(side, unit_type, spawn_target))
+	for entry in replay_config.click_history:
+		var time = entry[0]
+		var side = entry[1]
+		get_tree().create_timer(time).connect("timeout", func (): increment_score(side, 1))
+
+func _clear_replay():
+	replay_config.clear()
 
 
 func reset_values():
 	timer = 0.0
 	score = [0,0]
 	game_ended = false
+	spawn_bubbles = true
 
 
 func bubble_to_unit(bubble_type: BubbleType) -> UnitType:
@@ -106,6 +145,7 @@ func bubble_to_unit(bubble_type: BubbleType) -> UnitType:
 
 func bubble_popped(bubble: Bubble) -> void:
 	increment_score(bubble.side, 1)
+	replay_config.click_history.append([timer, bubble.side, bubble.type, bubble.global_position])
 	var spawn_target = player_left_base.generate_spawn_target() if bubble.side == PlayerSide.PLAYER_LEFT else player_right_base.generate_spawn_target()
 	var bonus = BubbleBonus.spawn(bullet_manager, bubble, spawn_target)
 	var unit_type = bubble_to_unit(bubble.type)
@@ -114,7 +154,8 @@ func bubble_popped(bubble: Bubble) -> void:
 
 
 func spawn_unit_for(side:PlayerSide, unit_type:UnitType, spawn_target: Vector2) -> void:
-	if side == SIDE_LEFT:
+	replay_config.spawn_history.append([timer, side, unit_type, spawn_target])
+	if side == PlayerSide.PLAYER_LEFT:
 		player_left_base.spawn_unit(unit_type, spawn_target)
 	else :
 		player_right_base.spawn_unit(unit_type, spawn_target)

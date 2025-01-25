@@ -62,8 +62,8 @@ text = "Debug"
 visible = false
 layout_mode = 0
 offset_top = 481.0
-offset_right = 1917.0
-offset_bottom = 612.0
+offset_right = 1914.0
+offset_bottom = 723.0
 color = Color(0, 0, 0, 0.188235)
 
 [node name="ScoreLabel" type="RichTextLabel" parent="GameEnd"]
@@ -73,16 +73,29 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -958.5
-offset_top = -27.5
-offset_right = 961.5
-offset_bottom = 32.5
+offset_left = -956.0
+offset_top = -80.0
+offset_right = 964.0
+offset_bottom = -20.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/normal_font_size = 50
 bbcode_enabled = true
 text = "[center]GAME OVER[/center]"
+
+[node name="ViewReplayButton" type="Button" parent="GameEnd"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -346.5
+offset_top = 131.0
+offset_right = 354.5
+offset_bottom = 208.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 50
+text = "View replay"
 
 [node name="Credits" type="ColorRect" parent="."]
 visible = false
@@ -204,6 +217,7 @@ show_percentage = false
 [connection signal="pressed" from="TopBarBG/TopBar/CreditsButton" to="." method="_on_credits_button_pressed"]
 [connection signal="pressed" from="TopBarBG/TopBar/ResetButton" to="." method="_on_reset_button_pressed"]
 [connection signal="pressed" from="TopBarBG/TopBar/DebugMenuButton" to="." method="_on_debug_menu_button_pressed"]
+[connection signal="pressed" from="GameEnd/ViewReplayButton" to="." method="_on_view_replay_button_pressed"]
 [connection signal="meta_clicked" from="Credits/CreditsText" to="." method="_on_credits_text_meta_clicked"]
 [connection signal="pressed" from="Credits/CloseCredits" to="." method="_on_close_credits_pressed"]
 [connection signal="pressed" from="DebugMenu/AutoSpawnToggle" to="." method="_on_toggle_autospawn_button_pressed"]

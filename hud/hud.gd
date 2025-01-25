@@ -80,3 +80,7 @@ func _on_close_debug_menu_pressed() -> void:
 func _on_toggle_autospawn_button_pressed() -> void:
 	GAME_STATE.toggle_autospawn()
 	update_autospawn_button()
+
+
+func _on_view_replay_button_pressed() -> void:
+	GAME_STATE.view_replay()
