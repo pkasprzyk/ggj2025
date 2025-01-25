@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="CreditsConfig" load_steps=2 format=3 uid="uid://8iyjti5ncguk"]
+
+[ext_resource type="Script" path="res://config/credits_config.gd" id="1_16p8j"]
+
+[resource]
+script = ExtResource("1_16p8j")
+external_credits = Array[String](["https://cassala.itch.io/bubble-sprites", "deasdas"])
