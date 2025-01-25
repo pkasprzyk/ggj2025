@@ -237,11 +237,13 @@ func powerup_spawned() -> void:
 	power_up_pending_content %= 3
 	power_up_count += 1
 
+func powerup_bubble_lost():
+	power_up_count -= 1
 
 func powerup_bubble_popped(bubble: Bubble) -> void:
 	replay_config.click_history.append([timer, bubble.type,  bubble.side, bubble.contents, bubble.global_position])
 	process_bonus(bubble.type, bubble.contents)
-	power_up_count = 0 # assumes bubble spawner destroys others
+	power_up_count = 0 # assumes bubble spawner destroys other powerups
 	power_up_cooldown_timestamp = timer + CONFIG.get_power_up_cooldown_s()
 
 

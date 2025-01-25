@@ -70,6 +70,8 @@ func _physics_process(delta: float) -> void:
 	# perpendicular
 	global_position += scale_oscilation * normal_p * sin(phase)
 	if target_distance.length_squared() < critical_target_distance * critical_target_distance:
+		if type ==  GAME_STATE.BubbleType.RUSH_POWERUP:
+			GAME_STATE.powerup_bubble_lost()
 		queue_free()
 		return
 	change_time -= delta
@@ -80,7 +82,6 @@ func _physics_process(delta: float) -> void:
 		contents %= GAME_STATE.BubbleContent.CANNON + 1
 		icon.texture = icons[contents]
 		icon_bg.texture = icons[contents]
-		
 
 
 func _on_input_event(_viewport:Node, event:InputEvent, _shape_idx:int) -> void:
