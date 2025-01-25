@@ -44,7 +44,6 @@ func update_values(timer : float, score: Array[int]) -> void:
 	progress_bar_r.value = r * 100
 
 
-
 func refresh_debug_toggles() -> void:
 	$DebugMenu/AutoSpawnToggle.text = "Autospawn right player: %s" % GAME_STATE.autospawn_right_player
 	$DebugMenu/DeterministictUnitSpawnToggle.text = "Deterministic unit spawn: %s" % GAME_STATE.deterministic_unit_spawn

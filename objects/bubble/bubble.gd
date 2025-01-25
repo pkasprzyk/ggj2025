@@ -8,6 +8,9 @@ var target: Vector2 = Vector2.ZERO
 @export var  side: GAME_STATE.PlayerSide
 @export var  contents: GAME_STATE.BubbleContent
 
+const CHANGE_TYPES = false
+const CHANGE_PERIOD =  0.75
+var change_time = CHANGE_PERIOD
 
 @export var  phase = 0
 @export var  speed = 100
@@ -69,6 +72,16 @@ func _physics_process(delta: float) -> void:
 	global_position += scale_oscilation * normal_p * sin(phase)
 	if target_distance.length_squared() < critical_target_distance * critical_target_distance:
 		queue_free()
+		return
+	change_time -= delta
+	if CHANGE_TYPES and \
+			type == GAME_STATE.BubbleType.UNIT and change_time <= 0:
+		change_time += CHANGE_PERIOD
+		contents += 1
+		contents %= GAME_STATE.BubbleContent.CANNON + 1
+		icon.texture = icons[contents]
+		icon_bg.texture = icons[contents]
+		
 
 
 func _on_input_event(_viewport:Node, event:InputEvent, _shape_idx:int) -> void:
