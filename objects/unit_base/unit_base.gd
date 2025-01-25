@@ -15,9 +15,12 @@ var player: GAME_STATE.PlayerSide
 
 var other_base: UnitBase
 
+var rush_expiry_timer: Timer
+var rush_time = 1.0
 
 func _ready() -> void:
-	pass # Replace with function body.
+	GAME_STATE.connect("bonus_activated", activate_bonus)
+	rush_expiry_timer = Timer.new()
 
 
 func init(
@@ -59,3 +62,23 @@ func spawn_unit(unit_type: GAME_STATE.UnitType, spawn_target: Vector2) -> void:
 
 func get_units() -> Array:
 	return units_group.get_children() + [self]
+
+
+func expire_bonus(type: GAME_STATE.BubbleType, unit_type: GAME_STATE.UnitType) -> void:
+	for unit in get_units():
+			if unit.type == unit_type:
+				unit.speed /= 5
+
+
+func activate_bonus(type: GAME_STATE.BubbleType, unit_type: GAME_STATE.UnitType) -> void:
+	if type == GAME_STATE.BubbleType.RUSH_POWERUP:
+		rush_expiry_timer.wait_time += rush_time
+		rush_expiry_timer.connect("timeout", func(): self.expire_bonus(type, unit_type))
+		if not rush_expiry_timer.is_stopped():
+			# reset the timer, cannot update time left
+			rush_expiry_timer.stop()
+		rush_expiry_timer.start()
+
+		for unit in get_units():
+			if unit as UnitShooter and unit.type == unit_type:
+				unit.speed *= 5

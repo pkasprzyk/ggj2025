@@ -81,6 +81,8 @@ position = Vector2(1848, 608)
 
 [node name="BubbleSpawner" parent="BubbleSpawners" instance=ExtResource("2_n4osd")]
 position = Vector2(852, 540)
+max_bubbles = 10
+rect_test = Rect2(0, 0, 0, 0)
 
 [node name="Area2D" type="Area2D" parent="BubbleSpawners/BubbleSpawner"]
 
@@ -99,6 +101,8 @@ position = Vector2(-508, 548)
 
 [node name="BubbleSpawner2" parent="BubbleSpawners" instance=ExtResource("2_n4osd")]
 position = Vector2(2107, 540)
+max_bubbles = 10
+rect_test = Rect2(0, 0, 0, 0)
 
 [node name="Area2D" type="Area2D" parent="BubbleSpawners/BubbleSpawner2"]
 
@@ -117,6 +121,8 @@ position = Vector2(-539, 548)
 
 [node name="BubbleSpawner3" parent="BubbleSpawners" instance=ExtResource("2_n4osd")]
 position = Vector2(852, 1210)
+max_bubbles = 10
+rect_test = Rect2(0, 0, 0, 0)
 
 [node name="Area2D" type="Area2D" parent="BubbleSpawners/BubbleSpawner3"]
 
@@ -135,6 +141,8 @@ position = Vector2(1060, -346)
 
 [node name="BubbleSpawner4" parent="BubbleSpawners" instance=ExtResource("2_n4osd")]
 position = Vector2(2107, 1210)
+max_bubbles = 10
+rect_test = Rect2(0, 0, 0, 0)
 
 [node name="Area2D" type="Area2D" parent="BubbleSpawners/BubbleSpawner4"]
 

@@ -5,6 +5,7 @@ extends Node2D
 
 @export var bubble: PackedScene
 @export var max_bubbles: int = 10
+@export var rush_powerup_chance: float = 0.05
 
 
 @onready var spawn_area_shape: CollisionShape2D = $Area2D/CollisionShape2D
@@ -32,23 +33,33 @@ func _gen_random_pos():
 
 func _spawn_bubble() -> void:
 	var bubble_instance = bubble.instantiate()
-	var side = [
-		GAME_STATE.PlayerSide.PLAYER_LEFT,
-		GAME_STATE.PlayerSide.PLAYER_RIGHT,
-	].pick_random()
-	var bubble_type = [
-		GAME_STATE.BubbleType.SWORD,
-		GAME_STATE.BubbleType.SHIELD,
-		GAME_STATE.BubbleType.CANNON,
-	].pick_random()
-	bubble_instance.connect("tree_exiting", _on_bubble_destroyed)
-	add_child(bubble_instance)
 	var target = [
 		target_1,
 		target_2,
 		target_3,
 	].pick_random()
-	bubble_instance.initialize(_gen_random_pos(), target.global_position, side, bubble_type)
+	var bubble_content = [
+		GAME_STATE.BubbleContent.SWORD,
+		GAME_STATE.BubbleContent.SHIELD,
+		GAME_STATE.BubbleContent.CANNON,
+	].pick_random()
+
+	bubble_instance.connect("tree_exiting", _on_bubble_destroyed)
+	add_child(bubble_instance)
+
+	var type
+	var side
+	if randf() <= rush_powerup_chance:
+		type = GAME_STATE.BubbleType.RUSH_POWERUP
+		bubble_instance.initialize_powerup(_gen_random_pos(), target.global_position, type, bubble_content)
+	else:
+		type = GAME_STATE.BubbleType.UNIT
+		side = [
+			GAME_STATE.PlayerSide.PLAYER_LEFT,
+			GAME_STATE.PlayerSide.PLAYER_RIGHT,
+		].pick_random()
+		bubble_instance.initialize_unit(_gen_random_pos(), target.global_position, type, side, bubble_content)
+
 	bubbles += 1
 
 

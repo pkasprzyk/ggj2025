@@ -2,12 +2,18 @@ extends Node
 
 # global singleton GAME_STATE
 
+enum BubbleType {
+	UNIT,
+	RUSH_POWERUP,
+}
+
+
 enum PlayerSide {
 	PLAYER_LEFT,
 	PLAYER_RIGHT,
 }
 
-enum BubbleType {
+enum BubbleContent {
 	SWORD,
 	SHIELD,
 	CANNON,
@@ -43,6 +49,9 @@ var in_replay_mode = false
 
 
 static var replay_config : ReplayConfig = ReplayConfig.new()
+
+
+signal bonus_activated(BubbleType, BubbleContent)
 
 
 func _ready() -> void:
@@ -121,8 +130,14 @@ func _run_replay():
 		get_tree().create_timer(time).connect("timeout", func (): spawn_unit_for(side, unit_type, spawn_target))
 	for entry in replay_config.click_history:
 		var time = entry[0]
-		var side = entry[1]
-		get_tree().create_timer(time).connect("timeout", func (): increment_score(side, 1))
+		var type = entry[1]
+		if type == BubbleType.UNIT:
+			var side = entry[2]
+			get_tree().create_timer(time).connect("timeout", func (): increment_score(side, 1))
+		else:
+			var contents = entry[3]
+			get_tree().create_timer(time).connect("timeout", func (): process_bonus(type, contents))
+
 
 func _clear_replay():
 	replay_config.clear()
@@ -135,13 +150,13 @@ func reset_values():
 	spawn_bubbles = true
 
 
-func bubble_to_unit(bubble_type: BubbleType) -> UnitType:
+func bubble_to_unit(bubble_type: BubbleContent) -> UnitType:
 	match bubble_type:
-		BubbleType.SWORD:
+		BubbleContent.SWORD:
 			return UnitType.SHOOTER
-		BubbleType.SHIELD:
+		BubbleContent.SHIELD:
 			return UnitType.TANK
-		BubbleType.CANNON:
+		BubbleContent.CANNON:
 			return UnitType.BAZOOKA
 	return UnitType.SHOOTER
 
@@ -154,16 +169,25 @@ func get_other_player(player: PlayerSide) -> PlayerSide:
 	return PlayerSide.PLAYER_RIGHT if player == PlayerSide.PLAYER_LEFT else PlayerSide.PLAYER_LEFT
 
 
-func bubble_popped(bubble: Bubble) -> void:
+func unit_bubble_popped(bubble: Bubble) -> void:
 	increment_score(bubble.side, 1)
-	replay_config.click_history.append([timer, bubble.side, bubble.type, bubble.global_position])
+	replay_config.click_history.append([timer, bubble.type, bubble.side, bubble.global_position])
 	var spawn_target = player_left_base.generate_spawn_target() if bubble.side == PlayerSide.PLAYER_LEFT else player_right_base.generate_spawn_target()
 	if deterministic_unit_spawn:
 		spawn_target.y = bubble.global_position.y
 	var bonus = BubbleBonus.spawn(bullet_manager, bubble, spawn_target)
-	var unit_type = bubble_to_unit(bubble.type)
+	var unit_type = bubble_to_unit(bubble.contents)
 	var side = bubble.side
 	bonus.on_bonus_granted.connect(func (): spawn_unit_for(side, unit_type, spawn_target))
+
+
+func powerup_bubble_popped(bubble: Bubble) -> void:
+	replay_config.click_history.append([timer, bubble.type, bubble.type, bubble.global_position])
+	process_bonus(bubble.type, bubble.contents)
+
+
+func process_bonus(type: BubbleType, contents: BubbleContent) -> void:
+	bonus_activated.emit(type, bubble_to_unit(contents))
 
 
 func spawn_unit_for(side:PlayerSide, unit_type:UnitType, spawn_target: Vector2) -> void:

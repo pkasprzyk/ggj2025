@@ -4,8 +4,9 @@ extends Node2D
 
 var target: Vector2 = Vector2.ZERO
 
-@export var  side: GAME_STATE.PlayerSide
 @export var  type: GAME_STATE.BubbleType
+@export var  side: GAME_STATE.PlayerSide
+@export var  contents: GAME_STATE.BubbleContent
 
 
 @export var  phase = 0
@@ -37,15 +38,24 @@ func _ready() -> void:
 	phase = randf_range(0, 2 * PI)
 
 
-func initialize(start_pos: Vector2, new_target: Vector2, new_side : GAME_STATE.PlayerSide, new_type : GAME_STATE.BubbleType) -> void:
-	side = new_side
+func _initialize_common(start_pos: Vector2, new_target: Vector2, new_type: GAME_STATE.BubbleType, new_contents: GAME_STATE.BubbleContent) -> void:
 	type = new_type
+	contents = new_contents
 	global_position = start_pos
 	target = new_target
-	icon.texture = icons[type]
-	icon_bg.texture = icons[type]
-	var color = GAME_STATE.get_player_color(side)
-	icon.modulate = color
+	icon.texture = icons[contents]
+	icon_bg.texture = icons[contents]
+
+
+func initialize_unit(start_pos: Vector2, new_target: Vector2, new_type: GAME_STATE.BubbleType, new_side: GAME_STATE.PlayerSide, new_contents: GAME_STATE.BubbleContent) -> void:
+	_initialize_common(start_pos, new_target, new_type, new_contents)
+	side = new_side
+	icon.modulate = GAME_STATE.get_player_color(side)
+
+
+func initialize_powerup(start_pos: Vector2, new_target: Vector2, new_type: GAME_STATE.BubbleType, new_contents: GAME_STATE.BubbleContent) -> void:
+	_initialize_common(start_pos, new_target, new_type, new_contents)
+	icon.modulate = Color(1,1,0,1)
 
 
 func _physics_process(delta: float) -> void:
@@ -65,7 +75,10 @@ func _on_input_event(_viewport:Node, event:InputEvent, _shape_idx:int) -> void:
 	var touch = event as InputEventScreenTouch
 	if touch:
 		spawn_pop()
-		GAME_STATE.bubble_popped(self)
+		if type == GAME_STATE.BubbleType.UNIT:
+			GAME_STATE.unit_bubble_popped(self)
+		else:
+			GAME_STATE.powerup_bubble_popped(self)
 		queue_free()
 		play_pop_cue()
 
