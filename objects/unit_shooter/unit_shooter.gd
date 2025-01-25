@@ -24,7 +24,7 @@ static var unit_type_to_scene: Dictionary = {
 	GAME_STATE.UnitType.BAZOOKA: load("res://objects/unit_shooter/unit_bazooka.tscn"),
 }
 
-@onready var shooting_timer: Timer = $ShootingTimer
+@onready var shooting_cooldown: float
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var barrel_tip: Marker2D = $BarrelTip
 @onready var area: Area2D = $Area2D
@@ -151,6 +151,8 @@ func _come_closer(delta: float) -> void:
 
 
 func _physics_process(delta: float) -> void:
+	var time_dilatation = 1 if not bonus_active else CONFIG.get_power_up_shoot_mult()
+	shooting_cooldown -= delta * time_dilatation
 	var closest = find_closest_enemy(other_base.get_units())
 	var closest_enemy = closest[0]
 	var distance = closest[1]
@@ -170,10 +172,10 @@ func handle_hit(bullet: Bullet) -> void:
 
 
 func try_shoot() -> void:
-	if not shooting_timer.is_stopped():
+	if shooting_cooldown > 0:
 		return
 	animation_player.play("shoot")
-	shooting_timer.start()
+	shooting_cooldown = CONFIG.unit_stats_shoot_cooldown_s()
 	GAME_STATE.spawn_bullet(self, barrel_tip.global_position, velocity)
 
 

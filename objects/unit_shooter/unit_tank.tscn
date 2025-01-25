@@ -93,10 +93,6 @@ rotation = -1.5708
 scale = Vector2(1.4036, 1.4036)
 texture = ExtResource("2_0ufwv")
 
-[node name="ShootingTimer" type="Timer" parent="."]
-wait_time = 3.0
-one_shot = true
-
 [node name="BarrelTip" type="Marker2D" parent="."]
 position = Vector2(37, -1)
 
