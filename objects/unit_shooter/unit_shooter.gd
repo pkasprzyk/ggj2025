@@ -4,6 +4,7 @@ class_name UnitShooter
 
 @export var speed: float = 100.0
 @export var separation_distance: float = 50.0
+@export var shooting_distance: float = 500.0
 
 var target: Vector2 = Vector2.ZERO
 var base: UnitBase
@@ -23,12 +24,6 @@ static var unit_scene: PackedScene = load("res://objects/unit_shooter/unit_shoot
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var barrel_tip: Marker2D = $BarrelTip
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	shooting_timer.connect("timeout", shoot)
-	shooting_timer.start()
 
 
 static func spawn(parent: Node, spawn_point: Vector2, player: PlayerSide, new_base: UnitBase, new_target: Vector2, new_other_base: UnitBase) -> UnitShooter:
@@ -87,7 +82,21 @@ func _allignment_rule(all_units) -> Vector2:
 	return (perceived_velocity - velocity) / 2
 
 
-func _physics_process(delta: float) -> void:
+func find_closest_enemy(all_units):
+	var closest_enemy: UnitShooter = null
+	var closest_distance: float = 9999999
+
+	for other_unit in all_units:
+		if self != other_unit:
+			var distance = (other_unit.global_position - global_position).length()
+			if distance < closest_distance:
+				closest_distance = distance
+				closest_enemy = other_unit
+
+	return [closest_enemy, closest_distance]
+
+
+func _come_closer(delta: float) -> void:
 	var friendly_units = base.get_units()
 	var enemy_units = other_base.get_units()
 	var new_velocity = (target - global_position).normalized() * speed / 2
@@ -100,10 +109,25 @@ func _physics_process(delta: float) -> void:
 	global_position += velocity * delta
 
 
+func _physics_process(delta: float) -> void:
+	var closest = find_closest_enemy(other_base.get_units())
+	var closest_enemy = closest[0]
+	var distance = closest[1]
+	if distance < shooting_distance:
+		velocity = (closest_enemy.global_position - global_position).normalized() * speed
+		look_at(closest_enemy.global_position)
+		try_shoot()
+	else:
+		_come_closer(delta)
+
+
 func handle_hit() -> void:
 	queue_free()
 
 
-func shoot() -> void:
+func try_shoot() -> void:
+	if not shooting_timer.is_stopped():
+		return
 	animation_player.play("shoot")
+	shooting_timer.start()
 	Bullet.spawn(barrel_tip.global_position, velocity)
