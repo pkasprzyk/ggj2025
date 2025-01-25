@@ -4,4 +4,4 @@
 
 [resource]
 script = ExtResource("1_16p8j")
-external_credits = Array[String](["https://cassala.itch.io/bubble-sprites", "deasdas"])
+external_credits = Array[String](["https://cassala.itch.io/bubble-sprites", "https://kenney.nl/assets/top-down-shooter", "https://kenney.nl/assets/top-down-tanks"])
