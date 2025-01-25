@@ -14,11 +14,11 @@ func _ready() -> void:
 	$Area2D.monitoring = true
 
 
-static func spawn(new_type:GAME_STATE.UnitType, parent: Node2D, position: Vector2, new_direction: Vector2) -> Bullet:
+static func spawn(new_type:GAME_STATE.UnitType, parent: Node2D, new_position: Vector2, new_direction: Vector2) -> Bullet:
 	var bullet = bullet_scene.instantiate()
 	parent.add_child(bullet)
 	bullet.type = new_type
-	bullet.global_position = position
+	bullet.global_position = new_position
 	bullet.direction = new_direction.normalized()
 	bullet.look_at(bullet.global_position + new_direction)
 	return bullet

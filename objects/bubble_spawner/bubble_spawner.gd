@@ -48,7 +48,7 @@ func _spawn_bubble() -> void:
 func _on_bubble_destroyed() -> void:
 	bubbles -= 1
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if spawn_timer.is_stopped() and active and bubbles < max_bubbles:
 		_spawn_bubble()
 		spawn_timer.start()

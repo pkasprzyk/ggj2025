@@ -60,7 +60,7 @@ func _physics_process(delta: float) -> void:
 		queue_free()
 
 
-func _on_input_event(viewport:Node, event:InputEvent, shape_idx:int) -> void:
+func _on_input_event(_viewport:Node, event:InputEvent, _shape_idx:int) -> void:
 	var touch = event as InputEventScreenTouch
 	if touch:
 		spawn_pop()

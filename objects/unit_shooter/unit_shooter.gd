@@ -39,7 +39,6 @@ static func spawn(
 
 	var unit_scene = unit_type_to_scene[unit_type] as PackedScene
 	print_debug("SPAWN %s %s %s"%[new_player, unit_type, unit_scene.resource_path])
-	var spawned_unit = unit_scene.instantiate() as UnitShooter
 
 	var unit = unit_scene.instantiate()
 	unit.name = "Shooter"+str(randi_range(0,9999999))

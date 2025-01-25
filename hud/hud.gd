@@ -28,6 +28,7 @@ func _on_credits_text_meta_clicked(meta: Variant) -> void:
 	OS.shell_open(meta)
 
 
+@warning_ignore("integer_division")
 func update_values(timer : float, score: Array[int]) -> void:
 	score_label.text = "[center]Time %2d:%02d\nScore: [color=red]%s[/color] - [color=blue]%s[/color][/center]" % \
 			[int(timer) / 60, int(timer) % 60, score[0], score[1]]
