@@ -4,7 +4,7 @@ class_name UnitShooter
 
 
 @export var player: GAME_STATE.PlayerSide
-@export var hp: float = 100.0
+@export var hp: float
 @export var speed: float = 100.0
 @export var separation_distance_squared: float = 50.0 ** 2
 @export var shooting_distance: float = 500.0
@@ -40,12 +40,13 @@ static func spawn(
 		new_other_base: UnitBase) -> UnitShooter:
 
 	var unit_scene = unit_type_to_scene[unit_type] as PackedScene
-	print_debug("SPAWN %s %s %s"%[new_player, unit_type, unit_scene.resource_path])
+	# print_debug("SPAWN %s %s %s"%[new_player, unit_type, unit_scene.resource_path])
 
 	var unit = unit_scene.instantiate()
 	unit.name = "Shooter"+str(randi_range(0,9999999))
 	unit.type = unit_type
 	unit.player = new_player
+	unit.hp = CONFIG.unit_stats_hp()
 	parent.add_child(unit)
 
 	unit.global_position = spawn_position
@@ -170,7 +171,10 @@ func try_shoot() -> void:
 
 func get_damage(unit_type : GAME_STATE.UnitType, bullet_type:GAME_STATE.UnitType) -> float:
 	match [unit_type, bullet_type]:
-		[GAME_STATE.UnitType.SHOOTER, GAME_STATE.UnitType.BAZOOKA]: return 50.0
-		[GAME_STATE.UnitType.TANK, GAME_STATE.UnitType.SHOOTER]: return 50.0
-		[GAME_STATE.UnitType.BAZOOKA, GAME_STATE.UnitType.TANK]: return 50.0
-	return 100.0
+		[GAME_STATE.UnitType.SHOOTER, GAME_STATE.UnitType.BAZOOKA]: 
+			return CONFIG.unit_stats_reduced_damage()
+		[GAME_STATE.UnitType.TANK, GAME_STATE.UnitType.SHOOTER]:
+			return CONFIG.unit_stats_reduced_damage()
+		[GAME_STATE.UnitType.BAZOOKA, GAME_STATE.UnitType.TANK]:
+			return CONFIG.unit_stats_reduced_damage()
+	return CONFIG.unit_stats_base_damage()

@@ -35,11 +35,11 @@ func _on_credits_text_meta_clicked(meta: Variant) -> void:
 
 
 @warning_ignore("integer_division")
-func update_values(timer : float, score: Array[int]) -> void:
+func update_values(timer : float, score: Array[float]) -> void:
 	score_label.text = "[center]Time %2d:%02d\nScore: [color=red]%s[/color] - [color=blue]%s[/color][/center]" % \
-			[int(timer) / 60, int(timer) % 60, score[0], score[1]]
-	var r = 1 - (score[0] / float(GAME_STATE.GAME_END_SCORE))
-	var l = 1 - (score[1] / float(GAME_STATE.GAME_END_SCORE))
+			[int(timer) / 60, int(timer) % 60, int(score[0]), int(score[1])]
+	var r = 1 - (score[0] / CONFIG.points_goal())
+	var l = 1 - (score[1] / CONFIG.points_goal())
 	progress_bar_l.value = l * 100
 	progress_bar_r.value = r * 100
 

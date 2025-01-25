@@ -25,10 +25,9 @@ enum UnitType {
 	BAZOOKA,
 }
 
-const GAME_END_SCORE := 5000
 
 var game_ended := false
-var score: Array[int] = [0,0]
+var score: Array[float] = [0,0]
 var timer := 0.0
 
 var hud: Hud
@@ -131,11 +130,12 @@ func _run_replay():
 	for entry in replay_config.click_history:
 		var time = entry[0]
 		var type = entry[1]
+		var side = entry[2]
+		var contents = entry[3]
+		var position = entry[4]
 		if type == BubbleType.UNIT:
-			var side = entry[2]
-			get_tree().create_timer(time).connect("timeout", func (): increment_score(side, 1))
+			get_tree().create_timer(time).connect("timeout", func (): increment_score(side, CONFIG.points_per_spawn()))
 		else:
-			var contents = entry[3]
 			get_tree().create_timer(time).connect("timeout", func (): process_bonus(type, contents))
 
 
@@ -170,8 +170,8 @@ func get_other_player(player: PlayerSide) -> PlayerSide:
 
 
 func unit_bubble_popped(bubble: Bubble) -> void:
-	increment_score(bubble.side, 1)
-	replay_config.click_history.append([timer, bubble.type, bubble.side, bubble.global_position])
+	increment_score(bubble.side, CONFIG.points_per_spawn())
+	replay_config.click_history.append([timer, bubble.type, bubble.side, bubble.contents, bubble.global_position])
 	var spawn_target = player_left_base.generate_spawn_target() if bubble.side == PlayerSide.PLAYER_LEFT else player_right_base.generate_spawn_target()
 	if deterministic_unit_spawn:
 		spawn_target.y = bubble.global_position.y
@@ -182,7 +182,7 @@ func unit_bubble_popped(bubble: Bubble) -> void:
 
 
 func powerup_bubble_popped(bubble: Bubble) -> void:
-	replay_config.click_history.append([timer, bubble.type, bubble.type, bubble.global_position])
+	replay_config.click_history.append([timer, bubble.type,  bubble.side, bubble.contents, bubble.global_position])
 	process_bonus(bubble.type, bubble.contents)
 
 
@@ -206,21 +206,21 @@ func spawn_unit_for(side:PlayerSide, unit_type:UnitType, spawn_target: Vector2) 
 
 
 func unit_died(unit:UnitShooter) -> void:
-	increment_score(1 - unit.player, 50)
+	increment_score(1 - unit.player, CONFIG.points_per_kill())
 
 
 func base_hit(base:UnitBase) -> void:
-	increment_score(1 - base.player, 100)
+	increment_score(1 - base.player, CONFIG.points_for_base_hit())
 
 
 func spawn_bullet(shooter:UnitShooter, position:Vector2, velocity:Vector2):
 	Bullet.spawn(shooter.type, bullet_manager, position, velocity, get_other_player(shooter.player))
 
 
-func increment_score(side: PlayerSide, value: int) -> void:
+func increment_score(side: PlayerSide, value: float) -> void:
 	score[side] += value
 	
-	if not game_ended and score[side] >= GAME_END_SCORE:
+	if not game_ended and score[side] >= CONFIG.points_goal():
 		hud.update_values(timer, score)
 		game_ended = true
 		hud.game_ended()

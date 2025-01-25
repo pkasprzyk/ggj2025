@@ -8,9 +8,7 @@ var target: Vector2 = Vector2.ZERO
 @export var  side: GAME_STATE.PlayerSide
 @export var  contents: GAME_STATE.BubbleContent
 
-const CHANGE_TYPES = false
-const CHANGE_PERIOD =  0.75
-var change_time = CHANGE_PERIOD
+var change_time : float
 
 @export var  phase = 0
 @export var  speed = 100
@@ -39,6 +37,7 @@ func _ready() -> void:
 	animated_sprite.play("spawn")
 	speed *= randf_range(0.7, 2.3)
 	phase = randf_range(0, 2 * PI)
+	change_time = CONFIG.change_bubble_types_period()
 
 
 func _initialize_common(start_pos: Vector2, new_target: Vector2, new_type: GAME_STATE.BubbleType, new_contents: GAME_STATE.BubbleContent) -> void:
@@ -74,9 +73,9 @@ func _physics_process(delta: float) -> void:
 		queue_free()
 		return
 	change_time -= delta
-	if CHANGE_TYPES and \
+	if CONFIG.change_bubble_types_active() and \
 			type == GAME_STATE.BubbleType.UNIT and change_time <= 0:
-		change_time += CHANGE_PERIOD
+		change_time += CONFIG.change_bubble_types_period()
 		contents += 1
 		contents %= GAME_STATE.BubbleContent.CANNON + 1
 		icon.texture = icons[contents]

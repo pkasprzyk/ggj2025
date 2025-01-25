@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="GameplayConfig" load_steps=2 format=3 uid="uid://b5u21xjrblf81"]
+
+[ext_resource type="Script" path="res://config/gameplay_config.gd" id="1_e0gxd"]
+
+[resource]
+script = ExtResource("1_e0gxd")
+change_type = true
+change_type_period = 0.75
+units_hp = 100.0
+base_damage = 100.0
+reduced_damage = 50.0
+points_goal = 10000.0
+points_per_spawn = 2.0
+points_per_kill = 100.0
+points_for_base_hit = 200.0

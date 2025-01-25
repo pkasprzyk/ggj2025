@@ -6,5 +6,5 @@ extends Resource
 
 
 func clear():
-    spawn_history.clear()
-    click_history.clear()
+	spawn_history.clear()
+	click_history.clear()

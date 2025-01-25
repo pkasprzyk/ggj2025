@@ -17,7 +17,8 @@ config/icon="res://icons/bubble.svg"
 
 [autoload]
 
-GAME_STATE="*res://game_state.gd"
+GAME_STATE="*res://GAME_STATE.gd"
+CONFIG="*res://CONFIG.gd"
 
 [display]
 
