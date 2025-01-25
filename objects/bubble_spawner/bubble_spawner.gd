@@ -39,8 +39,6 @@ func _spawn_bubble() -> void:
 
 func _on_bubble_destroyed() -> void:
 	bubbles -= 1
-	GAME_STATE.bubble_popped()
-
 
 func _physics_process(delta: float) -> void:
 	if spawn_timer.is_stopped() and active and bubbles < max_bubbles:
