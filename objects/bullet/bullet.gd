@@ -5,19 +5,19 @@ class_name Bullet
 @export var speed: float = 500.0
 
 static var bullet_scene: PackedScene = load("res://objects/bullet/bullet.tscn")
+var direction: Vector2 = Vector2.ZERO
+var type : GAME_STATE.UnitType
 
 @onready var end_of_life_timer: Timer = $EndOfLifeTimer
-
-var direction: Vector2 = Vector2.ZERO
-
 
 func _ready() -> void:
 	$Area2D.monitoring = true
 
 
-static func spawn(position: Vector2, new_direction: Vector2) -> Bullet:
+static func spawn(new_type:GAME_STATE.UnitType, parent: Node2D, position: Vector2, new_direction: Vector2) -> Bullet:
 	var bullet = bullet_scene.instantiate()
-	GAME_STATE.bullet_manager.add_child(bullet)
+	parent.add_child(bullet)
+	bullet.type = new_type
 	bullet.global_position = position
 	bullet.direction = new_direction.normalized()
 	bullet.look_at(bullet.global_position + new_direction)

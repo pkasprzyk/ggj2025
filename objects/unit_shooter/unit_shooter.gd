@@ -2,9 +2,12 @@ extends Node2D
 
 class_name UnitShooter
 
+@export var hp: float = 100.0
 @export var speed: float = 100.0
 @export var separation_distance: float = 50.0
 @export var shooting_distance: float = 500.0
+
+var type : GAME_STATE.UnitType
 
 var target: Vector2 = Vector2.ZERO
 var base: UnitBase
@@ -38,6 +41,7 @@ static func spawn(
 
 	var unit = unit_scene.instantiate()
 	unit.name = "Shooter"+str(randi_range(0,9999999))
+	unit.type = unit_type
 	parent.add_child(unit)
 
 	unit.global_position = spawn_position
@@ -131,7 +135,9 @@ func _physics_process(delta: float) -> void:
 
 
 func handle_hit(bullet: Bullet) -> void:
-	queue_free()
+	hp -= get_damage(type, bullet.type)
+	if hp <= 0:
+		queue_free()
 
 
 func try_shoot() -> void:
@@ -139,4 +145,11 @@ func try_shoot() -> void:
 		return
 	animation_player.play("shoot")
 	shooting_timer.start()
-	Bullet.spawn(barrel_tip.global_position, velocity)
+	GAME_STATE.spawn_bullet(self, barrel_tip.global_position, velocity)
+
+func get_damage(unit_type : GAME_STATE.UnitType, bullet_type:GAME_STATE.UnitType) -> float:
+	match [unit_type, bullet_type]:
+		[GAME_STATE.UnitType.SHOOTER, GAME_STATE.UnitType.BAZOOKA]: return 50.0
+		[GAME_STATE.UnitType.TANK, GAME_STATE.UnitType.SHOOTER]: return 50.0
+		[GAME_STATE.UnitType.BAZOOKA, GAME_STATE.UnitType.TANK]: return 50.0
+	return 100.0

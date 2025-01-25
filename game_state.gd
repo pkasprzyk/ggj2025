@@ -104,6 +104,10 @@ func bubble_popped(bubble: Bubble) -> void:
 	else :
 		player_right_base.spawn_unit(unit_type)
 
+func spawn_bullet(shooter:UnitShooter, position:Vector2, velocity:Vector2):
+	Bullet.spawn( shooter.type, bullet_manager, position, velocity)
+
+
 
 func increment_score(value: int) -> void:
 	score += value
