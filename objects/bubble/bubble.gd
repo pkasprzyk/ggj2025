@@ -49,14 +49,14 @@ func _initialize_common(start_pos: Vector2, new_target: Vector2, new_type: GAME_
 	icon_bg.texture = icons[contents]
 
 
-func initialize_unit(start_pos: Vector2, new_target: Vector2, new_type: GAME_STATE.BubbleType, new_side: GAME_STATE.PlayerSide, new_contents: GAME_STATE.BubbleContent) -> void:
-	_initialize_common(start_pos, new_target, new_type, new_contents)
+func initialize_unit(start_pos: Vector2, new_target: Vector2, new_side: GAME_STATE.PlayerSide, new_contents: GAME_STATE.BubbleContent) -> void:
+	_initialize_common(start_pos, new_target, GAME_STATE.BubbleType.UNIT, new_contents)
 	side = new_side
 	icon.modulate = GAME_STATE.get_player_color(side)
 
 
-func initialize_powerup(start_pos: Vector2, new_target: Vector2, new_type: GAME_STATE.BubbleType, new_contents: GAME_STATE.BubbleContent) -> void:
-	_initialize_common(start_pos, new_target, new_type, new_contents)
+func initialize_powerup(start_pos: Vector2, new_target: Vector2, new_contents: GAME_STATE.BubbleContent) -> void:
+	_initialize_common(start_pos, new_target, GAME_STATE.BubbleType.RUSH_POWERUP, new_contents)
 	icon.modulate = Color(1,1,0,1)
 
 

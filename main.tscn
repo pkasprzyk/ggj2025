@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=4 uid="uid://dgdqtydil5rj8"]
+[gd_scene load_steps=13 format=4 uid="uid://dgdqtydil5rj8"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_mmle3"]
 [ext_resource type="PackedScene" uid="uid://7m54yhh1iwlb" path="res://objects/bubble_spawner/bubble_spawner.tscn" id="2_n4osd"]
 [ext_resource type="Texture2D" uid="uid://d4hnr3kdyyf5g" path="res://background/terrainTiles_retina.png" id="2_pedbq"]
 [ext_resource type="PackedScene" uid="uid://ctjnx6oo5ch47" path="res://objects/unit_base/unit_base.tscn" id="4_78562"]
 [ext_resource type="PackedScene" uid="uid://ukm7x4tnv1xr" path="res://hud/hud.tscn" id="4_vi50i"]
+[ext_resource type="Texture2D" uid="uid://dct624iyu1ob6" path="res://icons/IconGodotNode/node/canon.png" id="4_vtrkf"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rmyoh"]
 texture = ExtResource("2_pedbq")
@@ -54,6 +55,42 @@ texture_region_size = Vector2i(128, 128)
 tile_size = Vector2i(128, 128)
 sources/0 = SubResource("TileSetAtlasSource_rmyoh")
 
+[sub_resource type="Animation" id="Animation_gujgg"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PowerUpIcon:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_gxh3r"]
+resource_name = "power_up_activated"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PowerUpIcon:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.533333, 1),
+"transitions": PackedFloat32Array(1, 0.5, 0.5),
+"update": 0,
+"values": [Color(1, 1, 0, 0), Color(1, 1, 0, 0.921569), Color(1, 1, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_w2j1s"]
+_data = {
+"RESET": SubResource("Animation_gujgg"),
+"power_up_activated": SubResource("Animation_gxh3r")
+}
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5c7yc"]
 size = Vector2(661, 404)
 
@@ -76,6 +113,23 @@ position = Vector2(72, 608)
 
 [node name="PlayerRightBase" parent="PlayerBases" instance=ExtResource("4_78562")]
 position = Vector2(1848, 608)
+
+[node name="BulletManager" type="Node2D" parent="."]
+
+[node name="PowerUpOverlay" type="Node2D" parent="."]
+
+[node name="PowerUpIcon" type="Sprite2D" parent="PowerUpOverlay"]
+modulate = Color(1, 1, 0, 0)
+texture_filter = 1
+position = Vector2(951, 561)
+scale = Vector2(52.125, 52.125)
+texture = ExtResource("4_vtrkf")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="PowerUpOverlay"]
+libraries = {
+"": SubResource("AnimationLibrary_w2j1s")
+}
+autoplay = "RESET"
 
 [node name="BubbleSpawners" type="Node2D" parent="."]
 
@@ -150,8 +204,6 @@ position = Vector2(-2099, -322)
 
 [node name="Target3" type="Marker2D" parent="BubbleSpawners/BubbleSpawner4/Area2D"]
 position = Vector2(-523, -1074)
-
-[node name="BulletManager" type="Node2D" parent="."]
 
 [node name="HUDCanvasGroup" type="CanvasLayer" parent="."]
 

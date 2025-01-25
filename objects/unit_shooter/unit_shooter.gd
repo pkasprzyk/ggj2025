@@ -137,7 +137,7 @@ func _rotate_clamped(new_velocity: Vector2) -> Vector2:
 func _come_closer(delta: float) -> void:
 	var effective_speed = speed
 	if bonus_active:
-		effective_speed *= 5
+		effective_speed *= CONFIG.get_power_up_speed_mult()
 	var friendly_units = base.get_units()
 	var enemy_units = other_base.get_units()
 	var new_velocity = (target - global_position).normalized() * effective_speed / 2

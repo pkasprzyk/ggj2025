@@ -231,6 +231,7 @@ fill_mode = 3
 show_percentage = false
 
 [node name="LCannonLabel" type="Label" parent="ProgressBarL"]
+layout_mode = 0
 offset_left = 162.0
 offset_top = 19.0
 offset_right = 191.0
@@ -244,6 +245,7 @@ scale = Vector2(3.5, 3.5)
 texture = ExtResource("2_xosfp")
 
 [node name="LShieldLabel" type="Label" parent="ProgressBarL"]
+layout_mode = 0
 offset_left = 161.0
 offset_top = 89.0
 offset_right = 190.0
@@ -257,6 +259,7 @@ scale = Vector2(3.5, 3.5)
 texture = ExtResource("3_1qcv1")
 
 [node name="LSwordLabel" type="Label" parent="ProgressBarL"]
+layout_mode = 0
 offset_left = 162.0
 offset_top = 162.0
 offset_right = 191.0
@@ -283,6 +286,7 @@ fill_mode = 3
 show_percentage = false
 
 [node name="RCannonLabel" type="Label" parent="ProgressBarR"]
+layout_mode = 0
 offset_left = -256.0
 offset_top = 5.0
 offset_right = -89.0
@@ -297,6 +301,7 @@ scale = Vector2(3.5, 3.5)
 texture = ExtResource("2_xosfp")
 
 [node name="RShieldLabel" type="Label" parent="ProgressBarR"]
+layout_mode = 0
 offset_left = -305.0
 offset_top = 75.0
 offset_right = -90.0
@@ -311,6 +316,7 @@ scale = Vector2(3.5, 3.5)
 texture = ExtResource("3_1qcv1")
 
 [node name="RSwordLabel" type="Label" parent="ProgressBarR"]
+layout_mode = 0
 offset_left = -276.0
 offset_top = 148.0
 offset_right = -89.0

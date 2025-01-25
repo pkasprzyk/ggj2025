@@ -47,9 +47,17 @@ var bgm_player : AudioStreamPlayer
 
 var in_replay_mode = false
 
+var power_up_count := 0
+var power_up_pending_content := BubbleContent.SWORD
+var power_up_cooldown_timestamp : float
 
 static var replay_config : ReplayConfig = ReplayConfig.new()
 
+static var icon_shield = load("res://icons/IconGodotNode/node/icon_shield.png")
+static var icon_sword = load("res://icons/IconGodotNode/node/icon_sword.png")
+static var icon_cannon = load("res://icons/IconGodotNode/node/canon_2.png")
+
+static var icons = [icon_sword, icon_shield, icon_cannon]
 
 signal bonus_activated(BubbleType, BubbleContent)
 
@@ -157,6 +165,8 @@ func reset_values():
 		[0,0,0],
 		[0,0,0]
 	]
+	power_up_count = 0
+	power_up_cooldown_timestamp = CONFIG.get_power_up_cooldown_s()
 
 
 func bubble_to_unit(bubble_type: BubbleContent) -> UnitType:
@@ -191,9 +201,25 @@ func unit_bubble_popped(bubble: Bubble) -> void:
 	units_counter[side][unit_type] += 1
 
 
+func should_spawn_powerup() -> bool:
+	return power_up_count < 2 && timer > power_up_cooldown_timestamp
+
+
+func get_pending_powerup_content() -> BubbleContent:
+	return power_up_pending_content
+
+
+func powerup_spawned() -> void:
+	power_up_pending_content += 1
+	power_up_pending_content %= 3
+	power_up_count += 1
+
+
 func powerup_bubble_popped(bubble: Bubble) -> void:
 	replay_config.click_history.append([timer, bubble.type,  bubble.side, bubble.contents, bubble.global_position])
 	process_bonus(bubble.type, bubble.contents)
+	power_up_count = 0 # assumes bubble spawner destroys others
+	power_up_cooldown_timestamp = timer + CONFIG.get_power_up_cooldown_s()
 
 
 func process_bonus(type: BubbleType, contents: BubbleContent) -> void:
@@ -254,3 +280,6 @@ func toggle_epic_mode() -> void:
 func get_player_color(side: PlayerSide) -> Color:
 	return Color(1, 0, 0, 1) if side == PlayerSide.PLAYER_LEFT\
 	  else Color(0, 0, 1, 1)
+
+func get_icon_for(c:BubbleContent) -> Texture2D:
+	return icons[c]

@@ -14,3 +14,7 @@ func points_goal() -> float : return config.points_goal
 func points_per_spawn() -> float : return config.points_per_spawn
 func points_per_kill() -> float : return config.points_per_kill
 func points_for_base_hit() -> float : return config.points_for_base_hit
+
+func get_power_up_cooldown_s() -> float: return 5.0
+func get_power_up_duration_s() -> float: return 1.0
+func get_power_up_speed_mult() -> float: return 5.0

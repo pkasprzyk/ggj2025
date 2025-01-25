@@ -16,7 +16,6 @@ var player: GAME_STATE.PlayerSide
 var other_base: UnitBase
 
 var rush_expiry_timer: Timer
-var rush_time = 1.0
 
 func _ready() -> void:
 	GAME_STATE.connect("bonus_activated", activate_bonus)
@@ -74,7 +73,7 @@ func expire_bonus(type: GAME_STATE.BubbleType, unit_type: GAME_STATE.UnitType) -
 
 func activate_bonus(type: GAME_STATE.BubbleType, unit_type: GAME_STATE.UnitType) -> void:
 	if type == GAME_STATE.BubbleType.RUSH_POWERUP:
-		rush_expiry_timer.wait_time += rush_time
+		rush_expiry_timer.wait_time += CONFIG.get_power_up_duration_s()
 		rush_expiry_timer.connect("timeout", func(): self.expire_bonus(type, unit_type))
 		if not rush_expiry_timer.is_stopped():
 			# reset the timer, cannot update time left
