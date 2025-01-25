@@ -89,14 +89,19 @@ func _on_input_event(_viewport:Node, event:InputEvent, _shape_idx:int) -> void:
 		spawn_pop()
 		if type == GAME_STATE.BubbleType.UNIT:
 			GAME_STATE.unit_bubble_popped(self)
+			play_pop_cue()
 		else:
 			GAME_STATE.powerup_bubble_popped(self)
+			play_boost_cue()
 		queue_free()
-		play_pop_cue()
+
+
+func play_boost_cue():
+	var powerup_sfx = load("res://objects/bubble/bubble_pop/power_up_grab-88510.mp3")
+	play_cue(powerup_sfx)
 
 
 func play_pop_cue():
-	var audio_player = AudioStreamPlayer2D.new()
 	var sfx_res = [
 		"res://objects/bubble/bubble_pop/bubble-pop-1.mp3",
 		"res://objects/bubble/bubble_pop/bubble-pop-2.mp3",
@@ -105,7 +110,12 @@ func play_pop_cue():
 		"res://objects/bubble/bubble_pop/bubble-pop-5.mp3",
 		"res://objects/bubble/bubble_pop/bubble-pop-6.mp3"
 	].pick_random()
-	audio_player.stream = load(sfx_res)
+	play_cue(load(sfx_res))
+
+
+func play_cue(sfx):
+	var audio_player = AudioStreamPlayer2D.new()
+	audio_player.stream = sfx
 	audio_player.volume_db = 30
 	audio_player.connect("finished", audio_player.queue_free)
 	get_tree().current_scene.add_child(audio_player)

@@ -6,4 +6,4 @@
 script = ExtResource("1_16p8j")
 external_credits = Array[String](["https://cassala.itch.io/bubble-sprites", "https://kenney.nl/assets/top-down-shooter", "https://kenney.nl/assets/top-down-tanks", "https://pixel-boy.itch.io/icon-godot-node/"])
 music = Array[String](["https://pixabay.com/music/main-title-reborn-battle-hybrid-cinematic-action-274988/"])
-sfx = Array[String](["https://pixabay.com/sound-effects/bubble-pops-272427/"])
+sfx = Array[String](["https://pixabay.com/sound-effects/bubble-pops-272427/", "https://pixabay.com/sound-effects/power-up-grab-88510/"])
