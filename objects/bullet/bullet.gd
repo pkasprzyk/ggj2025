@@ -36,8 +36,8 @@ func _physics_process(delta: float) -> void:
 		return
 
 
-func _on_area_2d_area_entered(area: Area2D) -> void:
-	var parent = area.get_parent()
+func _on_area_2d_area_entered(other_area: Area2D) -> void:
+	var parent = other_area.get_parent()
 	if parent.has_method("handle_hit"):
 		parent.handle_hit(self)
 		queue_free()

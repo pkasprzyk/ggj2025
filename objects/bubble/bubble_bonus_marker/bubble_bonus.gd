@@ -34,7 +34,7 @@ func _process(delta: float) -> void:
 	global_position = global_position.move_toward(target, speed * delta)
 
 
-static func spawn(parent:Node2D, bubble: Bubble, target: Vector2) -> BubbleBonus:
+static func spawn(parent:Node2D, bubble: Bubble, new_target: Vector2) -> BubbleBonus:
 	var b = bonus_scene.instantiate() as BubbleBonus
 	parent.add_child(b)
 	b.global_position = bubble.global_position
@@ -44,5 +44,5 @@ static func spawn(parent:Node2D, bubble: Bubble, target: Vector2) -> BubbleBonus
 	b.icon.modulate = c
 	b.icon.texture = Bubble.icons[bubble.contents]
 	b.icon_bg.texture = Bubble.icons[bubble.contents]
-	b.target = target
+	b.target = new_target
 	return b

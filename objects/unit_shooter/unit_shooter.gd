@@ -151,7 +151,7 @@ func _come_closer(delta: float) -> void:
 
 
 func _physics_process(delta: float) -> void:
-	var time_dilatation = 1 if not bonus_active else CONFIG.get_power_up_shoot_mult()
+	var time_dilatation = 1.0 if not bonus_active else CONFIG.get_power_up_shoot_mult()
 	shooting_cooldown -= delta * time_dilatation
 	var closest = find_closest_enemy(other_base.get_units())
 	var closest_enemy = closest[0]

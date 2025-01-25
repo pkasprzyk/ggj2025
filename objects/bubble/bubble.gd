@@ -78,8 +78,7 @@ func _physics_process(delta: float) -> void:
 	if CONFIG.change_bubble_types_active() and \
 			type == GAME_STATE.BubbleType.UNIT and change_time <= 0:
 		change_time += CONFIG.change_bubble_types_period()
-		contents += 1
-		contents %= GAME_STATE.BubbleContent.CANNON + 1
+		contents = GAME_STATE.next_content(contents)
 		icon.texture = icons[contents]
 		icon_bg.texture = icons[contents]
 

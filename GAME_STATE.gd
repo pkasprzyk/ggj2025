@@ -233,8 +233,7 @@ func get_pending_powerup_content() -> BubbleContent:
 
 
 func powerup_spawned() -> void:
-	power_up_pending_content += 1
-	power_up_pending_content %= 3
+	power_up_pending_content = next_content(power_up_pending_content)
 	power_up_count += 1
 
 func powerup_bubble_lost():
@@ -308,3 +307,6 @@ func get_player_color(side: PlayerSide) -> Color:
 
 func get_icon_for(c:BubbleContent) -> Texture2D:
 	return icons[c]
+
+func next_content(c:BubbleContent) -> BubbleContent:
+	return (int(c)+1) % 3 as BubbleContent

@@ -14,6 +14,6 @@ func _ready() -> void:
 	GAME_STATE.bonus_activated.connect(on_bonus_activated)
 
 
-func on_bonus_activated(t: GAME_STATE.BubbleType, c: GAME_STATE.BubbleContent):
+func on_bonus_activated(_t: GAME_STATE.BubbleType, c: GAME_STATE.BubbleContent):
 	power_up_animation.play("power_up_activated")
 	power_up_icon.texture = GAME_STATE.get_icon_for(c)
