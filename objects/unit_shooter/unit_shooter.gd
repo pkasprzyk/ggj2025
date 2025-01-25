@@ -2,6 +2,8 @@ extends Node2D
 
 class_name UnitShooter
 
+
+@export var player: GAME_STATE.PlayerSide
 @export var hp: float = 100.0
 @export var speed: float = 100.0
 @export var separation_distance: float = 50.0
@@ -30,25 +32,26 @@ static func spawn(
 		unit_type: GAME_STATE.UnitType,
 		parent: Node,
 		spawn_position: Vector2,
-		player: GAME_STATE.PlayerSide,
+		new_player: GAME_STATE.PlayerSide,
 		new_base: UnitBase,
 		new_target: Vector2,
 		new_other_base: UnitBase) -> UnitShooter:
 
 	var unit_scene = unit_type_to_scene[unit_type] as PackedScene
-	print_debug("SPAWN %s %s %s"%[player, unit_type, unit_scene.resource_path])
+	print_debug("SPAWN %s %s %s"%[new_player, unit_type, unit_scene.resource_path])
 	var spawned_unit = unit_scene.instantiate() as UnitShooter
 
 	var unit = unit_scene.instantiate()
 	unit.name = "Shooter"+str(randi_range(0,9999999))
 	unit.type = unit_type
+	unit.player = new_player
 	parent.add_child(unit)
 
 	unit.global_position = spawn_position
 	unit.base = new_base
 	unit.other_base = new_other_base
 	unit.target = new_target
-	unit.sprite.modulate = GAME_STATE.get_player_color(player)
+	unit.sprite.modulate = GAME_STATE.get_player_color(new_player)
 	return unit
 
 
@@ -79,7 +82,8 @@ func _separation_rule(all_units) -> Vector2:
 				separation_vec = separation_vec - (other_unit.position - position)
 	
 	return separation_vec
-	
+
+
 func _allignment_rule(all_units) -> Vector2:
 	var perceived_velocity: Vector2
 
@@ -137,6 +141,7 @@ func _physics_process(delta: float) -> void:
 func handle_hit(bullet: Bullet) -> void:
 	hp -= get_damage(type, bullet.type)
 	if hp <= 0:
+		GAME_STATE.unit_died(self)
 		queue_free()
 
 
@@ -146,6 +151,7 @@ func try_shoot() -> void:
 	animation_player.play("shoot")
 	shooting_timer.start()
 	GAME_STATE.spawn_bullet(self, barrel_tip.global_position, velocity)
+
 
 func get_damage(unit_type : GAME_STATE.UnitType, bullet_type:GAME_STATE.UnitType) -> float:
 	match [unit_type, bullet_type]:

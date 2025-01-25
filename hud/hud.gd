@@ -27,9 +27,9 @@ func _on_credits_text_meta_clicked(meta: Variant) -> void:
 	OS.shell_open(meta)
 
 
-func update_values(timer : float, score: int) -> void:
-	score_label.text = "Time %2d:%02d - Score: %s" % \
-			[int(timer) / 60, int(timer) % 60, score]
+func update_values(timer : float, score: Array[int]) -> void:
+	score_label.text = "Time %2d:%02d - Score: %s - %s" % \
+			[int(timer) / 60, int(timer) % 60, score[0], score[1]]
 
 
 func game_ended() -> void:
