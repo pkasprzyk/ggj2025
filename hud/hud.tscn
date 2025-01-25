@@ -1,6 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://ukm7x4tnv1xr"]
+[gd_scene load_steps=8 format=3 uid="uid://ukm7x4tnv1xr"]
 
 [ext_resource type="Script" path="res://hud/hud.gd" id="1_n3j1n"]
+[ext_resource type="Texture2D" uid="uid://e5f2r6uxowus" path="res://icons/IconGodotNode/node/canon_2.png" id="2_xosfp"]
+[ext_resource type="Texture2D" uid="uid://6347gkdm4e4l" path="res://icons/IconGodotNode/node/icon_shield.png" id="3_1qcv1"]
+[ext_resource type="Texture2D" uid="uid://yotxo0ga1dvs" path="res://icons/IconGodotNode/node/icon_sword.png" id="4_vsu1g"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0qmfv"]
 bg_color = Color(0, 0, 0, 1)
@@ -227,6 +230,45 @@ value = 50.0
 fill_mode = 3
 show_percentage = false
 
+[node name="LCannonLabel" type="Label" parent="ProgressBarL"]
+offset_left = 162.0
+offset_top = 19.0
+offset_right = 191.0
+offset_bottom = 88.0
+theme_override_font_sizes/font_size = 50
+text = "0"
+
+[node name="Icon" type="Sprite2D" parent="ProgressBarL/LCannonLabel"]
+position = Vector2(-45, 37)
+scale = Vector2(3.5, 3.5)
+texture = ExtResource("2_xosfp")
+
+[node name="LShieldLabel" type="Label" parent="ProgressBarL"]
+offset_left = 161.0
+offset_top = 89.0
+offset_right = 190.0
+offset_bottom = 158.0
+theme_override_font_sizes/font_size = 50
+text = "0"
+
+[node name="Icon" type="Sprite2D" parent="ProgressBarL/LShieldLabel"]
+position = Vector2(-45, 37)
+scale = Vector2(3.5, 3.5)
+texture = ExtResource("3_1qcv1")
+
+[node name="LSwordLabel" type="Label" parent="ProgressBarL"]
+offset_left = 162.0
+offset_top = 162.0
+offset_right = 191.0
+offset_bottom = 231.0
+theme_override_font_sizes/font_size = 50
+text = "0"
+
+[node name="Icon" type="Sprite2D" parent="ProgressBarL/LSwordLabel"]
+position = Vector2(-45, 37)
+scale = Vector2(3.5, 3.5)
+texture = ExtResource("4_vsu1g")
+
 [node name="ProgressBarR" type="ProgressBar" parent="."]
 modulate = Color(1, 1, 1, 0.509804)
 layout_mode = 0
@@ -239,6 +281,48 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_mypli")
 value = 50.0
 fill_mode = 3
 show_percentage = false
+
+[node name="RCannonLabel" type="Label" parent="ProgressBarR"]
+offset_left = -256.0
+offset_top = 5.0
+offset_right = -89.0
+offset_bottom = 74.0
+theme_override_font_sizes/font_size = 50
+text = "0"
+horizontal_alignment = 2
+
+[node name="Icon" type="Sprite2D" parent="ProgressBarR/RCannonLabel"]
+position = Vector2(213, 39)
+scale = Vector2(3.5, 3.5)
+texture = ExtResource("2_xosfp")
+
+[node name="RShieldLabel" type="Label" parent="ProgressBarR"]
+offset_left = -305.0
+offset_top = 75.0
+offset_right = -90.0
+offset_bottom = 144.0
+theme_override_font_sizes/font_size = 50
+text = "0"
+horizontal_alignment = 2
+
+[node name="Icon" type="Sprite2D" parent="ProgressBarR/RShieldLabel"]
+position = Vector2(265, 39)
+scale = Vector2(3.5, 3.5)
+texture = ExtResource("3_1qcv1")
+
+[node name="RSwordLabel" type="Label" parent="ProgressBarR"]
+offset_left = -276.0
+offset_top = 148.0
+offset_right = -89.0
+offset_bottom = 217.0
+theme_override_font_sizes/font_size = 50
+text = "0"
+horizontal_alignment = 2
+
+[node name="Icon" type="Sprite2D" parent="ProgressBarR/RSwordLabel"]
+position = Vector2(237, 31)
+scale = Vector2(3.5, 3.5)
+texture = ExtResource("4_vsu1g")
 
 [connection signal="pressed" from="TopBarBG/TopBar/CreditsButton" to="." method="_on_credits_button_pressed"]
 [connection signal="pressed" from="TopBarBG/TopBar/ResetButton" to="." method="_on_reset_button_pressed"]

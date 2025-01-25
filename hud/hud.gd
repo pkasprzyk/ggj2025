@@ -8,6 +8,18 @@ extends Control
 @onready var game_end = $GameEnd
 @onready var progress_bar_l := ($ProgressBarL as ProgressBar)
 @onready var progress_bar_r := ($ProgressBarR as ProgressBar)
+@onready var unit_labels = [
+	[
+		$ProgressBarL/LSwordLabel, 
+		$ProgressBarL/LShieldLabel,
+		$ProgressBarL/LCannonLabel, 
+	],
+	[
+		$ProgressBarR/RSwordLabel,
+		$ProgressBarR/RShieldLabel, 
+		$ProgressBarR/RCannonLabel, 
+	]
+]
 
 static var credits_config : CreditsConfig = load("res://config/credits.tres")
 
@@ -35,13 +47,19 @@ func _on_credits_text_meta_clicked(meta: Variant) -> void:
 
 
 @warning_ignore("integer_division")
-func update_values(timer : float, score: Array[float]) -> void:
-	score_label.text = "[center]Time %2d:%02d\nScore: [color=red]%s[/color] - [color=blue]%s[/color][/center]" % \
-			[int(timer) / 60, int(timer) % 60, int(score[0]), int(score[1])]
+func update_values(timer : float, score: Array[float], units_counter: Array) -> void:
+	score_label.text = ("[center]Time %2d:%02d"+\
+			"\nScore: [color=red]%s[/color] - [color=blue]%s[/color][/center]") % \
+			[int(timer) / 60, int(timer) % 60,\
+			 int(score[0]), int(score[1])]
 	var r = 1 - (score[0] / CONFIG.points_goal())
 	var l = 1 - (score[1] / CONFIG.points_goal())
 	progress_bar_l.value = l * 100
 	progress_bar_r.value = r * 100
+	
+	for p in units_counter.size():
+		for u in units_counter[p].size():
+			unit_labels[p][u].text = str(units_counter[p][u])
 
 
 func refresh_debug_toggles() -> void:

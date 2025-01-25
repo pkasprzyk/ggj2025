@@ -29,6 +29,7 @@ enum UnitType {
 var game_ended := false
 var score: Array[float] = [0,0]
 var timer := 0.0
+var units_counter # Side -> type -> count
 
 var hud: Hud
 var player_left_base: UnitBase
@@ -97,10 +98,14 @@ func _process(delta: float) -> void:
 	timer += delta
 	if right_spawn_timer.is_stopped() and autospawn_right_player:
 		right_spawn_timer.start()
-		spawn_unit_for(PlayerSide.PLAYER_RIGHT, UnitType.SHOOTER, player_right_base.generate_spawn_target())
+		var side = PlayerSide.PLAYER_RIGHT
+		var unit_type = UnitType.SHOOTER
+		spawn_unit_for(side, unit_type, player_right_base.generate_spawn_target())
+		# normally increments on bubble pop
+		units_counter[side][unit_type] +=1
 
 	if hud:
-		hud.update_values(timer, score)
+		hud.update_values(timer, score, units_counter)
 
 
 func _reload_scene():
@@ -132,7 +137,7 @@ func _run_replay():
 		var type = entry[1]
 		var side = entry[2]
 		var contents = entry[3]
-		var position = entry[4]
+		var _position = entry[4]
 		if type == BubbleType.UNIT:
 			get_tree().create_timer(time).connect("timeout", func (): increment_score(side, CONFIG.points_per_spawn()))
 		else:
@@ -148,6 +153,10 @@ func reset_values():
 	score = [0,0]
 	game_ended = false
 	spawn_bubbles = true
+	units_counter = [
+		[0,0,0],
+		[0,0,0]
+	]
 
 
 func bubble_to_unit(bubble_type: BubbleContent) -> UnitType:
@@ -179,6 +188,7 @@ func unit_bubble_popped(bubble: Bubble) -> void:
 	var unit_type = bubble_to_unit(bubble.contents)
 	var side = bubble.side
 	bonus.on_bonus_granted.connect(func (): spawn_unit_for(side, unit_type, spawn_target))
+	units_counter[side][unit_type] += 1
 
 
 func powerup_bubble_popped(bubble: Bubble) -> void:
@@ -198,15 +208,17 @@ func spawn_unit_for(side:PlayerSide, unit_type:UnitType, spawn_target: Vector2) 
 	else :
 		spawner = player_right_base
 
-	if epic_mode:
-		for i in range(epic_multiplier):
-			spawner.spawn_unit(unit_type, spawn_target)
-	else:
+	var units_to_spawn_count = 1 if not epic_mode else epic_multiplier
+	
+	for i in units_to_spawn_count:
 		spawner.spawn_unit(unit_type, spawn_target)
+		if in_replay_mode: # non-replay increments on bubble pop
+			units_counter[side][unit_type] +=1
 
 
 func unit_died(unit:UnitShooter) -> void:
 	increment_score(1 - unit.player, CONFIG.points_per_kill())
+	units_counter[unit.player][unit.type] -= 1
 
 
 func base_hit(base:UnitBase) -> void:
@@ -221,7 +233,7 @@ func increment_score(side: PlayerSide, value: float) -> void:
 	score[side] += value
 	
 	if not game_ended and score[side] >= CONFIG.points_goal():
-		hud.update_values(timer, score)
+		hud.update_values(timer, score, units_counter)
 		game_ended = true
 		hud.game_ended()
 		get_tree().paused = true
