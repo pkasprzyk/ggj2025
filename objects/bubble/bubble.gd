@@ -68,6 +68,23 @@ func _on_input_event(viewport:Node, event:InputEvent, shape_idx:int) -> void:
 		spawn_pop()
 		GAME_STATE.bubble_popped(self)
 		queue_free()
+		play_pop_cue()
+
+
+func play_pop_cue():
+	var player = AudioStreamPlayer2D.new()
+	var sfx_res = [
+		"res://objects/bubble/bubble_pop/bubble-pop-1.mp3",
+		"res://objects/bubble/bubble_pop/bubble-pop-2.mp3",
+		"res://objects/bubble/bubble_pop/bubble-pop-3.mp3",
+		"res://objects/bubble/bubble_pop/bubble-pop-4.mp3",
+		"res://objects/bubble/bubble_pop/bubble-pop-5.mp3",
+		"res://objects/bubble/bubble_pop/bubble-pop-6.mp3"
+	].pick_random()
+	player.stream = load(sfx_res)
+	get_tree().current_scene.add_child(player)
+	player.global_position = global_position
+	player.play()
 
 
 func spawn_pop():
