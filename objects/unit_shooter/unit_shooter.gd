@@ -115,7 +115,7 @@ func _physics_process(delta: float) -> void:
 		_come_closer(delta)
 
 
-func handle_hit() -> void:
+func handle_hit(bullet: Bullet) -> void:
 	queue_free()
 
 

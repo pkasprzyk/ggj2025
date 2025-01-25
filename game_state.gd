@@ -14,6 +14,12 @@ enum BubbleType {
 	CANNON,
 }
 
+enum UnitType {
+	SHOOTER,
+	TANK,
+	BAZOOKA,
+}
+
 const MATCH_TIME = 0.5 * 60.0
 
 @onready var score: int = 0
@@ -38,9 +44,9 @@ func init(
 ) -> void:
 	hud = i_hud
 	player_left_base = new_player_left_base
-	player_left_base.init(viewport_left, viewport_top, viewport_bottom, viewport_right)
+	player_left_base.init(PlayerSide.PLAYER_LEFT, viewport_left, viewport_top, viewport_bottom, viewport_right)
 	player_right_base = new_player_right_base
-	player_right_base.init(viewport_right, viewport_top, viewport_bottom, viewport_left)
+	player_right_base.init(PlayerSide.PLAYER_RIGHT, viewport_right, viewport_top, viewport_bottom, viewport_left)
 	player_left_base.set_other_base(player_right_base)
 	player_right_base.set_other_base(player_left_base)
 	bullet_manager = new_bullet_manager
@@ -56,7 +62,7 @@ func _process(delta: float) -> void:
 	timer -= delta
 	if right_spawn_timer.is_stopped():
 		right_spawn_timer.start()
-		player_right_base.spawn_unit(PlayerSide.PLAYER_RIGHT)
+		player_right_base.spawn_unit(UnitType.SHOOTER)
 
 	if hud:
 		hud.update_values(timer, score)
@@ -72,12 +78,24 @@ func reset():
 	timer = MATCH_TIME
 
 
-func bubble_popped( bubble: Bubble) -> void:
+func bubble_to_unit(bubble_type: BubbleType) -> UnitType:
+	match bubble_type:
+		BubbleType.SWORD:
+			return UnitType.SHOOTER
+		BubbleType.SHIELD:
+			return UnitType.TANK
+		BubbleType.CANNON:
+			return UnitType.BAZOOKA
+	return UnitType.SHOOTER
+
+
+func bubble_popped(bubble: Bubble) -> void:
 	increment_score(1)
+	var unit_type = bubble_to_unit(bubble.bubble_type)
 	if bubble.side == SIDE_LEFT:
-		player_left_base.spawn_unit(bubble.side)
+		player_left_base.spawn_unit(unit_type)
 	else :
-		player_right_base.spawn_unit(bubble.side)
+		player_right_base.spawn_unit(unit_type)
 
 
 func increment_score(value: int) -> void:
