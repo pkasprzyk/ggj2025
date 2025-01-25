@@ -43,19 +43,17 @@ func _ready() -> void:
 	
 	
 func init(
-	i_hud : Hud,
-	new_player_left_base: UnitBase,
-	new_player_right_base: UnitBase,
-	new_bullet_manager: Node,
-	viewport_top: float, viewport_right: float,
-	viewport_bottom: float,
-	viewport_left: float
-) -> void:
+		i_hud : Hud,
+		new_player_left_base: UnitBase,
+		new_player_right_base: UnitBase,
+		new_bullet_manager: Node
+		) -> void:
 	hud = i_hud
+	var play_area = Rect2i(0, hud.size.y, 1920, 1080)
 	player_left_base = new_player_left_base
-	player_left_base.init(PlayerSide.PLAYER_LEFT, viewport_left, viewport_top, viewport_bottom, viewport_right)
+	player_left_base.init(PlayerSide.PLAYER_LEFT, play_area)
 	player_right_base = new_player_right_base
-	player_right_base.init(PlayerSide.PLAYER_RIGHT, viewport_right, viewport_top, viewport_bottom, viewport_left)
+	player_right_base.init(PlayerSide.PLAYER_RIGHT, play_area)
 	player_left_base.set_other_base(player_right_base)
 	player_right_base.set_other_base(player_left_base)
 	bullet_manager = new_bullet_manager

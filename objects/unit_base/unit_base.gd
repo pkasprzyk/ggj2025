@@ -19,12 +19,20 @@ func _ready() -> void:
 	pass # Replace with function body.
 
 
-func init(new_player_side: GAME_STATE.PlayerSide, new_spawn_x: float, new_spawn_y_start: float, new_spawn_y_end: float, new_target_x: float) -> void:
+func init(
+		new_player_side: GAME_STATE.PlayerSide,
+		play_area: Rect2i) -> void:
 	player_side = new_player_side
-	spawn_x = new_spawn_x
-	spawn_y_start = new_spawn_y_start
-	spawn_y_end = new_spawn_y_end
-	target_x = new_target_x
+	spawn_y_start = play_area.position.y
+	spawn_y_end = play_area.end.y
+	
+	if new_player_side == GAME_STATE.PlayerSide.PLAYER_LEFT:
+		spawn_x = play_area.position.x
+		target_x = play_area.end.x
+	else:
+		spawn_x = play_area.end.x
+		target_x = play_area.position.x
+
 
 
 func set_other_base(new_other_base: UnitBase) -> void:

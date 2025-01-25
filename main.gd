@@ -8,5 +8,4 @@ func _ready() -> void:
 		$PlayerBases/PlayerLeftBase,
 		$PlayerBases/PlayerRightBase,
 		$BulletManager,
-		0, 1920, 1080, 0,
 	)

@@ -9,7 +9,7 @@ anchors_preset = 0
 offset_left = 1.0
 offset_top = 1.0
 offset_right = 1919.0
-offset_bottom = 90.0
+offset_bottom = 127.0
 script = ExtResource("1_n3j1n")
 
 [node name="TopBarBG" type="ColorRect" parent="."]
