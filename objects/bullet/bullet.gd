@@ -15,14 +15,20 @@ func _ready() -> void:
 	$Area2D.monitoring = true
 
 
-static func spawn(new_type:GAME_STATE.UnitType, parent: Node2D, new_position: Vector2, new_direction: Vector2, target_player: GAME_STATE.PlayerSide) -> Bullet:
+static func spawn(
+		new_type:GAME_STATE.UnitType,
+		parent: Node2D,
+		new_position: Vector2,
+		new_direction: Vector2,
+		enemy: GAME_STATE.PlayerSide) -> Bullet:
 	var bullet = bullet_scene.instantiate()
 	parent.add_child(bullet)
 	bullet.type = new_type
 	bullet.global_position = new_position
 	bullet.direction = new_direction.normalized()
-	bullet.area.collision_mask = GAME_STATE.get_player_layer(target_player)
+	bullet.area.collision_mask = GAME_STATE.get_player_layer(enemy)
 	bullet.look_at(bullet.global_position + new_direction)
+	bullet.get_node("Sprite2D").modulate = GAME_STATE.get_player_color(1-enemy)
 	return bullet
 
 
