@@ -230,7 +230,7 @@ func unit_bubble_popped(bubble: Bubble) -> void:
 	var unit_type = bubble_to_unit(bubble.contents)
 	var side = bubble.side
 	bonus.on_bonus_granted.connect(func (): spawn_unit_for(side, unit_type, spawn_target))
-	units_counter[side][unit_type] += 1
+	units_counter[side][unit_type] += _get_spawned_units_amount()
 
 
 func should_spawn_powerup() -> bool:
@@ -259,6 +259,13 @@ func process_bonus(type: BubbleType, contents: BubbleContent) -> void:
 	bonus_activated.emit(type, bubble_to_unit(contents))
 
 
+func _get_spawned_units_amount() -> int:
+	if CONFIG.get_debug_epic_mode_active():
+		return CONFIG.get_debug_epic_mode_count()
+	else:
+		return 1
+
+
 func spawn_unit_for(side:PlayerSide, unit_type:UnitType, spawn_target: Vector2) -> void:
 	if not in_replay_mode:
 		replay_config.spawn_history.append([timer, side, unit_type, spawn_target])
@@ -268,10 +275,7 @@ func spawn_unit_for(side:PlayerSide, unit_type:UnitType, spawn_target: Vector2) 
 	else :
 		spawner = player_right_base
 
-	var units_to_spawn_count = 1 
-	if CONFIG.get_debug_epic_mode_active():
-		units_to_spawn_count = CONFIG.get_debug_epic_mode_count()
-	
+	var units_to_spawn_count = _get_spawned_units_amount()
 	for i in units_to_spawn_count:
 		spawner.spawn_unit(unit_type, spawn_target)
 		if in_replay_mode: # non-replay increments on bubble pop
