@@ -1,9 +1,10 @@
-[gd_scene load_steps=14 format=3 uid="uid://pwm6l2tln5xx"]
+[gd_scene load_steps=15 format=3 uid="uid://pwm6l2tln5xx"]
 
 [ext_resource type="Script" path="res://objects/unit_shooter/unit_shooter.gd" id="1_twmya"]
 [ext_resource type="Texture2D" uid="uid://cg8e1nu62mf6n" path="res://objects/unit_shooter/manBlue_machine.png" id="2_c7sij"]
 [ext_resource type="Texture2D" uid="uid://bsmdoobq1iafs" path="res://objects/unit_shooter/shotLarge.png" id="3_jxddn"]
 [ext_resource type="Texture2D" uid="uid://bofmoniawd8u0" path="res://objects/bubble/bubble_pop/pop_pfx.svg" id="4_1jhtg"]
+[ext_resource type="PackedScene" uid="uid://beug4q11x8a3x" path="res://objects/unit_shooter/blood_particle.tscn" id="5_gyrlr"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_85p5x"]
 size = Vector2(32, 48)
@@ -74,6 +75,9 @@ _data = {
 
 [node name="UnitShooter" type="Node2D"]
 script = ExtResource("1_twmya")
+
+[node name="Splatter" parent="." instance=ExtResource("5_gyrlr")]
+position = Vector2(-24, 0)
 
 [node name="Area2D" type="Area2D" parent="."]
 position = Vector2(16, 16)

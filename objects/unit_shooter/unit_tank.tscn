@@ -1,9 +1,11 @@
-[gd_scene load_steps=14 format=3 uid="uid://pw7trqcfvf5d"]
+[gd_scene load_steps=19 format=3 uid="uid://pw7trqcfvf5d"]
 
 [ext_resource type="Script" path="res://objects/unit_shooter/unit_shooter.gd" id="1_8ax5n"]
 [ext_resource type="Texture2D" uid="uid://biaqpt8uo05ap" path="res://objects/unit_shooter/tank_dark.png" id="2_0ufwv"]
+[ext_resource type="PackedScene" uid="uid://d2cg5fcdxoc7m" path="res://objects/unit_shooter/explosion_particle.tscn" id="2_lo2ke"]
 [ext_resource type="Texture2D" uid="uid://bsmdoobq1iafs" path="res://objects/unit_shooter/shotLarge.png" id="3_1heab"]
 [ext_resource type="Texture2D" uid="uid://bofmoniawd8u0" path="res://objects/bubble/bubble_pop/pop_pfx.svg" id="4_ggsst"]
+[ext_resource type="Texture2D" uid="uid://bdseb5buf25fc" path="res://objects/unit_shooter/blood_pfx.svg" id="5_bsth8"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_85p5x"]
 size = Vector2(54, 60)
@@ -34,6 +36,24 @@ scale_min = 0.1
 scale_max = 0.1
 scale_curve = SubResource("CurveTexture_nkjgh")
 color_ramp = SubResource("GradientTexture1D_tm6an")
+
+[sub_resource type="Gradient" id="Gradient_u2gel"]
+offsets = PackedFloat32Array(0, 0.00335568, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 0.390833, 0.15, 1, 0.17, 0.0798433, 0.0442, 0.188235)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_rkgkj"]
+gradient = SubResource("Gradient_u2gel")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_teq2d"]
+particle_flag_disable_z = true
+direction = Vector3(0, 0, 0)
+spread = 180.0
+initial_velocity_min = 100.0
+initial_velocity_max = 200.0
+gravity = Vector3(0, 98, 0)
+scale_min = 0.7
+color = Color(1, 0.85, 0, 1)
+color_ramp = SubResource("GradientTexture1D_rkgkj")
 
 [sub_resource type="Animation" id="Animation_5081w"]
 length = 0.001
@@ -92,6 +112,11 @@ position = Vector2(-5.96046e-08, -1.42109e-14)
 rotation = -1.5708
 scale = Vector2(1.4036, 1.4036)
 texture = ExtResource("2_0ufwv")
+
+[node name="Splatter" parent="." instance=ExtResource("2_lo2ke")]
+amount = 16
+process_material = SubResource("ParticleProcessMaterial_teq2d")
+texture = ExtResource("5_bsth8")
 
 [node name="BarrelTip" type="Marker2D" parent="."]
 position = Vector2(37, -1)

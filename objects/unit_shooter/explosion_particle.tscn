@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://d2cg5fcdxoc7m"]
+
+[ext_resource type="Texture2D" uid="uid://bofmoniawd8u0" path="res://objects/bubble/bubble_pop/pop_pfx.svg" id="1_8cy0k"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_cja2o"]
+particle_flag_disable_z = true
+direction = Vector3(-1, 0, 0)
+spread = 60.0
+initial_velocity_min = 60.0
+initial_velocity_max = 100.0
+gravity = Vector3(0, 0, 0)
+linear_accel_min = -70.0
+linear_accel_max = -50.0
+scale_min = 0.05
+scale_max = 0.07
+color = Color(1, 0, 0, 0.584314)
+
+[node name="ExplosionParticle" type="GPUParticles2D"]
+emitting = false
+process_material = SubResource("ParticleProcessMaterial_cja2o")
+texture = ExtResource("1_8cy0k")
+lifetime = 0.3
+one_shot = true
+explosiveness = 0.8

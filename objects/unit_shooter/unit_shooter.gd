@@ -28,8 +28,10 @@ static var unit_type_to_scene: Dictionary = {
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var barrel_tip: Marker2D = $BarrelTip
 @onready var area: Area2D = $Area2D
+@onready var collision_shape: CollisionShape2D = $Area2D/CollisionShape2D
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var power_up_pfx: = $PowerUpPfx
+@onready var splatter: GPUParticles2D = $Splatter
 
 
 static func spawn(
@@ -167,9 +169,14 @@ func _physics_process(delta: float) -> void:
 func handle_hit(bullet: Bullet) -> void:
 	hp -= get_damage(type, bullet.type)
 	if hp <= 0:
+		collision_shape.set_deferred("disabled", true)
 		GAME_STATE.unit_died(self)
-		queue_free()
-
+		if splatter:
+			splatter.connect("finished", queue_free)
+			splatter.emitting = true		
+		else:
+			queue_free()
+		
 
 func try_shoot() -> void:
 	if shooting_cooldown > 0:
