@@ -63,9 +63,11 @@ func update_values(timer : float, score: Array[float], units_counter: Array) -> 
 
 
 func refresh_debug_toggles() -> void:
-	$DebugMenu/AutoSpawnToggle.text = "Autospawn right player: %s" % GAME_STATE.autospawn_right_player
-	$DebugMenu/DeterministictUnitSpawnToggle.text = "Deterministic unit spawn: %s" % GAME_STATE.deterministic_unit_spawn
-	$DebugMenu/EpicModeToggle.text = "Epic mode: %s" % GAME_STATE.epic_mode
+	$DebugMenu/AutoSpawnToggle.text = "Autospawn right player (%f.2): %s" % \
+		[CONFIG.get_debug_right_spawner_cooldown(), CONFIG.get_debug_right_spawner_active()]
+	$DebugMenu/DeterministictUnitSpawnToggle.text = "Deterministic unit spawn: %s" %  CONFIG.get_debug_deterministic_spawn()
+	$DebugMenu/EpicModeToggle.text = "Epic mode(%d): %s" % \
+		[CONFIG.get_debug_epic_mode_count(), CONFIG.get_debug_epic_mode_active()]
 
 
 func game_ended() -> void:

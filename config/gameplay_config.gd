@@ -14,3 +14,9 @@ extends Resource
 @export var points_per_spawn : float
 @export var points_per_kill : float
 @export var points_for_base_hit : float
+
+@export var debug_right_spawner_active:bool
+@export var debug_right_spawner_cooldown:float
+@export var debug_deterministic_spawn:bool
+@export var debug_epic_mode_active:bool
+@export var debug_epic_mode_count:int

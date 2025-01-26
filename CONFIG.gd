@@ -20,3 +20,13 @@ func get_power_up_cooldown_s() -> float: return 5.0
 func get_power_up_duration_s() -> float: return 1.0
 func get_power_up_speed_mult() -> float: return 5.0
 func get_power_up_shoot_mult() -> float: return 5.0
+
+func get_debug_right_spawner_active() -> bool: return config.debug_right_spawner_active
+func get_debug_right_spawner_cooldown() -> float: return config.debug_right_spawner_cooldown
+func get_debug_deterministic_spawn() -> bool: return config.debug_deterministic_spawn
+func get_debug_epic_mode_active() -> bool: return config.debug_epic_mode_active
+func get_debug_epic_mode_count() -> int: return config.debug_epic_mode_count
+
+func toggle_debug_right_spawner_active()-> void : config.debug_right_spawner_active = not config.debug_right_spawner_active
+func toggle_debug_deterministic_spawn()-> void : config.debug_deterministic_spawn = not config.debug_deterministic_spawn
+func toggle_debug_epic_mode_active()-> void : config.debug_epic_mode_active = not config.debug_epic_mode_active

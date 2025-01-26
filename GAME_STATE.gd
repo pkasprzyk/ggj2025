@@ -36,9 +36,6 @@ var player_left_base: UnitBase
 var player_right_base: UnitBase
 var bullet_manager: Node
 
-var autospawn_right_player: bool = true
-var deterministic_unit_spawn: bool = false
-var epic_mode: bool = false
 var spawn_bubbles: bool
 var right_spawn_timer: Timer
 var epic_multiplier: int = 5
@@ -105,8 +102,9 @@ func _process(delta: float) -> void:
 		return
 
 	timer += delta
-	if right_spawn_timer.is_stopped() and autospawn_right_player:
-		right_spawn_timer.start()
+	if CONFIG.get_debug_right_spawner_active() and \
+			not in_replay_mode and right_spawn_timer.is_stopped() :
+		right_spawn_timer.start(CONFIG.get_debug_right_spawner_cooldown())
 		var side = PlayerSide.PLAYER_RIGHT
 		var unit_type = UnitType.SHOOTER
 		spawn_unit_for(side, unit_type, player_right_base.generate_spawn_target())
@@ -135,7 +133,7 @@ func view_replay():
 
 
 func _run_replay():
-	autospawn_right_player = false
+	assert(in_replay_mode)
 	spawn_bubbles = false
 	
 	for entry in replay_config.spawn_history:
@@ -215,7 +213,7 @@ func unit_bubble_popped(bubble: Bubble) -> void:
 	increment_score(bubble.side, CONFIG.points_per_spawn())
 	replay_config.click_history.append([timer, bubble.type, bubble.side, bubble.contents, bubble.global_position])
 	var spawn_target = player_left_base.generate_spawn_target() if bubble.side == PlayerSide.PLAYER_LEFT else player_right_base.generate_spawn_target()
-	if deterministic_unit_spawn:
+	if CONFIG.get_debug_deterministic_spawn():
 		spawn_target.y = bubble.global_position.y
 	var bonus = BubbleBonus.spawn(bullet_manager, bubble, spawn_target)
 	var unit_type = bubble_to_unit(bubble.contents)
@@ -258,7 +256,9 @@ func spawn_unit_for(side:PlayerSide, unit_type:UnitType, spawn_target: Vector2) 
 	else :
 		spawner = player_right_base
 
-	var units_to_spawn_count = 1 if not epic_mode else epic_multiplier
+	var units_to_spawn_count = 1 
+	if CONFIG.get_debug_epic_mode_active():
+		units_to_spawn_count = CONFIG.get_debug_epic_mode_count()
 	
 	for i in units_to_spawn_count:
 		spawner.spawn_unit(unit_type, spawn_target)
@@ -290,15 +290,15 @@ func increment_score(side: PlayerSide, value: float) -> void:
 
 
 func toggle_autospawn() -> void:
-	autospawn_right_player = not autospawn_right_player
+	CONFIG.toggle_debug_right_spawner_active()
 
 
 func toggle_deterministic_unit_spawn() -> void:
-	deterministic_unit_spawn = not deterministic_unit_spawn
+	CONFIG.toggle_debug_deterministic_spawn()
 
 
 func toggle_epic_mode() -> void:
-	epic_mode = not epic_mode
+	CONFIG.toggle_debug_epic_mode_active()
 
 
 func get_player_color(side: PlayerSide) -> Color:
