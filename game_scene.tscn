@@ -1,15 +1,14 @@
-[gd_scene load_steps=14 format=4 uid="uid://dgdqtydil5rj8"]
+[gd_scene load_steps=13 format=4 uid="uid://dgdqtydil5rj8"]
 
-[ext_resource type="Script" path="res://main.gd" id="1_mmle3"]
-[ext_resource type="PackedScene" uid="uid://7m54yhh1iwlb" path="res://objects/bubble_spawner/bubble_spawner.tscn" id="2_n4osd"]
-[ext_resource type="Texture2D" uid="uid://d4hnr3kdyyf5g" path="res://background/terrainTiles_retina.png" id="2_pedbq"]
-[ext_resource type="PackedScene" uid="uid://ctjnx6oo5ch47" path="res://objects/unit_base/unit_base.tscn" id="4_78562"]
-[ext_resource type="PackedScene" uid="uid://ukm7x4tnv1xr" path="res://hud/hud.tscn" id="4_vi50i"]
-[ext_resource type="Texture2D" uid="uid://dct624iyu1ob6" path="res://icons/IconGodotNode/node/canon.png" id="4_vtrkf"]
-[ext_resource type="PackedScene" uid="uid://iilaldjgdi3u" path="res://hud/game_menu.tscn" id="7_4yvxc"]
+[ext_resource type="Script" path="res://game_scene.gd" id="1_0marj"]
+[ext_resource type="Texture2D" uid="uid://d4hnr3kdyyf5g" path="res://background/terrainTiles_retina.png" id="2_vthtk"]
+[ext_resource type="PackedScene" uid="uid://ctjnx6oo5ch47" path="res://objects/unit_base/unit_base.tscn" id="3_itl1k"]
+[ext_resource type="Texture2D" uid="uid://dct624iyu1ob6" path="res://icons/IconGodotNode/node/canon.png" id="4_bncqw"]
+[ext_resource type="PackedScene" uid="uid://7m54yhh1iwlb" path="res://objects/bubble_spawner/bubble_spawner.tscn" id="5_bytp8"]
+[ext_resource type="PackedScene" uid="uid://ukm7x4tnv1xr" path="res://hud/hud.tscn" id="6_kbtma"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rmyoh"]
-texture = ExtResource("2_pedbq")
+texture = ExtResource("2_vthtk")
 texture_region_size = Vector2i(128, 128)
 0:0/0 = 0
 1:0/0 = 0
@@ -96,7 +95,7 @@ _data = {
 size = Vector2(661, 404)
 
 [node name="MainScene" type="Node2D"]
-script = ExtResource("1_mmle3")
+script = ExtResource("1_0marj")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(960, 540)
@@ -109,10 +108,10 @@ tile_set = SubResource("TileSet_m3rmy")
 
 [node name="PlayerBases" type="Node2D" parent="."]
 
-[node name="PlayerLeftBase" parent="PlayerBases" instance=ExtResource("4_78562")]
+[node name="PlayerLeftBase" parent="PlayerBases" instance=ExtResource("3_itl1k")]
 position = Vector2(72, 608)
 
-[node name="PlayerRightBase" parent="PlayerBases" instance=ExtResource("4_78562")]
+[node name="PlayerRightBase" parent="PlayerBases" instance=ExtResource("3_itl1k")]
 position = Vector2(1848, 608)
 
 [node name="BulletManager" type="Node2D" parent="."]
@@ -124,7 +123,7 @@ modulate = Color(1, 1, 0, 0)
 texture_filter = 1
 position = Vector2(951, 561)
 scale = Vector2(52.125, 52.125)
-texture = ExtResource("4_vtrkf")
+texture = ExtResource("4_bncqw")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="PowerUpOverlay"]
 libraries = {
@@ -134,7 +133,7 @@ autoplay = "RESET"
 
 [node name="BubbleSpawners" type="Node2D" parent="."]
 
-[node name="BubbleSpawner" parent="BubbleSpawners" instance=ExtResource("2_n4osd")]
+[node name="BubbleSpawner" parent="BubbleSpawners" instance=ExtResource("5_bytp8")]
 position = Vector2(852, 540)
 
 [node name="Area2D" type="Area2D" parent="BubbleSpawners/BubbleSpawner"]
@@ -152,7 +151,7 @@ position = Vector2(1068, -212)
 [node name="Target3" type="Marker2D" parent="BubbleSpawners/BubbleSpawner/Area2D"]
 position = Vector2(-508, 548)
 
-[node name="BubbleSpawner2" parent="BubbleSpawners" instance=ExtResource("2_n4osd")]
+[node name="BubbleSpawner2" parent="BubbleSpawners" instance=ExtResource("5_bytp8")]
 position = Vector2(2107, 540)
 
 [node name="Area2D" type="Area2D" parent="BubbleSpawners/BubbleSpawner2"]
@@ -170,7 +169,7 @@ position = Vector2(-2099, -212)
 [node name="Target3" type="Marker2D" parent="BubbleSpawners/BubbleSpawner2/Area2D"]
 position = Vector2(-539, 548)
 
-[node name="BubbleSpawner3" parent="BubbleSpawners" instance=ExtResource("2_n4osd")]
+[node name="BubbleSpawner3" parent="BubbleSpawners" instance=ExtResource("5_bytp8")]
 position = Vector2(852, 1210)
 
 [node name="Area2D" type="Area2D" parent="BubbleSpawners/BubbleSpawner3"]
@@ -188,7 +187,7 @@ position = Vector2(-492, -1082)
 [node name="Target3" type="Marker2D" parent="BubbleSpawners/BubbleSpawner3/Area2D"]
 position = Vector2(1060, -346)
 
-[node name="BubbleSpawner4" parent="BubbleSpawners" instance=ExtResource("2_n4osd")]
+[node name="BubbleSpawner4" parent="BubbleSpawners" instance=ExtResource("5_bytp8")]
 position = Vector2(2107, 1210)
 
 [node name="Area2D" type="Area2D" parent="BubbleSpawners/BubbleSpawner4"]
@@ -208,6 +207,4 @@ position = Vector2(-523, -1074)
 
 [node name="HUDCanvasGroup" type="CanvasLayer" parent="."]
 
-[node name="HUD" parent="HUDCanvasGroup" instance=ExtResource("4_vi50i")]
-
-[node name="GameMenu" parent="HUDCanvasGroup" instance=ExtResource("7_4yvxc")]
+[node name="HUD" parent="HUDCanvasGroup" instance=ExtResource("6_kbtma")]

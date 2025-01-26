@@ -103,7 +103,7 @@ func _process(delta: float) -> void:
 		return
 
 	timer += delta
-	if CONFIG.get_debug_right_spawner_active() and \
+	if game_started and CONFIG.get_debug_right_spawner_active() and \
 			not in_replay_mode and right_spawn_timer.is_stopped() :
 		right_spawn_timer.start(CONFIG.get_debug_right_spawner_cooldown())
 		var side = PlayerSide.PLAYER_RIGHT
@@ -139,7 +139,8 @@ func back_to_menu():
 	in_replay_mode = false
 	spawn_bubbles = false
 	clear_timers()
-	_reload_scene()
+	get_tree().paused = false
+	get_tree().change_scene_to_file("res://main_menu.tscn")
 
 
 func _run_replay():
