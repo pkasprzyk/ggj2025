@@ -213,7 +213,7 @@ func bubble_to_unit(bubble_type: BubbleContent) -> UnitType:
 
 
 func get_player_layer(player: PlayerSide) -> int:
-	return 2 if player == PlayerSide.PLAYER_LEFT else 3
+	return 2 if player == PlayerSide.PLAYER_LEFT else 4  # this is flag!
 
 
 func get_other_player(player: PlayerSide) -> PlayerSide:
