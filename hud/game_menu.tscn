@@ -1,0 +1,92 @@
+[gd_scene load_steps=3 format=3 uid="uid://iilaldjgdi3u"]
+
+[ext_resource type="Script" path="res://hud/game_menu.gd" id="1_5w45o"]
+[ext_resource type="Texture2D" uid="uid://buvpjtrsoxep0" path="res://hud/logo.png" id="2_16yt6"]
+
+[node name="GameMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_5w45o")
+
+[node name="StartGameButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 624.0
+offset_top = 584.0
+offset_right = 1325.0
+offset_bottom = 661.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 50
+text = "Start Game"
+
+[node name="CreditsButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 627.0
+offset_top = 721.0
+offset_right = 1328.0
+offset_bottom = 798.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 50
+text = "Credits"
+
+[node name="Credits" type="ColorRect" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 260.0
+offset_top = 104.0
+offset_right = 1688.0
+offset_bottom = 904.0
+color = Color(0, 0, 0, 0.67451)
+
+[node name="CreditsText" type="RichTextLabel" parent="Credits"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = 13.0
+offset_right = -15.0
+offset_bottom = -124.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/normal_font_size = 50
+bbcode_enabled = true
+text = "Lorem ipsum dolor sit amet, [color=red] consectetur adipiscing elit[/color]. Vestibulum nec gravida lacus, tincidunt pretium diam. Ut sagittis erat a eros aliquet laoreet. Duis ac sapien in est egestas euismod nec sed quam. Sed porta elementum ligula. Vestibulum cursus, ex non dictum feugiat, enim lacus vestibulum ex, nec volutpat lectus turpis vel dui. Ut vel ullamcorper mauris. Suspendisse potenti. Mauris blandit ullamcorper ligula tempus porta. Integer faucibus, est nec condimentum accumsan, ipsum tortor cursus massa, a accumsan enim ipsum vel nibh. Maecenas cursus eget ex non porttitor. Proin vulputate, odio vel ornare maximus, neque ipsum placerat massa, vitae sollicitudin arcu erat eget magna. Aliquam ornare magna purus, vitae sollicitudin enim accumsan vel. In finibus porta arcu et finibus. Nunc non felis augue. Etiam leo arcu, ultricies a nisl in, cursus faucibus dui.
+
+Nunc pellentesque, ex sed vulputate pellentesque, tellus ex laoreet neque, ac fringilla lorem urna at ante. Phasellus eu eros sed mauris malesuada porttitor non in elit. Phasellus ultricies rutrum bibendum. Interdum et malesuada fames ac ante ipsum primis in faucibus. Mauris dignissim enim et placerat tempor. Morbi vitae augue in nunc gravida commodo. Etiam et viverra diam, sed faucibus elit. Vivamus malesuada, est ac maximus auctor, dui sapien ultricies mi, quis vulputate turpis nibh et dui. Phasellus consequat at dolor ac consequat. Proin ornare lorem nisl, ac feugiat turpis porta non. Maecenas ornare odio non ligula mattis, quis dignissim neque tincidunt. Nulla id urna in leo sagittis sagittis id in dolor. Sed sapien lacus, lacinia nec tellus vitae, imperdiet pharetra nisi. Vestibulum vitae commodo neque. Maecenas vitae dolor purus.
+
+Nam ut erat a ante laoreet porta ut non nisi. Suspendisse ultricies dictum sapien quis euismod. Vivamus a finibus augue. Phasellus consectetur ultrices massa, nec interdum nisl tincidunt porta. Nulla velit nibh, auctor vitae efficitur vitae, fringilla non ligula. Vestibulum tincidunt et risus eu vulputate. Maecenas a lacus nec sapien posuere lobortis hendrerit et ipsum.
+
+Etiam et laoreet ipsum, vitae venenatis sapien. Fusce non magna odio. Vivamus fermentum ac justo ac fermentum. Vestibulum fringilla ornare lacus ut laoreet. Cras pellentesque ante ut sapien dignissim, nec suscipit dui rhoncus. In feugiat dui consectetur, sagittis justo eget, consequat erat. Vivamus ante erat, porta vitae accumsan eget, faucibus sed libero. Curabitur dapibus orci quis justo lacinia, sit amet feugiat purus blandit. Vivamus tristique at nisl quis facilisis. Aliquam quis lectus est.
+
+Sed scelerisque orci nec vulputate dictum. Sed gravida sollicitudin magna, sed egestas nulla laoreet quis. Sed at viverra elit, sit amet fringilla ex. Ut efficitur egestas odio, sed finibus massa tristique a. Phasellus tristique ultricies augue, nec volutpat nibh ultricies sit amet. Maecenas finibus sed lorem quis sodales. Vivamus quis mi efficitur, luctus massa in, interdum lacus. Vivamus finibus nulla lacus."
+
+[node name="CloseCredits" type="Button" parent="Credits"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -516.5
+offset_top = -103.0
+offset_right = 513.5
+offset_bottom = -14.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 50
+text = "Close"
+
+[node name="Logo" type="Sprite2D" parent="."]
+position = Vector2(1024, 312)
+scale = Vector2(1.62281, 1.62281)
+texture = ExtResource("2_16yt6")
+
+[connection signal="pressed" from="CreditsButton" to="." method="_on_credits_button_pressed"]
+[connection signal="meta_clicked" from="Credits/CreditsText" to="." method="_on_credits_text_meta_clicked"]
+[connection signal="pressed" from="Credits/CloseCredits" to="." method="_on_close_credits_pressed"]

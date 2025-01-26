@@ -26,7 +26,10 @@ enum UnitType {
 }
 
 
+var game_started := false
 var game_ended := false
+var in_replay_mode := false
+
 var score: Array[float] = [0,0]
 var timer := 0.0
 var units_counter # Side -> type -> count
@@ -41,8 +44,6 @@ var right_spawn_timer: Timer
 var epic_multiplier: int = 5
 
 var bgm_player : AudioStreamPlayer
-
-var in_replay_mode = false
 
 var power_up_count := 0
 var power_up_pending_content := BubbleContent.SWORD
@@ -128,6 +129,15 @@ func reset():
 
 func view_replay():
 	in_replay_mode = true
+	clear_timers()
+	_reload_scene()
+
+
+func back_to_menu():
+	game_ended = true
+	game_started = false
+	in_replay_mode = false
+	spawn_bubbles = false
 	clear_timers()
 	_reload_scene()
 

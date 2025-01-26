@@ -1,15 +1,36 @@
 extends Node
 
-@onready var power_up_icon : Sprite2D = $PowerUpOverlay/PowerUpIcon
-@onready var power_up_animation : AnimationPlayer = $PowerUpOverlay/AnimationPlayer
+var play: bool = false
+
+
+@onready var power_up_icon: Sprite2D = $PowerUpOverlay/PowerUpIcon
+@onready var power_up_animation: AnimationPlayer = $PowerUpOverlay/AnimationPlayer
+@onready var hud = $HUDCanvasGroup/HUD
+@onready var game_menu: GameMenu = $HUDCanvasGroup/GameMenu
+@onready var player_left_base = $PlayerBases/PlayerLeftBase
+@onready var player_right_base = $PlayerBases/PlayerRightBase
+@onready var bullet_manager = $BulletManager
+
 
 func _ready() -> void:
 	Input.emulate_touch_from_mouse = true
+	if GAME_STATE.game_started:
+		_do_play()
+	else:
+		hud.hide()
+		game_menu.show()
+		game_menu.start_game_button.connect("pressed", _do_play)
+
+
+func _do_play() -> void:
+	GAME_STATE.game_started = true
+	game_menu.hide()
+	hud.show()
 	GAME_STATE.init(
-		$HUDCanvasGroup/HUD,
-		$PlayerBases/PlayerLeftBase,
-		$PlayerBases/PlayerRightBase,
-		$BulletManager,
+		hud,
+		player_left_base,
+		player_right_base,
+		bullet_manager,
 	)
 	GAME_STATE.bonus_activated.connect(on_bonus_activated)
 

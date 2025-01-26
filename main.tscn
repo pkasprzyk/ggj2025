@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=4 uid="uid://dgdqtydil5rj8"]
+[gd_scene load_steps=14 format=4 uid="uid://dgdqtydil5rj8"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_mmle3"]
 [ext_resource type="PackedScene" uid="uid://7m54yhh1iwlb" path="res://objects/bubble_spawner/bubble_spawner.tscn" id="2_n4osd"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://ctjnx6oo5ch47" path="res://objects/unit_base/unit_base.tscn" id="4_78562"]
 [ext_resource type="PackedScene" uid="uid://ukm7x4tnv1xr" path="res://hud/hud.tscn" id="4_vi50i"]
 [ext_resource type="Texture2D" uid="uid://dct624iyu1ob6" path="res://icons/IconGodotNode/node/canon.png" id="4_vtrkf"]
+[ext_resource type="PackedScene" uid="uid://iilaldjgdi3u" path="res://hud/game_menu.tscn" id="7_4yvxc"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rmyoh"]
 texture = ExtResource("2_pedbq")
@@ -208,3 +209,5 @@ position = Vector2(-523, -1074)
 [node name="HUDCanvasGroup" type="CanvasLayer" parent="."]
 
 [node name="HUD" parent="HUDCanvasGroup" instance=ExtResource("4_vi50i")]
+
+[node name="GameMenu" parent="HUDCanvasGroup" instance=ExtResource("7_4yvxc")]

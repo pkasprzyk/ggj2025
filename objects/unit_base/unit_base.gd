@@ -18,6 +18,7 @@ var other_base: UnitBase
 var rush_expiry_timer: Timer
 
 func _ready() -> void:
+	sprite.hide()
 	GAME_STATE.connect("bonus_activated", activate_bonus)
 	rush_expiry_timer = Timer.new()
 	rush_expiry_timer.name = "rush_expiry_timer"
@@ -31,6 +32,7 @@ func init(
 	spawn_y_start = play_area.position.y
 	spawn_y_end = play_area.end.y
 	sprite.modulate = GAME_STATE.get_player_color(player)
+	sprite.show()
 	area.collision_layer = GAME_STATE.get_player_layer(player)
 	
 	if new_player == GAME_STATE.PlayerSide.PLAYER_LEFT:
