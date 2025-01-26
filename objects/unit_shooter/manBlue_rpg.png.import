@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://421haeb2pqai"
-path="res://.godot/imported/logo.png-cca8726399059c8d4f806e28e356b14d.ctex"
+uid="uid://4t0mtbqqgtho"
+path="res://.godot/imported/manBlue_rpg.png-c38e253bcbce02e6355874e611d2bf6c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://logo.png"
-dest_files=["res://.godot/imported/logo.png-cca8726399059c8d4f806e28e356b14d.ctex"]
+source_file="res://objects/unit_shooter/manBlue_rpg.png"
+dest_files=["res://.godot/imported/manBlue_rpg.png-c38e253bcbce02e6355874e611d2bf6c.ctex"]
 
 [params]
 
