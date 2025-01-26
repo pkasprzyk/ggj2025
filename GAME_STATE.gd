@@ -135,6 +135,7 @@ func view_replay():
 func _run_replay():
 	assert(in_replay_mode)
 	spawn_bubbles = false
+	clear_timers()
 	
 	for entry in replay_config.spawn_history:
 		var time = entry[0]
@@ -249,7 +250,8 @@ func process_bonus(type: BubbleType, contents: BubbleContent) -> void:
 
 
 func spawn_unit_for(side:PlayerSide, unit_type:UnitType, spawn_target: Vector2) -> void:
-	replay_config.spawn_history.append([timer, side, unit_type, spawn_target])
+	if not in_replay_mode:
+		replay_config.spawn_history.append([timer, side, unit_type, spawn_target])
 	var spawner: UnitBase
 	if side == PlayerSide.PLAYER_LEFT:
 		spawner = player_left_base
