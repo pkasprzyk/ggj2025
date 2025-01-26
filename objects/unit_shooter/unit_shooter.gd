@@ -8,6 +8,9 @@ class_name UnitShooter
 @export var speed: float = 100.0
 @export var separation_distance_squared: float = 50.0 ** 2
 @export var shooting_distance: float = 500.0
+@export var slowdown_while_shooting: float = 4.0
+@export var minimum_shooting_distance: float = 300.0
+@export var shooting_distance_variation: float = 200.0
 @export var rotation_speed: float = 0.05  # radians per tick
 
 var type : GAME_STATE.UnitType
@@ -33,6 +36,7 @@ static var unit_type_to_scene: Dictionary = {
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var power_up_pfx: = $PowerUpPfx
 @onready var splatter: GPUParticles2D = $Splatter
+@onready var shooting_distance_offset: float = randf_range(0, shooting_distance_variation)
 
 
 static func spawn(
@@ -137,7 +141,7 @@ func _rotate_clamped(new_velocity: Vector2) -> Vector2:
 	return new_velocity
 
 
-func _come_closer(delta: float) -> void:
+func _come_closer(delta: float, slowdown: float = 1.0) -> void:
 	var effective_speed = speed
 	if bonus_active:
 		effective_speed *= CONFIG.get_power_up_speed_mult()
@@ -150,7 +154,7 @@ func _come_closer(delta: float) -> void:
 	new_velocity = new_velocity + cohesion_vec + allignment_vec + seperation_vec
 	new_velocity = _rotate_clamped(new_velocity)
 	velocity = new_velocity.normalized() * effective_speed
-	global_position += velocity * delta
+	global_position += velocity * delta / slowdown
 
 
 func _physics_process(delta: float) -> void:
@@ -159,12 +163,14 @@ func _physics_process(delta: float) -> void:
 	var closest = find_closest_enemy(other_base.get_units())
 	var closest_enemy = closest[0]
 	var distance = closest[1]
-	if distance < shooting_distance:
+	var slowdown := 1.0
+	if distance < shooting_distance + shooting_distance_offset:
 		velocity = (closest_enemy.global_position - global_position).normalized() * speed
 		velocity = _rotate_clamped(velocity)
 		try_shoot()
-	else:
-		_come_closer(delta)
+		slowdown = slowdown_while_shooting  # advance slower when shooting
+	if distance > minimum_shooting_distance + shooting_distance_offset:
+		_come_closer(delta, slowdown)
 
 
 func handle_hit(bullet: Bullet) -> void:
