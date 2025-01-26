@@ -17,6 +17,7 @@ var target: Vector2 = Vector2.ZERO
 var base: UnitBase
 var other_base: UnitBase
 var velocity: Vector2 = Vector2.ZERO
+var alive := true
 
 static var unit_type_to_scene: Dictionary = {
 	GAME_STATE.UnitType.SHOOTER: load("res://objects/unit_shooter/unit_shooter.tscn"),
@@ -168,7 +169,8 @@ func _physics_process(delta: float) -> void:
 
 func handle_hit(bullet: Bullet) -> void:
 	hp -= get_damage(type, bullet.type)
-	if hp <= 0:
+	if hp <= 0 and alive:
+		alive = false
 		collision_shape.set_deferred("disabled", true)
 		GAME_STATE.unit_died(self)
 		if splatter:
@@ -179,7 +181,7 @@ func handle_hit(bullet: Bullet) -> void:
 		
 
 func try_shoot() -> void:
-	if shooting_cooldown > 0:
+	if shooting_cooldown > 0 or not alive:
 		return
 	animation_player.play("shoot")
 	shooting_cooldown = CONFIG.unit_stats_shoot_cooldown_s()
