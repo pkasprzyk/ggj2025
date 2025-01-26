@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://ukm7x4tnv1xr"]
+[gd_scene load_steps=9 format=3 uid="uid://ukm7x4tnv1xr"]
 
 [ext_resource type="Script" path="res://hud/hud.gd" id="1_n3j1n"]
 [ext_resource type="Texture2D" uid="uid://e5f2r6uxowus" path="res://icons/IconGodotNode/node/canon_2.png" id="2_xosfp"]
 [ext_resource type="Texture2D" uid="uid://6347gkdm4e4l" path="res://icons/IconGodotNode/node/icon_shield.png" id="3_1qcv1"]
 [ext_resource type="Texture2D" uid="uid://yotxo0ga1dvs" path="res://icons/IconGodotNode/node/icon_sword.png" id="4_vsu1g"]
+[ext_resource type="Texture2D" uid="uid://bm57lglln4h8n" path="res://icons/IconGodotNode/color/icon_area_damage.png" id="5_34sc2"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0qmfv"]
 bg_color = Color(0, 0, 0, 1)
@@ -219,7 +220,7 @@ theme_override_font_sizes/font_size = 50
 text = "Close"
 
 [node name="ProgressBarL" type="ProgressBar" parent="."]
-modulate = Color(1, 1, 1, 0.509804)
+modulate = Color(1, 1, 1, 0.784314)
 layout_mode = 0
 offset_top = 126.0
 offset_right = 67.0
@@ -273,7 +274,7 @@ scale = Vector2(3.5, 3.5)
 texture = ExtResource("4_vsu1g")
 
 [node name="ProgressBarR" type="ProgressBar" parent="."]
-modulate = Color(1, 1, 1, 0.509804)
+modulate = Color(1, 1, 1, 0.784314)
 layout_mode = 0
 offset_left = 1847.0
 offset_top = 126.0
@@ -329,6 +330,13 @@ horizontal_alignment = 2
 position = Vector2(237, 31)
 scale = Vector2(3.5, 3.5)
 texture = ExtResource("4_vsu1g")
+
+[node name="DebugAutoSpawnerIcon" type="Sprite2D" parent="ProgressBarR/RSwordLabel"]
+visible = false
+texture_filter = 1
+position = Vector2(214, 106)
+scale = Vector2(4.5, 4.5)
+texture = ExtResource("5_34sc2")
 
 [connection signal="pressed" from="TopBarBG/TopBar/CreditsButton" to="." method="_on_credits_button_pressed"]
 [connection signal="pressed" from="TopBarBG/TopBar/ResetButton" to="." method="_on_reset_button_pressed"]

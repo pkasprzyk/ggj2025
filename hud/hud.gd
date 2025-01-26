@@ -8,6 +8,7 @@ extends Control
 @onready var game_end = $GameEnd
 @onready var progress_bar_l := ($ProgressBarL as ProgressBar)
 @onready var progress_bar_r := ($ProgressBarR as ProgressBar)
+@onready var debug_auto_spawner_icon := $ProgressBarR/RSwordLabel/DebugAutoSpawnerIcon
 @onready var unit_labels = [
 	[
 		$ProgressBarL/LSwordLabel, 
@@ -63,11 +64,12 @@ func update_values(timer : float, score: Array[float], units_counter: Array) -> 
 
 
 func refresh_debug_toggles() -> void:
-	$DebugMenu/AutoSpawnToggle.text = "Autospawn right player (%f.2): %s" % \
+	$DebugMenu/AutoSpawnToggle.text = "Autospawn right player (%.2f): %s" % \
 		[CONFIG.get_debug_right_spawner_cooldown(), CONFIG.get_debug_right_spawner_active()]
 	$DebugMenu/DeterministictUnitSpawnToggle.text = "Deterministic unit spawn: %s" %  CONFIG.get_debug_deterministic_spawn()
 	$DebugMenu/EpicModeToggle.text = "Epic mode(%d): %s" % \
 		[CONFIG.get_debug_epic_mode_count(), CONFIG.get_debug_epic_mode_active()]
+	debug_auto_spawner_icon.visible = CONFIG.get_debug_right_spawner_active()
 
 
 func game_ended() -> void:
